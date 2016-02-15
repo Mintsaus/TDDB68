@@ -1,0 +1,62 @@
+#include "userprog/syscall.h"
+#include <stdio.h>
+#include <syscall-nr.h>
+#include "threads/interrupt.h"
+#include "threads/thread.h"
+#include "filesys/filesys.h"
+#include "filesys/file.c" //Unsure about this, see compliler errors.
+
+static void syscall_handler (struct intr_frame *);
+void power_off(void);
+void putbuf(const char *buffer, size_t n);
+
+void
+syscall_init (void) 
+{
+  intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+}
+
+static void
+syscall_handler (struct intr_frame *f UNUSED) 
+{
+	int *p = f->esp;
+	switch(*p)
+	{
+		case (SYS_HALT):
+			power_off();
+			break;
+			
+		case (SYS_WRITE): ;
+			int fd_write = *(p + 1);
+			const char *buffer_write = (char *)(p + 2);
+			unsigned int size_write = *(p + 3);
+			if(fd_write == 1){
+				putbuf(buffer_write, size_write);
+			}else{
+				/* Code for writing to actual files goes here. 
+				 * Probably just a function call to aldready
+				 * defined function */
+			}
+			
+			break;
+		
+		case (SYS_CREATE): ;
+			char *name_create = (char *)(p + 1);
+			unsigned int size_create = *(p + 2);
+			f -> eax = filesys_create(name_create, size_create);
+			break;
+		
+		case (SYS_OPEN): ;
+			char *name_open = (char *)(p + 1);
+			file *fd_open = filesys_open(name_open);
+			f -> eax = (fd_open != NULL ? 1 : 0);
+			break;
+		case (SYS_CLOSE): ;
+			//int fd_close = *(p + 1);
+			break;
+		default:
+			printf ("system call!\n");
+			thread_exit ();
+	}
+  
+}
