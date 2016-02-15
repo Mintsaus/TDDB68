@@ -69,6 +69,8 @@ static void schedule (void);
 void schedule_tail (struct thread *prev);
 static tid_t allocate_tid (void);
 
+void file_close (struct file *);
+
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This can't work in
    general and it is possible in this case only because loader.S
@@ -203,7 +205,6 @@ thread_create (const char *name, int priority,
   if(t->fd_bitmap == NULL){
 	PANIC("bitmap too big!!");
   }
-printf("bitmap created\n");
   bitmap_set_multiple(t->fd_bitmap, 0, 2, 1);
 
   /* Add to run queue. */
@@ -296,7 +297,7 @@ if(thread_current()->fd_bitmap != NULL){
 	for(i=0; i < file_map_size; i++){
 	
 		if(bitmap_test(thread_current()->fd_bitmap, i)){
-			file_close (thread_current() -> file_names[i]);  
+			//~ file_close((thread_current() -> file_names[i]));  
 		}
 	}
 	bitmap_destroy(thread_current() -> fd_bitmap);	/* Added to avoid leaks for bitmap!!! */

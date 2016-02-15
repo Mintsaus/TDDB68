@@ -5,4 +5,4 @@ tests/threads/alarm-wait.o: ../../tests/threads/alarm-wait.c \
  ../../threads/init.h ../../threads/malloc.h ../../threads/synch.h \
  ../../lib/kernel/list.h ../../threads/thread.h ../../lib/kernel/bitmap.h \
  ../../lib/inttypes.h ../../filesys/file.h ../../filesys/off_t.h \
- ../../devices/timer.h ../../lib/round.h
+ ../../devices/timer.h ../../lib/round.h ../../lib/kernel/list.h

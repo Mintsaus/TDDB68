@@ -97,6 +97,8 @@ struct thread
     //#ifdef USERPROG
 		struct bitmap *fd_bitmap;		/* File descriptors saved here!!! */
 		struct file *file_names[file_map_size];
+		struct list_elem sleep_list_elem;
+		int64_t sleep_until;
 	//#endif
     
 

@@ -5,4 +5,5 @@ tests/threads/alarm-simultaneous.o: \
  ../../tests/threads/tests.h ../../threads/init.h ../../threads/malloc.h \
  ../../threads/synch.h ../../lib/kernel/list.h ../../threads/thread.h \
  ../../lib/kernel/bitmap.h ../../lib/inttypes.h ../../filesys/file.h \
- ../../filesys/off_t.h ../../devices/timer.h ../../lib/round.h
+ ../../filesys/off_t.h ../../devices/timer.h ../../lib/round.h \
+ ../../lib/kernel/list.h
