@@ -35,7 +35,19 @@ static void real_time_sleep (int64_t num, int32_t denom);
 bool 
 sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux)
 {	
-	return((list_entry(a, struct thread, sleep_list_elem)->sleep_until) < (list_entry(b, struct thread, sleep_list_elem)->sleep_until));
+	//~ if(b == list_tail(&sleep_list)){
+		//~ return 1;
+	//~ }
+	//~ dsajkl
+	struct thread *tha = list_entry(a, struct thread, sleep_list_elem);
+	struct thread *thb = list_entry(b, struct thread, sleep_list_elem);
+	uint64_t inta = tha->sleep_until;
+	uint64_t intb = thb->sleep_until;
+	printf("inta: %d intb: %d \n", (int)inta, (int)intb);
+	
+	return inta < intb;
+	
+	//~ return((list_entry(a, struct thread, sleep_list_elem)->sleep_until) < (list_entry(b, struct thread, sleep_list_elem)->sleep_until));
 }
 
 /* Sets up the 8254 Programmable Interval Timer (PIT) to
@@ -131,7 +143,7 @@ timer_sleep(int64_t ticks)
 	printf("after list_push \n");
 	intr_set_level (old_level);
 	sema_down(&th->sleep_sema);
-
+	
 
 }
 
@@ -173,23 +185,23 @@ timer_interrupt (struct intr_frame *args UNUSED)
   enum intr_level old_level;
   old_level = intr_disable ();
 
-      for (e = list_begin (&sleep_list); e != list_end (&sleep_list);
-           e = list_next (e))
-        {
-			printf("in fthread for\n");
-          struct thread *th = list_entry (e, struct thread, sleep_list_elem);
-          if(timer_ticks() >= 0){
+   for (e = list_begin (&sleep_list); e != list_end (&sleep_list); e = list_remove (e))
+     {
+		struct thread *th = list_entry (e, struct thread, sleep_list_elem);
+		
+       if(timer_ticks() > 0){
+		   printf("breaking for in thread \n");
+			break;
+		}
 			printf("a thread to wake \n");
-			e = e->prev;
-			list_remove(e->next);
 			sema_up(&th->sleep_sema);
 			printf("woken up thread \n");
-			}
-			printf("breaking for in thread \n");
-			break;
-        }
+			
+     }
+     printf("after for in interrupt \n");
   intr_set_level (old_level);
   thread_tick ();
+  printf("after thread_tick() \n");
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer

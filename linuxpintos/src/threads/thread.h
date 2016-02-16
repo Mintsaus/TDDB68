@@ -95,13 +95,13 @@ struct thread
     char name[16];                      /* Name (for debugging purposes). */
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
-    //#ifdef USERPROG
+    #ifdef USERPROG
 		struct bitmap *fd_bitmap;		/* File descriptors saved here!!! */
 		struct file *file_names[file_map_size];
-		struct list_elem sleep_list_elem;
-		int64_t sleep_until;
-		struct semaphore sleep_sema;
-	//#endif
+	#endif
+	struct list_elem sleep_list_elem;
+	int64_t sleep_until;
+	struct semaphore sleep_sema;
     
 
     /* Shared between thread.c and synch.c. */

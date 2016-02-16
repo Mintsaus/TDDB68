@@ -14,8 +14,9 @@
 #include "filesys/file.h"
 #ifdef USERPROG
 	#include "userprog/process.h"
+	#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
 #endif
-#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
+
 
 /* Random value for struct thread's `magic' member.
    Used to detect stack overflow.  See the big comment at the top
@@ -199,16 +200,18 @@ thread_create (const char *name, int priority,
   /* Stack frame for switch_threads(). */
   sf = alloc_frame (t, sizeof *sf);
   sf->eip = switch_entry;
-  
+ #ifdef USERPROG
   /* My bitmap !!!*/
   t->fd_bitmap = bitmap_create(file_map_size);
   if(t->fd_bitmap == NULL){
 	PANIC("bitmap too big!!");
   }
   bitmap_set_multiple(t->fd_bitmap, 0, 2, 1);
-
+#endif
   /* Add to run queue. */
   thread_unblock (t);
+  
+  sema_init(&t->sleep_sema, 0);
   
 
   return tid;
