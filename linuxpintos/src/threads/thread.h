@@ -4,6 +4,7 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include <threads/synch.h>
 //#ifdef USERPROG
 	#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
 	#include "filesys/file.h"
@@ -99,6 +100,7 @@ struct thread
 		struct file *file_names[file_map_size];
 		struct list_elem sleep_list_elem;
 		int64_t sleep_until;
+		struct semaphore sleep_sema;
 	//#endif
     
 

@@ -291,19 +291,20 @@ void
 thread_exit (void) 
 {
   ASSERT (!intr_context ());
-
+  
+#ifdef USERPROG
 if(thread_current()->fd_bitmap != NULL){
 	int i;
 	for(i=0; i < file_map_size; i++){
 	
 		if(bitmap_test(thread_current()->fd_bitmap, i)){
-			//~ file_close((thread_current() -> file_names[i]));  
+			
+			file_close((thread_current() -> file_names[i]));  
 		}
 	}
 	bitmap_destroy(thread_current() -> fd_bitmap);	/* Added to avoid leaks for bitmap!!! */
 }
 
-#ifdef USERPROG
   process_exit ();
 #endif
 

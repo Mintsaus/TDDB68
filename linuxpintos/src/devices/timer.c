@@ -31,6 +31,13 @@ static bool too_many_loops (unsigned loops);
 static void busy_wait (int64_t loops);
 static void real_time_sleep (int64_t num, int32_t denom);
 
+/* Comparator function for list elements in sleep_list. Used by list_insert_ordered */
+bool 
+sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux)
+{	
+	return((list_entry(a, struct thread, sleep_list_elem)->sleep_until) < (list_entry(b, struct thread, sleep_list_elem)->sleep_until));
+}
+
 /* Sets up the 8254 Programmable Interval Timer (PIT) to
    interrupt PIT_FREQ times per second, and registers the
    corresponding interrupt. */
@@ -114,11 +121,16 @@ timer_sleep(int64_t ticks)
 	struct thread *th = thread_current();
 	int64_t sleep_until = ticks + timer_ticks();
 	ASSERT (intr_get_level () == INTR_ON);
-	//~ th->sleep_until = sleep_until;
-	list_push_front(&sleep_list, &th->sleep_list_elem);
+	th->sleep_until = sleep_until;
 	
-	while (timer_ticks() < sleep_until) 
-		thread_yield ();
+	enum intr_level old_level;
+	old_level = intr_disable ();
+	
+	printf("before list_push \n");
+	list_insert_ordered(&sleep_list, &th->sleep_list_elem, *sleep_less, NULL);
+	printf("after list_push \n");
+	intr_set_level (old_level);
+	sema_down(&th->sleep_sema);
 
 
 }
@@ -155,20 +167,28 @@ timer_print_stats (void)
 static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
+	printf("in thread_interrupt\n");
   ticks++;
-  //~ struct list_elem *e;
-  //~ enum intr_level old_level;
-  //~ old_level = intr_disable ();
-//~ 
-      //~ for (e = list_begin (&sleep_list); e != list_end (&sleep_list);
-           //~ e = list_next (e))
-        //~ {
-          //~ struct thread *th = list_entry (e, struct thread, sleep_list_elem);
-          //~ if(timer_ticks() >= th->sleep_until){
-			//~ printf("a thread to wake ");
-			//~ }
-        //~ }
-  //~ intr_set_level (old_level);
+  struct list_elem *e;
+  enum intr_level old_level;
+  old_level = intr_disable ();
+
+      for (e = list_begin (&sleep_list); e != list_end (&sleep_list);
+           e = list_next (e))
+        {
+			printf("in fthread for\n");
+          struct thread *th = list_entry (e, struct thread, sleep_list_elem);
+          if(timer_ticks() >= 0){
+			printf("a thread to wake \n");
+			e = e->prev;
+			list_remove(e->next);
+			sema_up(&th->sleep_sema);
+			printf("woken up thread \n");
+			}
+			printf("breaking for in thread \n");
+			break;
+        }
+  intr_set_level (old_level);
   thread_tick ();
 }
 
