@@ -208,10 +208,13 @@ thread_create (const char *name, int priority,
   }
   bitmap_set_multiple(t->fd_bitmap, 0, 2, 1);
 #endif
+
+  //~ sema_init(&t->sleep_sema, 0);
+  
   /* Add to run queue. */
   thread_unblock (t);
   
-  sema_init(&t->sleep_sema, 0);
+
   
 
   return tid;

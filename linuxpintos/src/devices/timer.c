@@ -43,7 +43,6 @@ sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux)
 	struct thread *thb = list_entry(b, struct thread, sleep_list_elem);
 	uint64_t inta = tha->sleep_until;
 	uint64_t intb = thb->sleep_until;
-	printf("inta: %d intb: %d \n", (int)inta, (int)intb);
 	
 	return inta < intb;
 	
@@ -116,7 +115,7 @@ timer_elapsed (int64_t then)
   return timer_ticks () - then;
 }
 
-/* Suspends execution for approximately TICKS timer ticks. */
+//~ /* Suspends execution for approximately TICKS timer ticks. */
 //~ void
 //~ timer_sleep (int64_t ticks) 
 //~ {
@@ -138,13 +137,11 @@ timer_sleep(int64_t ticks)
 	enum intr_level old_level;
 	old_level = intr_disable ();
 	
-	printf("before list_push \n");
 	list_insert_ordered(&sleep_list, &th->sleep_list_elem, *sleep_less, NULL);
-	printf("after list_push \n");
 	intr_set_level (old_level);
-	sema_down(&th->sleep_sema);
 	
-
+	sema_init(&th->sleep_sema, 0);
+	sema_down(&th->sleep_sema);
 }
 
 /* Suspends execution for approximately MS milliseconds. */
@@ -179,7 +176,6 @@ timer_print_stats (void)
 static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
-	printf("in thread_interrupt\n");
   ticks++;
   struct list_elem *e;
   enum intr_level old_level;
@@ -189,19 +185,16 @@ timer_interrupt (struct intr_frame *args UNUSED)
      {
 		struct thread *th = list_entry (e, struct thread, sleep_list_elem);
 		
-       if(timer_ticks() > 0){
-		   printf("breaking for in thread \n");
+       if(timer_ticks() < th->sleep_until){
 			break;
 		}
-			printf("a thread to wake \n");
 			sema_up(&th->sleep_sema);
-			printf("woken up thread \n");
 			
      }
-     printf("after for in interrupt \n");
   intr_set_level (old_level);
+  
   thread_tick ();
-  printf("after thread_tick() \n");
+  //~ printf("after thread_tick() \n");
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer
