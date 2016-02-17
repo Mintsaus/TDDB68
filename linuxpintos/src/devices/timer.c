@@ -26,6 +26,7 @@ static unsigned loops_per_tick;
 
 static struct list sleep_list;
 
+
 static intr_handler_func timer_interrupt;
 static bool too_many_loops (unsigned loops);
 static void busy_wait (int64_t loops);
@@ -35,10 +36,7 @@ static void real_time_sleep (int64_t num, int32_t denom);
 bool 
 sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux)
 {	
-	//~ if(b == list_tail(&sleep_list)){
-		//~ return 1;
-	//~ }
-	//~ dsajkl
+
 	struct thread *tha = list_entry(a, struct thread, sleep_list_elem);
 	struct thread *thb = list_entry(b, struct thread, sleep_list_elem);
 	uint64_t inta = tha->sleep_until;
@@ -46,7 +44,6 @@ sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux)
 	
 	return inta < intb;
 	
-	//~ return((list_entry(a, struct thread, sleep_list_elem)->sleep_until) < (list_entry(b, struct thread, sleep_list_elem)->sleep_until));
 }
 
 /* Sets up the 8254 Programmable Interval Timer (PIT) to
@@ -194,7 +191,6 @@ timer_interrupt (struct intr_frame *args UNUSED)
   intr_set_level (old_level);
   
   thread_tick ();
-  //~ printf("after thread_tick() \n");
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer
