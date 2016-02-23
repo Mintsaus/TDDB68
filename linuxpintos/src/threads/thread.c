@@ -211,7 +211,8 @@ thread_create (const char *name, int priority,
   
   /* Add to run queue. */
   thread_unblock (t);
-  
+  //Sema_down here...
+  //Get tid from child_status
 
   
 
@@ -469,7 +470,7 @@ init_thread (struct thread *t, const char *name, int priority)
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
   t->magic = THREAD_MAGIC;
-  
+  list_init(&t->cs_list);
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and

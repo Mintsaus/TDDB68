@@ -33,6 +33,7 @@ int fd_ok(int fd, struct bitmap *map)
 static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {	
+	tid_t tid; //Added lab 3
 	int fd;
 	int status;
 	size_t size;
@@ -123,6 +124,13 @@ syscall_handler (struct intr_frame *f UNUSED)
 		
 		case (SYS_EXIT):
 			thread_exit();
+			
+		case (SYS_EXEC):
+		/*	Vi har just initat en cs_list i init_thread. Nästa problem är att skapa child_status nånstans.
+		 * Vi har fått tips att skicka med den som aux argument till thread_create. Behövs tilldelas en pekare från child till
+		 * dess parents cs. 	 */
+			name = *(p + 1);
+			tid = process_execute(name);
 			
 		default:
 			printf ("system call!\n");

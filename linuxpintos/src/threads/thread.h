@@ -10,7 +10,14 @@
 	#include "filesys/file.h"
 	#define file_map_size 128
 //#endif
-
+/*---------Lab 3-------------*/
+struct child_status{
+	int pid;
+	int exit_status;
+	int ref_cnt;
+	struct semaphore sema_exec;
+	struct list_elem cs_elem;
+};
 
 /* States in a thread's life cycle. */
 enum thread_status
@@ -103,6 +110,9 @@ struct thread
 	int64_t sleep_until;
 	struct semaphore sleep_sema;
     
+    /*-----------Lab3------------*/
+	struct list cs_list; 
+    struct child_status *cs_parent;
 
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
