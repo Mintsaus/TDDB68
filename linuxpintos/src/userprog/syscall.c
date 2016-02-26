@@ -12,6 +12,7 @@ void power_off(void);
 void putbuf(const char *buffer, size_t n);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
+tid_t process_execute(const char *);
 
 void
 syscall_init (void) 
@@ -127,10 +128,17 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_EXEC):
 		/*	Vi har just initat en cs_list i init_thread. Nästa problem är att skapa child_status nånstans.
-		 * Vi har fått tips att skicka med den som aux argument till thread_create. Behövs tilldelas en pekare från child till
-		 * dess parents cs. 	 */
-			name = *(p + 1);
+		 * Vi har fått tips att skicka med den som aux argument från thread_create till start_process(). 
+		 * Behövs tilldelas en pekare från child till dess parents cs. 	 */
+		 
+		 /* Vi har gjort det som står där uppe ^. Vi har även fixat ett lås runt ref_cnt i start_process().
+		  * Erik sa nånting med att inita en global lista. Kolla att det blir rätt. Vi måste också sätta upp stacken(wtf),
+		  * fast det kanske var del B. Vi skulle kunna skriva ett eget testprogram där userprog A startar userprog B.
+		  * Om load misslyckas i start_process ska child_status-structen tas bort så fort som möjligt. 
+		  * Kanske parent kan ta bort den om pid=-1?? */
+			name = (char *)(*(p + 1));
 			tid = process_execute(name);
+			f->eax = tid;
 			
 		default:
 			printf ("system call!\n");

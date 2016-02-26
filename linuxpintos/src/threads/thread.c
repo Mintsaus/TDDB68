@@ -17,6 +17,9 @@
 	#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
 #endif
 
+/*-------------Lab3--------------*/
+#include <stdlib.h>
+void* malloc(size_t);
 
 /* Random value for struct thread's `magic' member.
    Used to detect stack overflow.  See the big comment at the top
@@ -186,12 +189,22 @@ thread_create (const char *name, int priority,
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
+  
+  /*----Lab3------*/
+  struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
+  cs->ref_cnt = 2;
+  sema_init(&cs->sema_exec, 0);
+  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
+  cs->filename = aux;
+  t->cs_parent = cs;
+  cs->pid = tid;
+  
 
   /* Stack frame for kernel_thread(). */
   kf = alloc_frame (t, sizeof *kf);
   kf->eip = NULL;
   kf->function = function;
-  kf->aux = aux;
+  kf->aux = cs; //cs instead of aux Lab3
 
   /* Stack frame for switch_entry(). */
   ef = alloc_frame (t, sizeof *ef);
@@ -212,7 +225,9 @@ thread_create (const char *name, int priority,
   /* Add to run queue. */
   thread_unblock (t);
   //Sema_down here...
+  sema_down(&cs->sema_exec);
   //Get tid from child_status
+  tid = cs->pid;
 
   
 
@@ -470,7 +485,7 @@ init_thread (struct thread *t, const char *name, int priority)
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
   t->magic = THREAD_MAGIC;
-  list_init(&t->cs_list);
+  list_init(&t->cs_list); //Lab3
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and

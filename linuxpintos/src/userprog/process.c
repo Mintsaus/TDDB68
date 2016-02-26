@@ -50,7 +50,8 @@ process_execute (const char *file_name)
 static void
 start_process (void *file_name_)
 {
-  char *file_name = file_name_;
+  struct child_status *cs = (struct child_status *)file_name_;
+  char *file_name = &cs->filename; //Lab3 file_name_ is our struct cs
   struct intr_frame if_;
   bool success;
 
@@ -63,8 +64,16 @@ start_process (void *file_name_)
 
   /* If load failed, quit. */
   palloc_free_page (file_name);
-  if (!success) 
+  if (!success){ 
+		cs->pid = -1;
+		sema_up(&cs->sema_exec);
+		lock_acquire(&cs->cs_lock);
+		cs->ref_cnt--;
+		lock_release(&cs->cs_lock);
     thread_exit ();
+	}else{
+		sema_up(&cs->sema_exec);
+	}
 
   /* Start the user process by simulating a return from an
      interrupt, implemented by intr_exit (in
