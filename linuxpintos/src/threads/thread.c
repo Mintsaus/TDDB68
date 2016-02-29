@@ -20,6 +20,7 @@
 /*-------------Lab3--------------*/
 #include <stdlib.h>
 void* malloc(size_t);
+void free(void *);
 
 /* Random value for struct thread's `magic' member.
    Used to detect stack overflow.  See the big comment at the top
@@ -228,6 +229,9 @@ thread_create (const char *name, int priority,
   sema_down(&cs->sema_exec);
   //Get tid from child_status
   tid = cs->pid;
+  if(tid == -1){		//om -1 misslyckades load, kan ta bort strukten
+	free(cs);
+  }
 
   
 

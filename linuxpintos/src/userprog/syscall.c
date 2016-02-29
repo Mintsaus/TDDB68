@@ -6,6 +6,7 @@
 #include "filesys/filesys.h"
 #include "filesys/file.h"
 #include <lib/kernel/bitmap.h>
+#include <lib/kernel/list.h>
 
 static void syscall_handler (struct intr_frame *);
 void power_off(void);
@@ -13,6 +14,8 @@ void putbuf(const char *buffer, size_t n);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
 tid_t process_execute(const char *);
+void free(void*);
+void* malloc(size_t);
 
 void
 syscall_init (void) 
@@ -45,6 +48,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 	struct thread *curr_thread = thread_current();				/* Gets current thread*/
 	struct bitmap *fd_map = curr_thread->fd_bitmap;				/* Gets bitmap from current thread*/
 	struct file **file_names = curr_thread->file_names;			/* Gets pointer to array of file names from current thread */
+	struct list *cs_list;
 	int *p = f->esp;
 	switch(*p)
 	{
@@ -123,8 +127,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			file_close(file_handle);
 			break;
 		
-		case (SYS_EXIT):
-			thread_exit();
+		
 			
 		case (SYS_EXEC):
 		/*	Vi har just initat en cs_list i init_thread. Nästa problem är att skapa child_status nånstans.
@@ -139,6 +142,94 @@ syscall_handler (struct intr_frame *f UNUSED)
 			name = (char *)(*(p + 1));
 			tid = process_execute(name);
 			f->eax = tid;
+			break;
+			
+		case (SYS_EXIT):
+			status = *(p + 1);
+			//kolla om parent existerar?? Fråga Erik
+			struct child_status *cs_parent;
+			cs_parent = curr_thread->cs_parent;
+			cs_parent->exit_status = status;
+			
+			lock_acquire(&cs_parent->cs_lock);
+			cs_parent->ref_cnt--;
+			if(cs_parent->ref_cnt == 0){		//Parent is dead
+				lock_release(&cs_parent->cs_lock);
+				free(cs_parent);
+			}else {								//Parent waits or doesn't care
+				lock_release(&cs_parent->cs_lock);
+				sema_up(&cs_parent->sema_exec);
+			}
+			
+			//remember the children!!
+			struct elem_copy{
+				struct list_elem *pointer;
+				struct list_elem elem;
+			};
+			
+			cs_list = &curr_thread->cs_list;
+			struct list_elem *e;
+			struct child_status *cs;
+			struct list children_to_delete;
+			list_init(&children_to_delete);
+			for (e = list_begin (cs_list); e != list_end (cs_list); e = list_next(e))
+			 {
+				cs = list_entry (e, struct child_status, cs_elem);
+				lock_acquire(&cs->cs_lock);		
+				cs->ref_cnt--;
+				if(cs->ref_cnt == 0){
+					struct elem_copy *ec = (struct elem_copy *)malloc(sizeof(struct elem_copy));
+					ec->pointer = e;
+					list_push_front(&children_to_delete, &ec->elem);
+				}
+				lock_release(&cs->cs_lock);			
+			 }
+			 
+			while (!list_empty (&children_to_delete))
+			{
+				e = list_pop_front (&children_to_delete);
+				struct elem_copy *ec = list_entry(e, struct elem_copy, elem);
+				struct child_status *cs = list_entry(ec->pointer, struct child_status, cs_elem);
+				list_remove(ec->pointer);
+				free(ec);
+				free(cs);				
+			}
+			
+			thread_exit();
+			break;
+			
+		/*Fråga Erik om "Reconsider all the situations under the condition that the child does not 
+		 * exit normally" */	
+		case (SYS_WAIT):
+			tid = *(p + 1);
+			cs_list = &curr_thread->cs_list;
+			struct list_elem *el;
+			struct child_status *cs2 = NULL;
+			int exit_code;
+			for (el = list_begin (cs_list); el != list_end (cs_list); el = list_next(el))
+			 {
+				cs2 = list_entry (el, struct child_status, cs_elem);
+				
+			   if(cs2->pid == tid){
+					break;
+				}					
+			 }
+			 if(cs2 == NULL){
+				f->eax = -1;
+				break; 
+			}
+			lock_acquire(&cs2->cs_lock);
+			if(cs2->ref_cnt == 2){
+				lock_release(&cs2->cs_lock);
+				sema_down(&cs2->sema_exec);
+			}else{ lock_release(&cs2->cs_lock); }
+						
+			exit_code = cs2->exit_status;
+			list_remove(el);
+			free(cs2);
+			f->eax = exit_code;
+			break;
+			
 			
 		default:
 			printf ("system call!\n");
