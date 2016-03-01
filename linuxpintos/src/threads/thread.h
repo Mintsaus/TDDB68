@@ -15,6 +15,8 @@ struct child_status{
 	int pid;
 	int exit_status;
 	int ref_cnt;
+	struct lock cs_lock;
+	const char *filename;
 	struct semaphore sema_exec;
 	struct list_elem cs_elem;
 };

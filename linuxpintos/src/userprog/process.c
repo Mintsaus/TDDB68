@@ -50,7 +50,9 @@ process_execute (const char *file_name)
 static void
 start_process (void *file_name_)
 {
-  char *file_name = file_name_;
+	struct child_status *cs = (struct child_status *)file_name_;
+  char *file_name = &cs->filename; //Lab3 file_name_ is our struct cs
+  //char *file_name = file_name_;
   struct intr_frame if_;
   bool success;
 
