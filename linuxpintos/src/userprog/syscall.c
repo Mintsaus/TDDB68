@@ -139,6 +139,14 @@ syscall_handler (struct intr_frame *f UNUSED)
 		  * fast det kanske var del B. Vi skulle kunna skriva ett eget testprogram där userprog A startar userprog B.
 		  * Om load misslyckas i start_process ska child_status-structen tas bort så fort som möjligt. 
 		  * Kanske parent kan ta bort den om pid=-1?? */
+		  
+		  
+		  /*Får pagefault som behöer debuggas. User programs ska kunna köras innan PartB. Se kommentar på github för error-meddelande.
+		   * Behöver nog lägga till prints för att se ar det går fel. Alternativt börja från committen innan det fuckade ur och lägga
+		   * till en sak i taget för att se vad som orsakar felet.
+		   * PHYS_BASE ger plats för tre argument längst upp på användarens minne.
+		   * 
+		   * */
 			name = (char *)(*(p + 1));
 			tid = process_execute(name);
 			f->eax = tid;
