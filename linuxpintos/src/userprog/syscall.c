@@ -148,7 +148,9 @@ syscall_handler (struct intr_frame *f UNUSED)
 		   * 
 		   * */
 			name = (char *)(*(p + 1));
+			printf("Calling process_execute \n");
 			tid = process_execute(name);
+			printf("Done with process_execute \n");
 			f->eax = tid;
 			break;
 			

@@ -18,6 +18,12 @@
 #include "threads/thread.h"
 #include "threads/vaddr.h"
 
+/*-------------Lab3--------------*/
+#include <stdlib.h>
+void* malloc(size_t);
+void free(void *);
+
+
 static thread_func start_process NO_RETURN;
 static bool load (const char *cmdline, void (**eip) (void), void **esp);
 
@@ -37,9 +43,15 @@ process_execute (const char *file_name)
   if (fn_copy == NULL)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
+  
+  /* Lab 3 */
+  struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
+  cs->ref_cnt = 2;
+  cs->filename = fn_copy;
+	printf("Created new child \n");
 
   /* Create a new thread to execute FILE_NAME. */
-  tid = thread_create (file_name, PRI_DEFAULT, start_process, fn_copy);
+  tid = thread_create (file_name, PRI_DEFAULT, start_process, cs);
   if (tid == TID_ERROR)
     palloc_free_page (fn_copy); 
   return tid;
@@ -50,6 +62,7 @@ process_execute (const char *file_name)
 static void
 start_process (void *file_name_)
 {
+	printf("Beginning of start_process \n");
   struct child_status *cs = (struct child_status *)file_name_;
   char *file_name = &cs->filename; //Lab3 file_name_ is our struct cs
   struct intr_frame if_;
@@ -65,6 +78,7 @@ start_process (void *file_name_)
   /* If load failed, quit. */
   palloc_free_page (file_name);
   if (!success){ 
+		printf("Not success \n");
 		cs->pid = -1;
 		sema_up(&cs->sema_exec);
 		lock_acquire(&cs->cs_lock);
@@ -72,6 +86,7 @@ start_process (void *file_name_)
 		lock_release(&cs->cs_lock);
     thread_exit ();
 	}else{
+		printf("Success \n");
 		sema_up(&cs->sema_exec);
 	}
 

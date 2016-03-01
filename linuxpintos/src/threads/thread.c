@@ -174,6 +174,7 @@ tid_t
 thread_create (const char *name, int priority,
                thread_func *function, void *aux) 
 {
+  struct child_status *cs = aux;//(struct child_status*)aux;
   struct thread *t;
   struct kernel_thread_frame *kf;
   struct switch_entry_frame *ef;
@@ -192,20 +193,18 @@ thread_create (const char *name, int priority,
   tid = t->tid = allocate_tid ();
   
   /*----Lab3------*/
-  struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
-  cs->ref_cnt = 2;
-  sema_init(&cs->sema_exec, 0);
-  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
-  cs->filename = aux;
-  t->cs_parent = cs;
-  cs->pid = tid;
-  
+  if(cs->ref_cnt == 2){
+	  sema_init(&cs->sema_exec, 0);
+	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
+	  t->cs_parent = cs;
+	  cs->pid = tid;
+  }
 
   /* Stack frame for kernel_thread(). */
   kf = alloc_frame (t, sizeof *kf);
   kf->eip = NULL;
   kf->function = function;
-  kf->aux = cs; //cs instead of aux Lab3
+  kf->aux = aux; //cs instead of aux Lab3
 
   /* Stack frame for switch_entry(). */
   ef = alloc_frame (t, sizeof *ef);
@@ -225,15 +224,15 @@ thread_create (const char *name, int priority,
   
   /* Add to run queue. */
   thread_unblock (t);
-  //Sema_down here...
-  sema_down(&cs->sema_exec);
-  //Get tid from child_status
-  tid = cs->pid;
-  if(tid == -1){		//om -1 misslyckades load, kan ta bort strukten
-	free(cs);
-  }
-
-  
+  if(cs->ref_cnt == 2){
+	  //Sema_down here...
+	  sema_down(&cs->sema_exec);
+	  //Get tid from child_status
+	  tid = cs->pid;
+	  if(tid == -1){		//om -1 misslyckades load, kan ta bort strukten
+		free(cs);
+	  }
+	}	
 
   return tid;
 }
