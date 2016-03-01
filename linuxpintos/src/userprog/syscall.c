@@ -12,6 +12,7 @@ void power_off(void);
 void putbuf(const char *buffer, size_t n);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
+tid_t process_execute(const char *);
 
 void
 syscall_init (void) 
@@ -129,8 +130,10 @@ syscall_handler (struct intr_frame *f UNUSED)
 		/*	Vi har just initat en cs_list i init_thread. Nästa problem är att skapa child_status nånstans.
 		 * Vi har fått tips att skicka med den som aux argument till thread_create. Behövs tilldelas en pekare från child till
 		 * dess parents cs. 	 */
-			name = *(p + 1);
+			name = (char *)(*(p + 1));
 			tid = process_execute(name);
+			f->eax = tid;
+			break;
 			
 		default:
 			printf ("system call!\n");
