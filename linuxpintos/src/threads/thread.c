@@ -194,11 +194,15 @@ thread_create (const char *name, int priority,
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
+  printf("New tid: %d\n", tid);
+  /* ---------------Lab 3----------------- */
+  
+  t->cs_parent = cs; 	//Unsure if this is safe in all cases, 
+						//but couldn't access new thread from process_execute.
   
   
-  
-	printf("New tid: %d\n", tid);
-  /*----Lab3------*/
+	
+  /*----Lab3------
   if(tid > 2 ){       //curr_thread->tid >= 2){ 
 	  printf("Inte en urtrad: do sema init etc \n");
 	  sema_init(&cs->sema_exec, 0);
@@ -206,7 +210,7 @@ thread_create (const char *name, int priority,
 	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
 	  t->cs_parent = cs;
 	  cs->pid = tid;
-  }
+  } */
 
   /* Stack frame for kernel_thread(). */
   kf = alloc_frame (t, sizeof *kf);
@@ -232,7 +236,7 @@ thread_create (const char *name, int priority,
   
   /* Add to run queue. */
   thread_unblock (t);
-  if(tid > 2){ //curr_thread->tid >= 2){
+  /*if(tid > 2){ //curr_thread->tid >= 2){
 	  printf("Inte en urtrad: sema down etc \n");
 	  //Sema_down here...
 	  sema_down(&cs->sema_exec);
@@ -242,7 +246,7 @@ thread_create (const char *name, int priority,
 		free(cs);
 	  }
 	}	
-	printf("Returning tid %d\n", tid);
+	printf("Returning tid %d\n", tid); */
   return tid;
 }
 

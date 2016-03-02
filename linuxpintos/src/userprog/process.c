@@ -52,6 +52,27 @@ process_execute (const char *file_name)
 
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (file_name, PRI_DEFAULT, start_process, cs);
+  
+  /*-------------Lab3-----------------*/
+  if(tid > 2 ){       //curr_thread->tid >= 2){ 
+	  printf("Inte en urtrad: do sema init etc \n");
+	  sema_init(&cs->sema_exec, 0);
+	  lock_init(&cs->cs_lock);
+	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
+	  cs->pid = tid;
+  }
+  
+  
+  
+  
+  sema_down(&cs->sema_exec);
+	//Get tid from child_status
+	tid = cs->pid;
+	if(tid == -1){		//om -1 misslyckades load, kan ta bort strukten
+		free(cs);
+	}
+  
+  
   if (tid == TID_ERROR)
     palloc_free_page (fn_copy); 
   return tid;
