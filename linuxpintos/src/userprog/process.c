@@ -47,8 +47,8 @@ process_execute (const char *file_name)
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
-  cs->filename = fn_copy;
-	printf("Created new child \n");
+  cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leaks
+	printf("Created new child status for %s \n", cs->fn_copy);
 
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (file_name, PRI_DEFAULT, start_process, cs);
@@ -63,20 +63,31 @@ static void
 start_process (void *file_name_)
 {
 	printf("Beginning of start_process \n");
+	struct thread *curr_thread = thread_current();
   struct child_status *cs = (struct child_status *)file_name_;
-  char *file_name = &cs->filename; //Lab3 file_name_ is our struct cs
+  char *file_name;
+  printf("Curr thread tid: %d\n", curr_thread->tid);
+  if(curr_thread->tid >= 2){
+		file_name = &cs->filename; //Lab3 file_name_ is our struct cs
+	}else{
+		printf("Using old method for file_name \n");
+		file_name = (char *) file_name_;
+	}
   struct intr_frame if_;
   bool success;
-
+	printf("%s", cs->fn_copy);
   /* Initialize interrupt frame and load executable. */
   memset (&if_, 0, sizeof if_);
   if_.gs = if_.fs = if_.es = if_.ds = if_.ss = SEL_UDSEG;
   if_.cs = SEL_UCSEG;
   if_.eflags = FLAG_IF | FLAG_MBS;
-  success = load (file_name, &if_.eip, &if_.esp);
+  printf(" About to load \n");
+  success = load (cs->fn_copy, &if_.eip, &if_.esp); //cs->fn_copy
 
   /* If load failed, quit. */
-  palloc_free_page (file_name);
+ 
+  palloc_free_page (cs->fn_copy); //cs->fn_copy   free:as rätt?
+  
   if (!success){ 
 		printf("Not success \n");
 		cs->pid = -1;
@@ -86,8 +97,10 @@ start_process (void *file_name_)
 		lock_release(&cs->cs_lock);
     thread_exit ();
 	}else{
+		//printf("%s", cs->sema_exec);
 		printf("Success \n");
-		sema_up(&cs->sema_exec);
+		sema_up(&cs->sema_exec); //Causes problems. Is not initialized? Try to comment out and run lab3test, interesting stuff.
+		printf("start_process: after sema up \n");
 	}
 
   /* Start the user process by simulating a return from an

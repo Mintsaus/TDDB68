@@ -17,6 +17,7 @@ struct child_status{
 	int ref_cnt;
 	struct lock cs_lock;
 	const char *filename;
+	char *fn_copy; //Lagt till
 	struct semaphore sema_exec;
 	struct list_elem cs_elem;
 };

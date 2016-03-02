@@ -156,18 +156,24 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_EXIT):
 			status = *(p + 1);
+			printf("SYS_EXIT \n");
+			printf("Exit curr thread: %d\n", curr_thread -> tid);
 			//kolla om parent existerar?? Fråga Erik
 			struct child_status *cs_parent;
 			cs_parent = curr_thread->cs_parent;
 			cs_parent->exit_status = status;
 			
+			printf("Before lock acquire \n");
 			lock_acquire(&cs_parent->cs_lock);
 			cs_parent->ref_cnt--;
 			if(cs_parent->ref_cnt == 0){		//Parent is dead
+				printf("Parent is dead \n");
 				lock_release(&cs_parent->cs_lock);
 				free(cs_parent);
 			}else {								//Parent waits or doesn't care
+				printf("Parent wait or doesn't care \n");
 				lock_release(&cs_parent->cs_lock);
+				printf("EXIT: sema up \n");
 				sema_up(&cs_parent->sema_exec);
 			}
 			
@@ -176,7 +182,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				struct list_elem *pointer;
 				struct list_elem elem;
 			};
-			
+			printf("Before first for loops \n");
 			cs_list = &curr_thread->cs_list;
 			struct list_elem *e;
 			struct child_status *cs;
@@ -194,7 +200,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				}
 				lock_release(&cs->cs_lock);			
 			 }
-			 
+			 printf("Children to delete is filled \n");
 			while (!list_empty (&children_to_delete))
 			{
 				e = list_pop_front (&children_to_delete);
@@ -204,7 +210,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				free(ec);
 				free(cs);				
 			}
-			
+			printf("Thread %d has exited \n", curr_thread ->tid);
 			thread_exit();
 			break;
 			
@@ -216,7 +222,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			struct list_elem *el;
 			struct child_status *cs2 = NULL;
 			int exit_code;
-			for (el = list_begin (cs_list); el != list_end (cs_list); el = list_next(el))
+			for (el = list_begin (cs_list); el != list_end (cs_list); el = list_next(el))	//FInds 
 			 {
 				cs2 = list_entry (el, struct child_status, cs_elem);
 				

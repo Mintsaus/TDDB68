@@ -174,13 +174,16 @@ tid_t
 thread_create (const char *name, int priority,
                thread_func *function, void *aux) 
 {
+	printf("Beginning of thread_create \n");
   struct child_status *cs = aux;//(struct child_status*)aux;
   struct thread *t;
   struct kernel_thread_frame *kf;
   struct switch_entry_frame *ef;
   struct switch_threads_frame *sf;
   tid_t tid;
-
+  
+  struct thread *curr_thread = thread_current(); //Lab3
+	printf("Current thread's tid: %d\n", curr_thread -> tid);
   ASSERT (function != NULL);
 
   /* Allocate thread. */
@@ -192,9 +195,14 @@ thread_create (const char *name, int priority,
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
   
+  
+  
+	printf("New tid: %d\n", tid);
   /*----Lab3------*/
-  if(cs->ref_cnt == 2){
+  if(tid > 2 ){       //curr_thread->tid >= 2){ 
+	  printf("Inte en urtrad: do sema init etc \n");
 	  sema_init(&cs->sema_exec, 0);
+	  lock_init(&cs->cs_lock);
 	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
 	  t->cs_parent = cs;
 	  cs->pid = tid;
@@ -224,7 +232,8 @@ thread_create (const char *name, int priority,
   
   /* Add to run queue. */
   thread_unblock (t);
-  if(cs->ref_cnt == 2){
+  if(tid > 2){ //curr_thread->tid >= 2){
+	  printf("Inte en urtrad: sema down etc \n");
 	  //Sema_down here...
 	  sema_down(&cs->sema_exec);
 	  //Get tid from child_status
@@ -233,7 +242,7 @@ thread_create (const char *name, int priority,
 		free(cs);
 	  }
 	}	
-
+	printf("Returning tid %d\n", tid);
   return tid;
 }
 
