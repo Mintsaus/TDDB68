@@ -54,15 +54,13 @@ process_execute (const char *file_name)
   tid = thread_create (file_name, PRI_DEFAULT, start_process, cs);
   
   /*-------------Lab3-----------------*/
-  if(tid > 2 ){       //curr_thread->tid >= 2){ 
+  //if(tid > 2 ){       //curr_thread->tid >= 2){ //We don't need to check anymore cause' we're in proc_execute.
 	  printf("Inte en urtrad: do sema init etc \n");
 	  sema_init(&cs->sema_exec, 0);
 	  lock_init(&cs->cs_lock);
 	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
 	  cs->pid = tid;
-  }
-  
-  
+  //}
   
   
   sema_down(&cs->sema_exec);
@@ -83,11 +81,10 @@ process_execute (const char *file_name)
 static void
 start_process (void *file_name_)
 {
-	printf("Beginning of start_process \n");
 	struct thread *curr_thread = thread_current();
+  printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
   struct child_status *cs = (struct child_status *)file_name_;
   char *file_name;
-  printf("Curr thread tid: %d\n", curr_thread->tid);
   if(curr_thread->tid >= 2){
 		file_name = &cs->filename; //Lab3 file_name_ is our struct cs
 	}else{
@@ -96,13 +93,12 @@ start_process (void *file_name_)
 	}
   struct intr_frame if_;
   bool success;
-	printf("%s", cs->fn_copy);
   /* Initialize interrupt frame and load executable. */
   memset (&if_, 0, sizeof if_);
   if_.gs = if_.fs = if_.es = if_.ds = if_.ss = SEL_UDSEG;
   if_.cs = SEL_UCSEG;
   if_.eflags = FLAG_IF | FLAG_MBS;
-  printf(" About to load \n");
+  printf(" About to load %s \n", cs->fn_copy);
   success = load (cs->fn_copy, &if_.eip, &if_.esp); //cs->fn_copy
 
   /* If load failed, quit. */

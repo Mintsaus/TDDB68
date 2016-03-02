@@ -148,26 +148,25 @@ syscall_handler (struct intr_frame *f UNUSED)
 		   * 
 		   * */
 			name = (char *)(*(p + 1));
-			printf("Calling process_execute \n");
+			printf("Calling process_execute in thread: %d \n", curr_thread->tid);
 			tid = process_execute(name);
-			printf("Done with process_execute \n");
+			printf("Done with process_execute in thread: %d \n", curr_thread->tid);
 			f->eax = tid;
 			break;
 			
 		case (SYS_EXIT):
 			status = *(p + 1);
-			printf("SYS_EXIT \n");
-			printf("Exit curr thread: %d\n", curr_thread -> tid);
+			printf("SYS_EXIT in thread: %d \n", curr_thread -> tid);
 			//kolla om parent existerar?? Fråga Erik
 			struct child_status *cs_parent;
 			cs_parent = curr_thread->cs_parent;
 			cs_parent->exit_status = status;
 			
-			printf("Before lock acquire \n");
+			printf("Before lock acquire thread: %d \n", curr_thread -> tid);
 			lock_acquire(&cs_parent->cs_lock);
 			cs_parent->ref_cnt--;
 			if(cs_parent->ref_cnt == 0){		//Parent is dead
-				printf("Parent is dead \n");
+				printf("Parent of thread %d is dead \n", curr_thread -> tid);
 				lock_release(&cs_parent->cs_lock);
 				free(cs_parent);
 			}else {								//Parent waits or doesn't care
@@ -200,7 +199,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				}
 				lock_release(&cs->cs_lock);			
 			 }
-			 printf("Children to delete is filled \n");
+			 printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
 			while (!list_empty (&children_to_delete))
 			{
 				e = list_pop_front (&children_to_delete);
@@ -210,7 +209,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				free(ec);
 				free(cs);				
 			}
-			printf("Thread %d has exited \n", curr_thread ->tid);
+			printf("Thread %d has exited, with %d children remaining \n", curr_thread ->tid, list_size(&curr_thread->cs_list));
 			thread_exit();
 			break;
 			

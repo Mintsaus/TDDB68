@@ -174,7 +174,7 @@ tid_t
 thread_create (const char *name, int priority,
                thread_func *function, void *aux) 
 {
-	printf("Beginning of thread_create \n");
+	
   struct child_status *cs = aux;//(struct child_status*)aux;
   struct thread *t;
   struct kernel_thread_frame *kf;
@@ -183,7 +183,7 @@ thread_create (const char *name, int priority,
   tid_t tid;
   
   struct thread *curr_thread = thread_current(); //Lab3
-	printf("Current thread's tid: %d\n", curr_thread -> tid);
+	printf("Beginning of thread_create in thread: %d \n", curr_thread -> tid);
   ASSERT (function != NULL);
 
   /* Allocate thread. */
