@@ -22,6 +22,7 @@
 #include <stdlib.h>
 void* malloc(size_t);
 void free(void *);
+static bool setup_stack(void **esp);
 
 
 static thread_func start_process NO_RETURN;
@@ -43,6 +44,24 @@ process_execute (const char *file_name)
   if (fn_copy == NULL)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
+  
+  const char *arguments[32];
+  int arg_cnt = 0;
+    /* Divide file_name into arguments */
+  const char delim[] = " ";
+  char *token, *save_ptr;
+  for(token = strtok_r (fn_copy, delim, &save_ptr);
+    token != NULL;
+    token = strtok_r (NULL, delim, &save_ptr)){
+      arguments[arg_cnt] = token;
+      arg_cnt++;
+    };
+    
+  void **esp;
+  bool stack_success = FALSE;
+  stack_success = setup_stack(esp);
+  esp->argv[0] = arguments[0];
+      
   
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
@@ -531,7 +550,7 @@ setup_stack (void **esp)
     {
       success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
       if (success)
-        *esp = PHYS_BASE - 12;
+        *esp = PHYS_BASE;
       else
         palloc_free_page (kpage);
     }
