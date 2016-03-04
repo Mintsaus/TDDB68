@@ -22,7 +22,6 @@
 #include <stdlib.h>
 void* malloc(size_t);
 void free(void *);
-static bool setup_stack(void **esp);
 
 
 static thread_func start_process NO_RETURN;
@@ -69,13 +68,11 @@ process_execute (const char *file_name)
   sema_down(&cs->sema_exec);
 	//Get tid from child_status
 	tid = cs->pid;
-	if(tid == -1){		//om -1 misslyckades load, kan ta bort strukten
+	if(tid == TID_ERROR){		//om -1 misslyckades load, kan ta bort strukten
 		free(cs);
+    palloc_free_page (fn_copy);
 	}
   
-  
-  if (tid == TID_ERROR)
-    palloc_free_page (fn_copy); 
   return tid;
 }
 
@@ -253,7 +250,7 @@ struct Elf32_Phdr
 #define PF_W 2          /* Writable. */
 #define PF_R 4          /* Readable. */
 
-static bool setup_stack (void **esp);
+static bool setup_stack (void **esp, const char **arguments);
 static bool validate_segment (const struct Elf32_Phdr *, struct file *);
 static bool load_segment (struct file *file, off_t ofs, uint8_t *upage,
                           uint32_t read_bytes, uint32_t zero_bytes,
@@ -274,7 +271,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
   
   const char delim[] = " ";
   char *token, *save_ptr;
-  const char *file_name = strtok_r(file_name_, delim, &save_ptr);
+  char *file_name = strtok_r(file_name_, delim, &save_ptr);
   printf("LOAD: file_name: %s\n", file_name);
   
   const char *arguments[32];
@@ -297,7 +294,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
   process_activate ();
 
   /* Set up stack. */
-  if (!setup_stack (esp)){
+  if (!setup_stack (esp, arguments)){
     goto done;
   }
 
@@ -541,13 +538,11 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 /* Create a minimal stack by mapping a zeroed page at the top of
    user virtual memory. */
 static bool
-setup_stack (void **esp) 
+setup_stack (void **esp, const char **arguments) 
 {
   uint8_t *kpage;
   bool success = false;
 	
-  
-    	
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
     {
@@ -556,9 +551,31 @@ setup_stack (void **esp)
         *esp = PHYS_BASE;
       else
         palloc_free_page (kpage);
+        return success;
     }
+    
+  /*--------Pusha argument på stacken---------------------*/  
+  char *argv[32];
+  int i;
+  for(i = 0; arguments[i] != NULL; i++){
+    *esp -= strlen(arguments[i]);
+    memcpy(*esp, arguments[i], strlen(arguments[i]));
+    argv[i] = *esp;
+  }
+  /*--------Avrunda *esp till närmsta 4-tal---------------*/
+  
+  /*--------Pusha argv, adresser till argumenten ovan-----*/
+  int j;
+  for(j = i; j >= 0; j--){
+    *esp -= 4;
+    memcpy(*esp, argv[j], 4);
+    argv[j] = *esp;
+  }
   return success;
+  
 }
+
+
 
 /* Adds a mapping from user virtual address UPAGE to kernel
    virtual address KPAGE to the page table.
