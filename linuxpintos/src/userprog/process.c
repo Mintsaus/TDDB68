@@ -44,24 +44,8 @@ process_execute (const char *file_name)
   if (fn_copy == NULL)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
-  
-  const char *arguments[32];
-  int arg_cnt = 0;
-    /* Divide file_name into arguments */
-  const char delim[] = " ";
-  char *token, *save_ptr;
-  for(token = strtok_r (fn_copy, delim, &save_ptr);
-    token != NULL;
-    token = strtok_r (NULL, delim, &save_ptr)){
-      arguments[arg_cnt] = token;
-      arg_cnt++;
-    };
-    
-  void **esp;
-  bool stack_success = FALSE;
-  stack_success = setup_stack(esp);
-  esp->argv[0] = arguments[0];
-      
+ 
+   
   
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
@@ -280,14 +264,31 @@ static bool load_segment (struct file *file, off_t ofs, uint8_t *upage,
    and its initial stack pointer into *ESP.
    Returns true if successful, false otherwise. */
 bool
-load (const char *file_name, void (**eip) (void), void **esp) 
+load (const char *file_name_, void (**eip) (void), void **esp) 
 {
   struct thread *t = thread_current ();
   struct Elf32_Ehdr ehdr;
   struct file *file = NULL;
   off_t file_ofs;
   bool success = false;
+  
+  const char delim[] = " ";
+  char *token, *save_ptr;
+  const char *file_name = strtok_r(file_name_, delim, &save_ptr);
+  printf("LOAD: file_name: %s\n", file_name);
+  
+  const char *arguments[32];
+  int arg_cnt = 0;   
+  
+  /* Divide file_name into arguments */
+  for(token = file_name; token != NULL; token = strtok_r (NULL, delim, &save_ptr)){
+    arguments[arg_cnt] = token;
+    arg_cnt++;
+  };
   int i;
+  for(i = 0; i < arg_cnt; i++){
+	printf("%s\n", arguments[i]);
+  }
 
   /* Allocate and activate page directory. */
   t->pagedir = pagedir_create ();
@@ -303,7 +304,7 @@ load (const char *file_name, void (**eip) (void), void **esp)
    /* Uncomment the following line to print some debug
      information. This will be useful when you debug the program
      stack.*/
-/*#define STACK_DEBUG*/
+//#define STACK_DEBUG
 
 #ifdef STACK_DEBUG
   printf("*esp is %p\nstack contents:\n", *esp);
@@ -544,7 +545,9 @@ setup_stack (void **esp)
 {
   uint8_t *kpage;
   bool success = false;
-
+	
+  
+    	
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
     {
