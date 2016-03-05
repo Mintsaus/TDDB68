@@ -301,7 +301,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
    /* Uncomment the following line to print some debug
      information. This will be useful when you debug the program
      stack.*/
-//#define STACK_DEBUG
+#define STACK_DEBUG
 
 #ifdef STACK_DEBUG
   printf("*esp is %p\nstack contents:\n", *esp);
@@ -543,6 +543,7 @@ setup_stack (void **esp, const char **arguments)
   uint8_t *kpage;
   bool success = false;
 	
+  printf("arguments[%d] = %s", 1, arguments[1]);
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
     {
@@ -551,26 +552,41 @@ setup_stack (void **esp, const char **arguments)
         *esp = PHYS_BASE;
       else
         palloc_free_page (kpage);
+        printf("Free page in setup_stack");
         return success;
     }
     
+    
   /*--------Pusha argument på stacken---------------------*/  
   char *argv[32];
-  int i;
+  int i, argc;
   for(i = 0; arguments[i] != NULL; i++){
-    *esp -= strlen(arguments[i]);
-    memcpy(*esp, arguments[i], strlen(arguments[i]));
-    argv[i] = *esp;
+    *esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
+    memcpy(*esp, arguments[i], strlen(arguments[i])); //the actual pushing to the stack
+    printf("arguments[%d] = %s", i, arguments[i]);
+    argv[i] = *esp;   //saving a pointer to were on the stack each argument is placed
   }
+  argc = i + 1;
   /*--------Avrunda *esp till närmsta 4-tal---------------*/
+  *esp = *esp - ((int)*esp)%4;
   
   /*--------Pusha argv, adresser till argumenten ovan-----*/
+  char *np = 0;
+  memcpy(*esp, np, 4);   //NULL-pointer sentinel
+
   int j;
   for(j = i; j >= 0; j--){
     *esp -= 4;
     memcpy(*esp, argv[j], 4);
     argv[j] = *esp;
   }
+  char *argv_onstack = *esp;    //save the adress of argv on the stack to be able to point to it in next step.
+  *esp -= sizeof(char **);
+  memcpy(*esp, &argv_onstack, sizeof(char **));   //push pointer to argv
+  *esp -= sizeof(int);
+  memcpy(*esp, &argc, sizeof(int));    //push argc
+  *esp -= sizeof(void *);
+  memcpy(*esp, &argv[argc], sizeof(void *));    //push fake return address
   return success;
   
 }
