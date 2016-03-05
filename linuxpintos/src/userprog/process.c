@@ -152,7 +152,7 @@ process_exit (void)
 {
   struct thread *cur = thread_current ();
   uint32_t *pd;
-
+	
   /* Destroy the current process's page directory and switch back
      to the kernel-only page directory. */
   pd = cur->pagedir;
@@ -548,12 +548,14 @@ setup_stack (void **esp, const char **arguments)
   if (kpage != NULL) 
     {
       success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
-      if (success)
+      if (success){
+		printf("Great success!");
         *esp = PHYS_BASE;
-      else
+      }else{
         palloc_free_page (kpage);
         printf("Free page in setup_stack");
         return success;
+	}
     }
     
     
@@ -563,21 +565,33 @@ setup_stack (void **esp, const char **arguments)
   for(i = 0; arguments[i] != NULL; i++){
     *esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
     memcpy(*esp, arguments[i], strlen(arguments[i])); //the actual pushing to the stack
-    printf("arguments[%d] = %s", i, arguments[i]);
+    printf("arguments[%d] = %s \n", i, arguments[i]);
     argv[i] = *esp;   //saving a pointer to were on the stack each argument is placed
   }
   argc = i + 1;
   /*--------Avrunda *esp till närmsta 4-tal---------------*/
-  *esp = *esp - ((int)*esp)%4;
+  char *np = 0;
+  int round =  ((size_t) * esp)%4;
+  printf("Round %d\n", round);
+  if(round>0){
+	printf("Round var > 0 \n");
+	*esp -= round;
+	memcpy(*esp, &np, round);
+	
+  }
+  printf("Avrundning gjord\n");
   
   /*--------Pusha argv, adresser till argumenten ovan-----*/
-  char *np = 0;
-  memcpy(*esp, np, 4);   //NULL-pointer sentinel
+  
+  printf("Pushing sentinel \n");
+  *esp -= 4;
+  memcpy(*esp, &np, 4);   //NULL-pointer sentinel
 
   int j;
+  printf("Pushing argv[] \n");
   for(j = i; j >= 0; j--){
     *esp -= 4;
-    memcpy(*esp, argv[j], 4);
+    memcpy(*esp, &argv[j], 4);
     argv[j] = *esp;
   }
   char *argv_onstack = *esp;    //save the adress of argv on the stack to be able to point to it in next step.

@@ -1,9 +1,11 @@
-Writing command line to /tmp/vn3rOZjXMJ.dsk...
-qemu -hda /tmp/vn3rOZjXMJ.dsk -m 4 -net none -nographic -monitor null
+Writing command line to /tmp/VwK2TTmiR4.dsk...
+qemu -hda /tmp/VwK2TTmiR4.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q run alarm-multiple
 Pintos booting with 4,088 kB RAM...
 371 pages available in kernel pool.
 371 pages available in user pool.
+Beginning of thread_create in thread: 1 
+New tid: 2
 Calibrating timer...  419,020,800 loops/s.
 Boot complete.
 Executing 'alarm-multiple':
@@ -13,6 +15,16 @@ Executing 'alarm-multiple':
 (alarm-multiple) thread 1 sleeps 20 ticks each time, and so on.
 (alarm-multiple) If successful, product of iteration count and
 (alarm-multiple) sleep duration will appear in nondescending order.
+Beginning of thread_create in thread: 1 
+New tid: 3
+Beginning of thread_create in thread: 1 
+New tid: 4
+Beginning of thread_create in thread: 1 
+New tid: 5
+Beginning of thread_create in thread: 1 
+New tid: 6
+Beginning of thread_create in thread: 1 
+New tid: 7
 (alarm-multiple) thread 0: duration=10, iteration=1, product=10
 (alarm-multiple) thread 1: duration=20, iteration=1, product=20
 (alarm-multiple) thread 0: duration=10, iteration=2, product=20
@@ -52,6 +64,6 @@ Executing 'alarm-multiple':
 Execution of 'alarm-multiple' complete.
 Timer: 581 ticks
 Thread: 550 idle ticks, 31 kernel ticks, 0 user ticks
-Console: 2955 characters output
+Console: 3267 characters output
 Keyboard: 0 keys pressed
 Powering off...

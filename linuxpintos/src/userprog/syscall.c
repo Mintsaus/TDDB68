@@ -210,6 +210,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				free(cs);				
 			}
 			printf("Thread %d has exited, with %d children remaining \n", curr_thread ->tid, list_size(&curr_thread->cs_list));
+      printf("%s: exit(%d)\n", curr_thread -> name, status);
 			thread_exit();
 			break;
 			
