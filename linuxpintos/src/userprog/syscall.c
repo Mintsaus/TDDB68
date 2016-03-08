@@ -157,6 +157,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_EXIT):
 			status = *(p + 1);
+      //a change
 			printf("SYS_EXIT in thread: %d \n", curr_thread -> tid);
 			//kolla om parent existerar?? Fråga Erik
 			struct child_status *cs_parent;
