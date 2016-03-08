@@ -183,7 +183,7 @@ thread_create (const char *name, int priority,
   tid_t tid;
   
   struct thread *curr_thread = thread_current(); //Lab3
-	printf("Beginning of thread_create in thread: %d \n", curr_thread -> tid);
+	//printf("Beginning of thread_create in thread: %d \n", curr_thread -> tid);
   ASSERT (function != NULL);
 
   /* Allocate thread. */
@@ -194,7 +194,7 @@ thread_create (const char *name, int priority,
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
-  printf("New tid: %d\n", tid);
+  //printf("New tid: %d\n", tid);
   /* ---------------Lab 3----------------- */
   
   t->cs_parent = cs; 	//Unsure if this is safe in all cases, 
