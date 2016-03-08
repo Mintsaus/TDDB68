@@ -1,2 +1,2 @@
 Use of uninitialized value in numeric le (<=) at /home/mikog745/TDDB68/TDDB68/TDDB68/linuxpintos/src/utils//pintos line 767.
-qemu: terminating on signal 2
+qemu: terminating on signal 2 from pid 13029

@@ -182,7 +182,7 @@ thread_create (const char *name, int priority,
   struct switch_threads_frame *sf;
   tid_t tid;
   
-  struct thread *curr_thread = thread_current(); //Lab3
+  //struct thread *curr_thread = thread_current(); //Lab3
 	//printf("Beginning of thread_create in thread: %d \n", curr_thread -> tid);
   ASSERT (function != NULL);
 

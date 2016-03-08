@@ -568,7 +568,7 @@ setup_stack (void **esp, const char **arguments)
     printf("arguments[%d] = %s \n", i, arguments[i]);
     argv[i] = *esp;   //saving a pointer to were on the stack each argument is placed
   }
-  argc = i + 1;
+  argc = i;
   /*--------Avrunda *esp till närmsta 4-tal---------------*/
   char *np = 0;
   int round =  ((size_t) * esp)%4;

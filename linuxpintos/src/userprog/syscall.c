@@ -101,6 +101,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			break;
 		
 		case (SYS_CREATE)://Done
+    printf("SYS_CREATE\n");
 			name = (char *)(*(p + 1));
 			size = *(p + 2);
 			f -> eax = filesys_create(name, size);
