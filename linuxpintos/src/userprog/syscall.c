@@ -209,11 +209,13 @@ syscall_handler (struct intr_frame *f UNUSED)
 				struct child_status *cs = list_entry(ec->pointer, struct child_status, cs_elem);
 				list_remove(ec->pointer);
 				free(ec);
-				free(cs);				
+				free(cs);		
 			}
+      
 			printf("Thread %d has exited, with %d children remaining \n", curr_thread ->tid, list_size(&curr_thread->cs_list));
       printf("%s: exit(%d)\n", curr_thread -> name, status);
 			thread_exit();
+      f->eax = status;
 			break;
 			
 		/*Fråga Erik om "Reconsider all the situations under the condition that the child does not 
