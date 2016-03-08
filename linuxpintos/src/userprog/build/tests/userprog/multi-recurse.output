@@ -1,0 +1,18 @@
+Copying tests/userprog/multi-recurse into /tmp/CkRdHczEQz.dsk...
+Writing command line to /tmp/_CsUTgWy_S.dsk...
+qemu -hda /tmp/_CsUTgWy_S.dsk -hdb /tmp/v_TJ0GB9Ce.dsk -hdc /tmp/CkRdHczEQz.dsk -m 4 -net none -nographic -monitor null
+in init.c main()Kernel command line: -q -f put multi-recurse run 'multi-recurse 15'
+Pintos booting with 4,088 kB RAM...
+371 pages available in kernel pool.
+371 pages available in user pool.
+Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
+Call stack: 0xc01070ab.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 0 ticks
+Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
+Console: 541 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

@@ -1,0 +1,18 @@
+Copying tests/userprog/read-stdout into /tmp/Zpft4LSEIb.dsk...
+Writing command line to /tmp/jVfC2bK3Gn.dsk...
+qemu -hda /tmp/jVfC2bK3Gn.dsk -hdb /tmp/A5hHnYi26u.dsk -hdc /tmp/Zpft4LSEIb.dsk -m 4 -net none -nographic -monitor null
+in init.c main()Kernel command line: -q -f put read-stdout run read-stdout
+Pintos booting with 4,088 kB RAM...
+371 pages available in kernel pool.
+371 pages available in user pool.
+Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
+Call stack: 0xc01070ab.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 0 ticks
+Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
+Console: 532 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

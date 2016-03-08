@@ -1,0 +1,19 @@
+Copying tests/userprog/exec-multiple into /tmp/9o0mfrfeMs.dsk...
+Copying tests/userprog/child-simple into /tmp/9o0mfrfeMs.dsk...
+Writing command line to /tmp/SKjFj_wLqd.dsk...
+qemu -hda /tmp/SKjFj_wLqd.dsk -hdb /tmp/Q12QaDnur0.dsk -hdc /tmp/9o0mfrfeMs.dsk -m 4 -net none -nographic -monitor null
+in init.c main()Kernel command line: -q -f put exec-multiple put child-simple run exec-multiple
+Pintos booting with 4,088 kB RAM...
+371 pages available in kernel pool.
+371 pages available in user pool.
+Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
+Call stack: 0xc01070ab.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 0 ticks
+Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
+Console: 553 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

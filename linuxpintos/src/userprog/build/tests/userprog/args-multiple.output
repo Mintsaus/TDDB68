@@ -1,0 +1,18 @@
+Copying tests/userprog/args-multiple into /tmp/1dLbb5873v.dsk...
+Writing command line to /tmp/kua_XPosxB.dsk...
+qemu -hda /tmp/kua_XPosxB.dsk -hdb /tmp/mprIKiHAm3.dsk -hdc /tmp/1dLbb5873v.dsk -m 4 -net none -nographic -monitor null
+in init.c main()Kernel command line: -q -f put args-multiple run 'args-multiple some arguments for you!'
+Pintos booting with 4,088 kB RAM...
+371 pages available in kernel pool.
+371 pages available in user pool.
+Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
+Call stack: 0xc01070ab.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 0 ticks
+Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
+Console: 562 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

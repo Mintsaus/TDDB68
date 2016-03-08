@@ -1,0 +1,19 @@
+Copying tests/userprog/write-bad-ptr into /tmp/rILu5JKxnd.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/rILu5JKxnd.dsk...
+Writing command line to /tmp/RabidVejCX.dsk...
+qemu -hda /tmp/RabidVejCX.dsk -hdb /tmp/Vt_0BnH0Gz.dsk -hdc /tmp/rILu5JKxnd.dsk -m 4 -net none -nographic -monitor null
+in init.c main()Kernel command line: -q -f put write-bad-ptr put sample.txt run write-bad-ptr
+Pintos booting with 4,088 kB RAM...
+371 pages available in kernel pool.
+371 pages available in user pool.
+Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
+Call stack: 0xc01070ab.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 0 ticks
+Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
+Console: 551 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...
