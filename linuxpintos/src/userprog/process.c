@@ -35,16 +35,16 @@ tid_t
 process_execute (const char *file_name) 
 {
   char *fn_copy;
+  char *file_name_no_args;
+  char *save_ptr;
   tid_t tid;
-
   /* Make a copy of FILE_NAME.
      Otherwise there's a race between the caller and load(). */
   fn_copy = palloc_get_page (0);
   if (fn_copy == NULL)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
- 
-   
+   file_name_no_args = strtok_r(file_name, " ", &save_ptr);
   
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
@@ -53,7 +53,7 @@ process_execute (const char *file_name)
 	printf("Created new child status for %s \n", cs->fn_copy);
 
   /* Create a new thread to execute FILE_NAME. */
-  tid = thread_create (file_name, PRI_DEFAULT, start_process, cs);
+  tid = thread_create (file_name_no_args, PRI_DEFAULT, start_process, cs);
   
   /*-------------Lab3-----------------*/
   //if(tid > 2 ){       //curr_thread->tid >= 2){ //We don't need to check anymore cause' we're in proc_execute.
