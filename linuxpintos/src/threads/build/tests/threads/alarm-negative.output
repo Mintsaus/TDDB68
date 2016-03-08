@@ -1,11 +1,9 @@
-Writing command line to /tmp/X_V3KXvlEi.dsk...
-qemu -hda /tmp/X_V3KXvlEi.dsk -m 4 -net none -nographic -monitor null
+Writing command line to /tmp/TC1x1tysJI.dsk...
+qemu -hda /tmp/TC1x1tysJI.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q run alarm-negative
 Pintos booting with 4,088 kB RAM...
 371 pages available in kernel pool.
 371 pages available in user pool.
-Beginning of thread_create in thread: 1 
-New tid: 2
 Calibrating timer...  419,020,800 loops/s.
 Boot complete.
 Executing 'alarm-negative':
@@ -15,6 +13,6 @@ Executing 'alarm-negative':
 Execution of 'alarm-negative' complete.
 Timer: 23 ticks
 Thread: 1 idle ticks, 22 kernel ticks, 0 user ticks
-Console: 461 characters output
+Console: 409 characters output
 Keyboard: 0 keys pressed
 Powering off...
