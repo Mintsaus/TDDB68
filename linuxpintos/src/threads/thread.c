@@ -14,8 +14,13 @@
 #include "filesys/file.h"
 #ifdef USERPROG
 	#include "userprog/process.h"
+	#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
 #endif
-#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
+
+/*-------------Lab3--------------*/
+#include <stdlib.h>
+void* malloc(size_t);
+void free(void *);
 
 /* Random value for struct thread's `magic' member.
    Used to detect stack overflow.  See the big comment at the top
@@ -68,6 +73,8 @@ static void *alloc_frame (struct thread *, size_t size);
 static void schedule (void);
 void schedule_tail (struct thread *prev);
 static tid_t allocate_tid (void);
+
+void file_close (struct file *);
 
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This can't work in
@@ -167,12 +174,16 @@ tid_t
 thread_create (const char *name, int priority,
                thread_func *function, void *aux) 
 {
+	
+  struct child_status *cs = aux;//(struct child_status*)aux;
   struct thread *t;
   struct kernel_thread_frame *kf;
   struct switch_entry_frame *ef;
   struct switch_threads_frame *sf;
   tid_t tid;
-
+  
+  //struct thread *curr_thread = thread_current(); //Lab3
+	//printf("Beginning of thread_create in thread: %d \n", curr_thread -> tid);
   ASSERT (function != NULL);
 
   /* Allocate thread. */
@@ -183,12 +194,29 @@ thread_create (const char *name, int priority,
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
+  //printf("New tid: %d\n", tid);
+  /* ---------------Lab 3----------------- */
+  
+  t->cs_parent = cs; 	//Unsure if this is safe in all cases, 
+						//but couldn't access new thread from process_execute.
+  
+  
+	
+  /*----Lab3------
+  if(tid > 2 ){       //curr_thread->tid >= 2){ 
+	  printf("Inte en urtrad: do sema init etc \n");
+	  sema_init(&cs->sema_exec, 0);
+	  lock_init(&cs->cs_lock);
+	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
+	  t->cs_parent = cs;
+	  cs->pid = tid;
+  } */
 
   /* Stack frame for kernel_thread(). */
   kf = alloc_frame (t, sizeof *kf);
   kf->eip = NULL;
   kf->function = function;
-  kf->aux = aux;
+  kf->aux = aux; //cs instead of aux Lab3
 
   /* Stack frame for switch_entry(). */
   ef = alloc_frame (t, sizeof *ef);
@@ -197,19 +225,28 @@ thread_create (const char *name, int priority,
   /* Stack frame for switch_threads(). */
   sf = alloc_frame (t, sizeof *sf);
   sf->eip = switch_entry;
-  
+ #ifdef USERPROG
   /* My bitmap !!!*/
   t->fd_bitmap = bitmap_create(file_map_size);
   if(t->fd_bitmap == NULL){
 	PANIC("bitmap too big!!");
   }
-printf("bitmap created\n");
   bitmap_set_multiple(t->fd_bitmap, 0, 2, 1);
-
+#endif
+  
   /* Add to run queue. */
   thread_unblock (t);
-  
-
+  /*if(tid > 2){ //curr_thread->tid >= 2){
+	  printf("Inte en urtrad: sema down etc \n");
+	  //Sema_down here...
+	  sema_down(&cs->sema_exec);
+	  //Get tid from child_status
+	  tid = cs->pid;
+	  if(tid == -1){		//om -1 misslyckades load, kan ta bort strukten
+		free(cs);
+	  }
+	}	
+	printf("Returning tid %d\n", tid); */
   return tid;
 }
 
@@ -290,19 +327,20 @@ void
 thread_exit (void) 
 {
   ASSERT (!intr_context ());
-
+  
+#ifdef USERPROG
 if(thread_current()->fd_bitmap != NULL){
 	int i;
 	for(i=0; i < file_map_size; i++){
 	
 		if(bitmap_test(thread_current()->fd_bitmap, i)){
-			file_close (thread_current() -> file_names[i]);  
+			
+			file_close((thread_current() -> file_names[i]));  
 		}
 	}
 	bitmap_destroy(thread_current() -> fd_bitmap);	/* Added to avoid leaks for bitmap!!! */
 }
 
-#ifdef USERPROG
   process_exit ();
 #endif
 
@@ -463,7 +501,7 @@ init_thread (struct thread *t, const char *name, int priority)
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
   t->magic = THREAD_MAGIC;
-  
+  list_init(&t->cs_list); //Lab3
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and

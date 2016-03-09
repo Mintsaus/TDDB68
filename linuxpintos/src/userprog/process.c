@@ -18,6 +18,12 @@
 #include "threads/thread.h"
 #include "threads/vaddr.h"
 
+/*-------------Lab3--------------*/
+#include <stdlib.h>
+void* malloc(size_t);
+void free(void *);
+
+
 static thread_func start_process NO_RETURN;
 static bool load (const char *cmdline, void (**eip) (void), void **esp);
 
@@ -37,11 +43,36 @@ process_execute (const char *file_name)
   if (fn_copy == NULL)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
+ 
+   
+  
+  /* Lab 3 */
+  struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
+  cs->ref_cnt = 2;
+  cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leaks
+	printf("Created new child status for %s \n", cs->fn_copy);
 
   /* Create a new thread to execute FILE_NAME. */
-  tid = thread_create (file_name, PRI_DEFAULT, start_process, fn_copy);
-  if (tid == TID_ERROR)
-    palloc_free_page (fn_copy); 
+  tid = thread_create (file_name, PRI_DEFAULT, start_process, cs);
+  
+  /*-------------Lab3-----------------*/
+  //if(tid > 2 ){       //curr_thread->tid >= 2){ //We don't need to check anymore cause' we're in proc_execute.
+	  printf("Inte en urtrad: do sema init etc \n");
+	  sema_init(&cs->sema_exec, 0);
+	  lock_init(&cs->cs_lock);
+	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
+	  cs->pid = tid;
+  //}
+  
+  
+  sema_down(&cs->sema_exec);
+	//Get tid from child_status
+	tid = cs->pid;
+	if(tid == TID_ERROR){		//om -1 misslyckades load, kan ta bort strukten
+		free(cs);
+    palloc_free_page (fn_copy);
+	}
+  
   return tid;
 }
 
@@ -50,21 +81,44 @@ process_execute (const char *file_name)
 static void
 start_process (void *file_name_)
 {
-  char *file_name = file_name_;
+	struct thread *curr_thread = thread_current();
+  printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
+  struct child_status *cs = (struct child_status *)file_name_;
+  char *file_name;
+  if(curr_thread->tid >= 2){
+		file_name = &cs->filename; //Lab3 file_name_ is our struct cs
+	}else{
+		printf("Using old method for file_name \n");
+		file_name = (char *) file_name_;
+	}
   struct intr_frame if_;
   bool success;
-
   /* Initialize interrupt frame and load executable. */
   memset (&if_, 0, sizeof if_);
   if_.gs = if_.fs = if_.es = if_.ds = if_.ss = SEL_UDSEG;
   if_.cs = SEL_UCSEG;
   if_.eflags = FLAG_IF | FLAG_MBS;
-  success = load (file_name, &if_.eip, &if_.esp);
+  printf(" About to load %s \n", cs->fn_copy);
+  success = load (cs->fn_copy, &if_.eip, &if_.esp); //cs->fn_copy
 
   /* If load failed, quit. */
-  palloc_free_page (file_name);
-  if (!success) 
+ 
+  palloc_free_page (cs->fn_copy); //cs->fn_copy   free:as rätt?
+  
+  if (!success){ 
+		printf("Not success \n");
+		cs->pid = -1;
+		sema_up(&cs->sema_exec);
+		lock_acquire(&cs->cs_lock);
+		cs->ref_cnt--;
+		lock_release(&cs->cs_lock);
     thread_exit ();
+	}else{
+		//printf("%s", cs->sema_exec);
+		printf("Success \n");
+		sema_up(&cs->sema_exec); //Causes problems. Is not initialized? Try to comment out and run lab3test, interesting stuff.
+		printf("start_process: after sema up \n");
+	}
 
   /* Start the user process by simulating a return from an
      interrupt, implemented by intr_exit (in
@@ -98,7 +152,7 @@ process_exit (void)
 {
   struct thread *cur = thread_current ();
   uint32_t *pd;
-
+	
   /* Destroy the current process's page directory and switch back
      to the kernel-only page directory. */
   pd = cur->pagedir;
@@ -196,7 +250,7 @@ struct Elf32_Phdr
 #define PF_W 2          /* Writable. */
 #define PF_R 4          /* Readable. */
 
-static bool setup_stack (void **esp);
+static bool setup_stack (void **esp, const char **arguments);
 static bool validate_segment (const struct Elf32_Phdr *, struct file *);
 static bool load_segment (struct file *file, off_t ofs, uint8_t *upage,
                           uint32_t read_bytes, uint32_t zero_bytes,
@@ -207,14 +261,31 @@ static bool load_segment (struct file *file, off_t ofs, uint8_t *upage,
    and its initial stack pointer into *ESP.
    Returns true if successful, false otherwise. */
 bool
-load (const char *file_name, void (**eip) (void), void **esp) 
+load (const char *file_name_, void (**eip) (void), void **esp) 
 {
   struct thread *t = thread_current ();
   struct Elf32_Ehdr ehdr;
   struct file *file = NULL;
   off_t file_ofs;
   bool success = false;
+  
+  const char delim[] = " ";
+  char *token, *save_ptr;
+  char *file_name = strtok_r(file_name_, delim, &save_ptr);
+  printf("LOAD: file_name: %s\n", file_name);
+  
+  const char *arguments[32];
+  int arg_cnt = 0;   
+  
+  /* Divide file_name into arguments */
+  for(token = file_name; token != NULL; token = strtok_r (NULL, delim, &save_ptr)){
+    arguments[arg_cnt] = token;
+    arg_cnt++;
+  };
   int i;
+  for(i = 0; i < arg_cnt; i++){
+	printf("%s\n", arguments[i]);
+  }
 
   /* Allocate and activate page directory. */
   t->pagedir = pagedir_create ();
@@ -223,14 +294,14 @@ load (const char *file_name, void (**eip) (void), void **esp)
   process_activate ();
 
   /* Set up stack. */
-  if (!setup_stack (esp)){
+  if (!setup_stack (esp, arguments)){
     goto done;
   }
 
    /* Uncomment the following line to print some debug
      information. This will be useful when you debug the program
      stack.*/
-/*#define STACK_DEBUG*/
+#define STACK_DEBUG
 
 #ifdef STACK_DEBUG
   printf("*esp is %p\nstack contents:\n", *esp);
@@ -467,22 +538,74 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 /* Create a minimal stack by mapping a zeroed page at the top of
    user virtual memory. */
 static bool
-setup_stack (void **esp) 
+setup_stack (void **esp, const char **arguments) 
 {
   uint8_t *kpage;
   bool success = false;
-
+	
+  printf("arguments[%d] = %s", 1, arguments[1]);
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
     {
       success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
-      if (success)
-        *esp = PHYS_BASE - 12;
-      else
+      if (success){
+		printf("Great success!");
+        *esp = PHYS_BASE;
+      }else{
         palloc_free_page (kpage);
+        printf("Free page in setup_stack");
+        return success;
+	}
     }
+    
+    
+  /*--------Pusha argument på stacken---------------------*/  
+  char *argv[32];
+  int i, argc;
+  for(i = 0; arguments[i] != NULL; i++){
+    *esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
+    memcpy(*esp, arguments[i], strlen(arguments[i])); //the actual pushing to the stack
+    printf("arguments[%d] = %s \n", i, arguments[i]);
+    argv[i] = *esp;   //saving a pointer to were on the stack each argument is placed
+  }
+  argc = i;
+  /*--------Avrunda *esp till närmsta 4-tal---------------*/
+  char *np = 0;
+  int round =  ((size_t) * esp)%4;
+  printf("Round %d\n", round);
+  if(round>0){
+	printf("Round var > 0 \n");
+	*esp -= round;
+	memcpy(*esp, &np, round);
+	
+  }
+  printf("Avrundning gjord\n");
+  
+  /*--------Pusha argv, adresser till argumenten ovan-----*/
+  
+  printf("Pushing sentinel \n");
+  *esp -= 4;
+  memcpy(*esp, &np, 4);   //NULL-pointer sentinel
+
+  int j;
+  printf("Pushing argv[] \n");
+  for(j = i; j >= 0; j--){
+    *esp -= 4;
+    memcpy(*esp, &argv[j], 4);
+    argv[j] = *esp;
+  }
+  char *argv_onstack = *esp;    //save the adress of argv on the stack to be able to point to it in next step.
+  *esp -= sizeof(char **);
+  memcpy(*esp, &argv_onstack, sizeof(char **));   //push pointer to argv
+  *esp -= sizeof(int);
+  memcpy(*esp, &argc, sizeof(int));    //push argc
+  *esp -= sizeof(void *);
+  memcpy(*esp, &argv[argc], sizeof(void *));    //push fake return address
   return success;
+  
 }
+
+
 
 /* Adds a mapping from user virtual address UPAGE to kernel
    virtual address KPAGE to the page table.

@@ -1,0 +1,104 @@
+Copying tests/userprog/halt into /tmp/qgaaS5qNVX.dsk...
+Writing command line to /tmp/x4FoLPJOqi.dsk...
+qemu -hda /tmp/x4FoLPJOqi.dsk -hdb /tmp/J2wx6lC6IC.dsk -hdc /tmp/qgaaS5qNVX.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put halt run halt
+Pintos booting with 4,088 kB RAM...
+371 pages available in kernel pool.
+371 pages available in user pool.
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'halt' into the file system...
+Executing 'halt':
+Created new child status for halt 
+Inte en urtrad: do sema init etc 
+Beginning of start_process for thread: 3 
+ About to load halt 
+LOAD: file_name: halt
+halt
+arguments[1] = (null)Great success!arguments[0] = halt 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+*esp is 0xbfffffe0
+stack contents:
+bfffffe0  f0 ff ff bf 01 00 00 00-ec ff ff bf fb ff ff bf |................|
+bffffff0  00 00 00 00 00 00 00 00-00 00 00 68 61 6c 74 00 |...........halt.|
+c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
+c000000f	 	
+c000000e	 	
+c000000d	 	
+c000000c	S	f000ff53	
+--------------------------------------------------------------
+c000000b	 	
+c000000a	 	
+c0000009	 	
+c0000008	 	f000e2c3	
+--------------------------------------------------------------
+c0000007	 	
+c0000006	 	
+c0000005	 	
+c0000004	S	f000ff53	
+--------------------------------------------------------------
+c0000003	 	
+c0000002	 	
+c0000001	 	
+c0000000	S	f000ff53	
+------- the border between KERNEL SPACE and USER SPACE -------
+bfffffff	 	
+bffffffe	t	
+bffffffd	l	
+bffffffc	a	746c61	
+--------------------------------------------------------------
+bffffffb	h	
+bffffffa	 	
+bffffff9	 	
+bffffff8	 	68000000	
+--------------------------------------------------------------
+bffffff7	 	
+bffffff6	 	
+bffffff5	 	
+bffffff4	 	0	
+--------------------------------------------------------------
+bffffff3	 	
+bffffff2	 	
+bffffff1	 	
+bffffff0	 	0	
+--------------------------------------------------------------
+bfffffef	 	
+bfffffee	 	
+bfffffed	 	
+bfffffec	 	bffffffb	
+--------------------------------------------------------------
+bfffffeb	 	
+bfffffea	 	
+bfffffe9	 	
+bfffffe8	 	bfffffec	
+--------------------------------------------------------------
+bfffffe7	 	
+bfffffe6	 	
+bfffffe5	 	
+bfffffe4	 	1	
+--------------------------------------------------------------
+bfffffe3	 	
+bfffffe2	 	
+bfffffe1	 	
+bfffffe0	 	bffffff0	
+--------------------------------------------------------------
+Success 
+start_process: after sema up 
+(halt) begin
+Timer: 66 ticks
+Thread: 33 idle ticks, 27 kernel ticks, 6 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 59 reads, 202 writes
+hd1:0: 97 reads, 0 writes
+Console: 2712 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

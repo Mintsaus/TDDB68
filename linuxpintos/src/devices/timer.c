@@ -24,10 +24,27 @@ static int64_t ticks;
    Initialized by timer_calibrate(). */
 static unsigned loops_per_tick;
 
+static struct list sleep_list;
+
+
 static intr_handler_func timer_interrupt;
 static bool too_many_loops (unsigned loops);
 static void busy_wait (int64_t loops);
 static void real_time_sleep (int64_t num, int32_t denom);
+
+/* Comparator function for list elements in sleep_list. Used by list_insert_ordered */
+bool 
+sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux)
+{	
+
+	struct thread *tha = list_entry(a, struct thread, sleep_list_elem);
+	struct thread *thb = list_entry(b, struct thread, sleep_list_elem);
+	uint64_t inta = tha->sleep_until;
+	uint64_t intb = thb->sleep_until;
+	
+	return inta < intb;
+	
+}
 
 /* Sets up the 8254 Programmable Interval Timer (PIT) to
    interrupt PIT_FREQ times per second, and registers the
@@ -44,6 +61,9 @@ timer_init (void)
   outb (0x40, count >> 8);
 
   intr_register_ext (0x20, timer_interrupt, "8254 Timer");
+  
+ 
+  list_init(&sleep_list);
 }
 
 /* Calibrates loops_per_tick, used to implement brief delays. */
@@ -92,15 +112,33 @@ timer_elapsed (int64_t then)
   return timer_ticks () - then;
 }
 
-/* Suspends execution for approximately TICKS timer ticks. */
-void
-timer_sleep (int64_t ticks) 
-{
-  int64_t start = timer_ticks ();
+//~ /* Suspends execution for approximately TICKS timer ticks. */
+//~ void
+//~ timer_sleep (int64_t ticks) 
+//~ {
+  //~ int64_t start = timer_ticks ();
+//~ 
+  //~ ASSERT (intr_get_level () == INTR_ON);
+  //~ while (timer_elapsed (start) < ticks) 
+    //~ thread_yield ();
+//~ }
 
-  ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < ticks) 
-    thread_yield ();
+void
+timer_sleep(int64_t ticks)
+{
+	struct thread *th = thread_current();
+	int64_t sleep_until = ticks + timer_ticks();
+	ASSERT (intr_get_level () == INTR_ON);
+	th->sleep_until = sleep_until;
+	
+	enum intr_level old_level;
+	old_level = intr_disable ();
+	
+	list_insert_ordered(&sleep_list, &th->sleep_list_elem, *sleep_less, NULL);
+	intr_set_level (old_level);
+	
+	sema_init(&th->sleep_sema, 0);
+	sema_down(&th->sleep_sema);
 }
 
 /* Suspends execution for approximately MS milliseconds. */
@@ -136,6 +174,22 @@ static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
   ticks++;
+  struct list_elem *e;
+  enum intr_level old_level;
+  old_level = intr_disable ();
+
+   for (e = list_begin (&sleep_list); e != list_end (&sleep_list); e = list_remove (e))
+     {
+		struct thread *th = list_entry (e, struct thread, sleep_list_elem);
+		
+       if(timer_ticks() < th->sleep_until){
+			break;
+		}
+			sema_up(&th->sleep_sema);
+			
+     }
+  intr_set_level (old_level);
+  
   thread_tick ();
 }
 

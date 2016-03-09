@@ -5,4 +5,4 @@ tests/threads/alarm-zero.o: ../../tests/threads/alarm-zero.c \
  ../../threads/malloc.h ../../threads/synch.h ../../lib/kernel/list.h \
  ../../threads/thread.h ../../lib/kernel/bitmap.h ../../lib/inttypes.h \
  ../../filesys/file.h ../../filesys/off_t.h ../../devices/timer.h \
- ../../lib/round.h
+ ../../lib/round.h ../../lib/kernel/list.h

@@ -4,12 +4,23 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include <threads/synch.h>
 //#ifdef USERPROG
 	#include <lib/kernel/bitmap.h> 	/* added for fd-mapping!!! */
 	#include "filesys/file.h"
 	#define file_map_size 128
 //#endif
-
+/*---------Lab 3-------------*/
+struct child_status{
+	int pid;
+	int exit_status;
+	int ref_cnt;
+	struct lock cs_lock;
+	const char *filename;
+	char *fn_copy; //Lagt till
+	struct semaphore sema_exec;
+	struct list_elem cs_elem;
+};
 
 /* States in a thread's life cycle. */
 enum thread_status
@@ -94,11 +105,17 @@ struct thread
     char name[16];                      /* Name (for debugging purposes). */
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
-    //#ifdef USERPROG
+    #ifdef USERPROG
 		struct bitmap *fd_bitmap;		/* File descriptors saved here!!! */
 		struct file *file_names[file_map_size];
-	//#endif
+	#endif
+	struct list_elem sleep_list_elem;
+	int64_t sleep_until;
+	struct semaphore sleep_sema;
     
+    /*-----------Lab3------------*/
+	struct list cs_list; 
+    struct child_status *cs_parent;
 
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */

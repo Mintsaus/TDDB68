@@ -3,9 +3,14 @@
 
 #include <round.h>
 #include <stdint.h>
+#include "lib/kernel/list.h"
 
 /* Number of timer interrupts per second. */
 #define TIMER_FREQ 100
+
+
+bool 
+sleep_less(const struct list_elem *a, const struct list_elem *b, void *aux);
 
 void timer_init (void);
 void timer_calibrate (void);

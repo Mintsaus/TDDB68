@@ -6,7 +6,7 @@ SRCDIR = ..
 PROGS = cat cmp cp echo halt hex-dump ls mcat mcp mkdir pwd rm shell \
 	bubsort insult lineup matmult recursor \
 	sumargv lab2test lab1test pfs pfs_reader pfs_writer dummy longrun \
-	child parent create-bad
+	child parent create-bad lab3test lab3testchild lab3test2
 
 # Added test programs
 sumargv_SRC = sumargv.c
@@ -20,6 +20,10 @@ dummy_SRC = dummy.c
 child_SRC = child.c
 parent_SRC = parent.c
 create-bad_SRC = create-bad.c
+lab3test_SRC = lab3test.c
+lab3testchild_SRC = lab3testchild.c
+lab3test2_SRC = lab3test2.c
+
 
 # Should work from project 2 onward.
 cat_SRC = cat.c
