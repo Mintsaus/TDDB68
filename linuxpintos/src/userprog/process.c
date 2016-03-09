@@ -152,6 +152,73 @@ process_exit (void)
 {
   struct thread *cur = thread_current ();
   uint32_t *pd;
+  
+   //If parent is alive: That needs to be checked
+  struct child_status *cs_parent;
+  cs_parent = cur->cs_parent;
+  
+  
+  // If parent dead we need to destroy the cs. If parent waiting wake it up. //
+  //lock_acquire(&cs_parent->cs_lock);
+  cs_parent->ref_cnt--;
+  if(cs_parent->ref_cnt == 0){		//Parent is dead
+    //printf("Parent of thread %d is dead \n", cur -> tid);
+    //lock_release(&cs_parent->cs_lock);
+    free(cs_parent);
+  }else {								//Parent waits or doesn't care
+    //printf("Parent wait or doesn't care \n");
+    //lock_release(&cs_parent->cs_lock);
+    //printf("EXIT: sema up \n");
+    //sema_up(&cs_parent->sema_exec);
+  }
+  
+  
+  
+  //Struct to be able to save pointers to the children from list
+  struct elem_copy{
+    struct list_elem *pointer;
+    struct list_elem elem;
+  };
+  
+  //Creating necessary variables for the loops
+  struct list *cs_list;
+  cs_list = &cur->cs_list;
+  struct list_elem *e;
+  struct child_status *cs;
+  struct list children_to_delete;
+  list_init(&children_to_delete);
+  //printf("Before for in proc_exit\n");
+  //Loops through list of children and adds the ones to be deleted to a separate list
+  for (e = list_begin (cs_list); e != list_end (cs_list); e = list_next(e))
+   {
+    cs = list_entry (e, struct child_status, cs_elem);
+    //lock_acquire(&cs->cs_lock);		
+    cs->ref_cnt--;
+    if(cs->ref_cnt == 0){
+      struct elem_copy *ec = (struct elem_copy *)malloc(sizeof(struct elem_copy));
+      ec->pointer = e;
+      list_push_front(&children_to_delete, &ec->elem);
+    }
+    //lock_release(&cs->cs_lock);			
+   }
+   //printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
+   
+   //printf("Before while in proc_exit\n");
+   //Loops through the children to delete, and deletes them
+   while (!list_empty (&children_to_delete))
+    {
+      e = list_pop_front (&children_to_delete);
+      struct elem_copy *ec = list_entry(e, struct elem_copy, elem);
+      struct child_status *cs = list_entry(ec->pointer, struct child_status, cs_elem);
+      list_remove(ec->pointer);
+      free(ec);
+      free(cs);		
+    } 
+   //printf("after while\n");
+   
+
+
+  
 	
   /* Destroy the current process's page directory and switch back
      to the kernel-only page directory. */
@@ -169,6 +236,7 @@ process_exit (void)
       pagedir_activate (NULL);
       pagedir_destroy (pd);
     }
+    //printf("Last in proc_exit\n");
 }
 
 /* Sets up the CPU for running user code in the current

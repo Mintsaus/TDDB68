@@ -1,18 +1,191 @@
-Copying tests/userprog/args-multiple into /tmp/1dLbb5873v.dsk...
-Writing command line to /tmp/kua_XPosxB.dsk...
-qemu -hda /tmp/kua_XPosxB.dsk -hdb /tmp/mprIKiHAm3.dsk -hdc /tmp/1dLbb5873v.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put args-multiple run 'args-multiple some arguments for you!'
+Copying tests/userprog/args-multiple into /tmp/FYWKmxONtZ.dsk...
+Writing command line to /tmp/1OsY2E8rWZ.dsk...
+qemu -hda /tmp/1OsY2E8rWZ.dsk -hdb /tmp/4REjOPCwBQ.dsk -hdc /tmp/FYWKmxONtZ.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put args-multiple run 'args-multiple some arguments for you!'
 Pintos booting with 4,088 kB RAM...
 371 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'args-multiple' into the file system...
+Executing 'args-multiple some arguments for you!':
+Created new child status for args-multiple some arguments for you! 
+Inte en urtrad: do sema init etc 
+Beginning of start_process for thread: 3 
+ About to load args-multiple some arguments for you! 
+LOAD: file_name: args-multiple
+args-multiple
+some
+arguments
+for
+you!
+arguments[1] = someGreat success!arguments[0] = args-multiple 
+arguments[1] = some 
+arguments[2] = arguments 
+arguments[3] = for 
+arguments[4] = you! 
+Round 2
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+*esp is 0xbfffffb0
+stack contents:
+bfffffb0  d0 ff ff bf 05 00 00 00-bc ff ff bf f2 ff ff bf |................|
+bfffffc0  ed ff ff bf e3 ff ff bf-df ff ff bf da ff ff bf |................|
+bfffffd0  00 00 00 00 00 00 00 00-00 00 79 6f 75 21 00 66 |..........you!.f|
+bfffffe0  6f 72 00 61 72 67 75 6d-65 6e 74 73 00 73 6f 6d |or.arguments.som|
+bffffff0  65 00 61 72 67 73 2d 6d-75 6c 74 69 70 6c 65 00 |e.args-multiple.|
+c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
+c000000f	 	
+c000000e	 	
+c000000d	 	
+c000000c	S	f000ff53	
+--------------------------------------------------------------
+c000000b	 	
+c000000a	 	
+c0000009	 	
+c0000008	 	f000e2c3	
+--------------------------------------------------------------
+c0000007	 	
+c0000006	 	
+c0000005	 	
+c0000004	S	f000ff53	
+--------------------------------------------------------------
+c0000003	 	
+c0000002	 	
+c0000001	 	
+c0000000	S	f000ff53	
+------- the border between KERNEL SPACE and USER SPACE -------
+bfffffff	 	
+bffffffe	e	
+bffffffd	l	
+bffffffc	p	656c70	
+--------------------------------------------------------------
+bffffffb	i	
+bffffffa	t	
+bffffff9	l	
+bffffff8	u	69746c75	
+--------------------------------------------------------------
+bffffff7	m	
+bffffff6	-	
+bffffff5	s	
+bffffff4	g	6d2d7367	
+--------------------------------------------------------------
+bffffff3	r	
+bffffff2	a	
+bffffff1	 	
+bffffff0	e	72610065	
+--------------------------------------------------------------
+bfffffef	m	
+bfffffee	o	
+bfffffed	s	
+bfffffec	 	6d6f7300	
+--------------------------------------------------------------
+bfffffeb	s	
+bfffffea	t	
+bfffffe9	n	
+bfffffe8	e	73746e65	
+--------------------------------------------------------------
+bfffffe7	m	
+bfffffe6	u	
+bfffffe5	g	
+bfffffe4	r	6d756772	
+--------------------------------------------------------------
+bfffffe3	a	
+bfffffe2	 	
+bfffffe1	r	
+bfffffe0	o	6100726f	
+--------------------------------------------------------------
+bfffffdf	f	
+bfffffde	 	
+bfffffdd	!	
+bfffffdc	u	66002175	
+--------------------------------------------------------------
+bfffffdb	o	
+bfffffda	y	
+bfffffd9	 	
+bfffffd8	 	6f790000	
+--------------------------------------------------------------
+bfffffd7	 	
+bfffffd6	 	
+bfffffd5	 	
+bfffffd4	 	0	
+--------------------------------------------------------------
+bfffffd3	 	
+bfffffd2	 	
+bfffffd1	 	
+bfffffd0	 	0	
+--------------------------------------------------------------
+bfffffcf	 	
+bfffffce	 	
+bfffffcd	 	
+bfffffcc	 	bfffffda	
+--------------------------------------------------------------
+bfffffcb	 	
+bfffffca	 	
+bfffffc9	 	
+bfffffc8	 	bfffffdf	
+--------------------------------------------------------------
+bfffffc7	 	
+bfffffc6	 	
+bfffffc5	 	
+bfffffc4	 	bfffffe3	
+--------------------------------------------------------------
+bfffffc3	 	
+bfffffc2	 	
+bfffffc1	 	
+bfffffc0	 	bfffffed	
+--------------------------------------------------------------
+bfffffbf	 	
+bfffffbe	 	
+bfffffbd	 	
+bfffffbc	 	bffffff2	
+--------------------------------------------------------------
+bfffffbb	 	
+bfffffba	 	
+bfffffb9	 	
+bfffffb8	 	bfffffbc	
+--------------------------------------------------------------
+bfffffb7	 	
+bfffffb6	 	
+bfffffb5	 	
+bfffffb4	 	5	
+--------------------------------------------------------------
+bfffffb3	 	
+bfffffb2	 	
+bfffffb1	 	
+bfffffb0	 	bfffffd0	
+--------------------------------------------------------------
+Success 
+start_process: after sema up 
+(args) begin
+(args) argc = 5
+(args) argv[0] = 'args-multiple'
+(args) argv[1] = 'some'
+(args) argv[2] = 'arguments'
+(args) argv[3] = 'for'
+(args) argv[4] = 'you!'
+(args) argv[5] = null
+(args) end
+SYS_EXIT in thread: 3 
+args-multiple: exit(0)
+Before for in proc_exitKernel PANIC at ../../lib/kernel/list.c:84 in list_next(): assertion `is_head (elem) || is_interior (elem)' failed.
+Call stack: 0xc010709b.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 562 characters output
+Kernel PANIC recursion at ../../filesys/inode.c:338 in inode_allow_write().
+Timer: 72 ticks
+Thread: 32 idle ticks, 27 kernel ticks, 13 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 59 reads, 202 writes
+hd1:0: 97 reads, 0 writes
+Console: 5294 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

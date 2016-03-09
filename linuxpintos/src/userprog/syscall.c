@@ -158,64 +158,16 @@ syscall_handler (struct intr_frame *f UNUSED)
 		case (SYS_EXIT):
 			status = *(p + 1);
       //a change
-			printf("SYS_EXIT in thread: %d \n", curr_thread -> tid);
-			//kolla om parent existerar?? Fråga Erik
+			//printf("SYS_EXIT in thread: %d \n", curr_thread -> tid);
+			
+      //kolla om parent existerar?? Fråga Erik
 			struct child_status *cs_parent;
 			cs_parent = curr_thread->cs_parent;
 			cs_parent->exit_status = status;
-			
-			printf("Before lock acquire thread: %d \n", curr_thread -> tid);
-			lock_acquire(&cs_parent->cs_lock);
-			cs_parent->ref_cnt--;
-			if(cs_parent->ref_cnt == 0){		//Parent is dead
-				printf("Parent of thread %d is dead \n", curr_thread -> tid);
-				lock_release(&cs_parent->cs_lock);
-				free(cs_parent);
-			}else {								//Parent waits or doesn't care
-				printf("Parent wait or doesn't care \n");
-				lock_release(&cs_parent->cs_lock);
-				printf("EXIT: sema up \n");
-				sema_up(&cs_parent->sema_exec);
-			}
-			
-			//remember the children!!
-			struct elem_copy{
-				struct list_elem *pointer;
-				struct list_elem elem;
-			};
-			printf("Before first for loops \n");
-			cs_list = &curr_thread->cs_list;
-			struct list_elem *e;
-			struct child_status *cs;
-			struct list children_to_delete;
-			list_init(&children_to_delete);
-			for (e = list_begin (cs_list); e != list_end (cs_list); e = list_next(e))
-			 {
-				cs = list_entry (e, struct child_status, cs_elem);
-				lock_acquire(&cs->cs_lock);		
-				cs->ref_cnt--;
-				if(cs->ref_cnt == 0){
-					struct elem_copy *ec = (struct elem_copy *)malloc(sizeof(struct elem_copy));
-					ec->pointer = e;
-					list_push_front(&children_to_delete, &ec->elem);
-				}
-				lock_release(&cs->cs_lock);			
-			 }
-			 printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
-			while (!list_empty (&children_to_delete))
-			{
-				e = list_pop_front (&children_to_delete);
-				struct elem_copy *ec = list_entry(e, struct elem_copy, elem);
-				struct child_status *cs = list_entry(ec->pointer, struct child_status, cs_elem);
-				list_remove(ec->pointer);
-				free(ec);
-				free(cs);		
-			}
       
-			printf("Thread %d has exited, with %d children remaining \n", curr_thread ->tid, list_size(&curr_thread->cs_list));
       printf("%s: exit(%d)\n", curr_thread -> name, status);
-			thread_exit();
-      f->eax = status;
+      thread_exit();
+      
 			break;
 			
 		/*Fråga Erik om "Reconsider all the situations under the condition that the child does not 
