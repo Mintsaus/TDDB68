@@ -1,12 +1,11 @@
-Copying tests/userprog/write-zero into /tmp/APArkm2weF.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/APArkm2weF.dsk...
-Writing command line to /tmp/byZ697qNNj.dsk...
-qemu -hda /tmp/byZ697qNNj.dsk -hdb /tmp/OXSBn4kkuY.dsk -hdc /tmp/APArkm2weF.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-zero into /tmp/I6n3ylULeA.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/I6n3ylULeA.dsk...
+Writing command line to /tmp/29EBArAg6Z.dsk...
+qemu -hda /tmp/29EBArAg6Z.dsk -hdb /tmp/4euISX94rO.dsk -hdc /tmp/I6n3ylULeA.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-zero put sample.txt run write-zero
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -16,31 +15,17 @@ Boot complete.
 Putting 'write-zero' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'write-zero':
-Created new child status for write-zero 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load write-zero 
-LOAD: file_name: write-zero
-write-zero
-arguments[1] = (null)Great success!arguments[0] = write-zero 
-Round 1
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (write-zero) begin
 (write-zero) open "sample.txt"
 (write-zero) write() returned -1 instead of 0: FAILED
 write-zero: exit(1)
 Execution of 'write-zero' complete.
 Timer: 57 ticks
-Thread: 32 idle ticks, 23 kernel ticks, 2 user ticks
+Thread: 34 idle ticks, 23 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 90 reads, 212 writes
 hd1:0: 101 reads, 0 writes
-Console: 1290 characters output
+Console: 934 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

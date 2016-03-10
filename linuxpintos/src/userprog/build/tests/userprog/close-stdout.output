@@ -1,11 +1,10 @@
-Copying tests/userprog/close-stdout into /tmp/2zlf8tW30G.dsk...
-Writing command line to /tmp/VTWhEPbdmc.dsk...
-qemu -hda /tmp/VTWhEPbdmc.dsk -hdb /tmp/pR2wkeh2C8.dsk -hdc /tmp/2zlf8tW30G.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/close-stdout into /tmp/ZXItX7fUzs.dsk...
+Writing command line to /tmp/umHEExa3Am.dsk...
+qemu -hda /tmp/umHEExa3Am.dsk -hdb /tmp/X4lBCAucWv.dsk -hdc /tmp/ZXItX7fUzs.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put close-stdout run close-stdout
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,30 +13,16 @@ Formatting file system...done.
 Boot complete.
 Putting 'close-stdout' into the file system...
 Executing 'close-stdout':
-Created new child status for close-stdout 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load close-stdout 
-LOAD: file_name: close-stdout
-close-stdout
-arguments[1] = (null)Great success!arguments[0] = close-stdout 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (close-stdout) begin
 (close-stdout) end
 close-stdout: exit(0)
 Execution of 'close-stdout' complete.
-Timer: 57 ticks
-Thread: 32 idle ticks, 24 kernel ticks, 1 user ticks
+Timer: 58 ticks
+Thread: 32 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 1186 characters output
+Console: 820 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -1,11 +1,10 @@
-Copying tests/userprog/create-bound into /tmp/O033UUsn4w.dsk...
-Writing command line to /tmp/WNTimS79Zo.dsk...
-qemu -hda /tmp/WNTimS79Zo.dsk -hdb /tmp/QEIWpxOjq8.dsk -hdc /tmp/O033UUsn4w.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-bound into /tmp/BB__3z0HMs.dsk...
+Writing command line to /tmp/8hVjC38DW2.dsk...
+qemu -hda /tmp/8hVjC38DW2.dsk -hdb /tmp/EBQSpI6AO9.dsk -hdc /tmp/BB__3z0HMs.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-bound run create-bound
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,32 +13,17 @@ Formatting file system...done.
 Boot complete.
 Putting 'create-bound' into the file system...
 Executing 'create-bound':
-Created new child status for create-bound 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load create-bound 
-LOAD: file_name: create-bound
-create-bound
-arguments[1] = (null)Great success!arguments[0] = create-bound 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (create-bound) begin
-SYS_CREATE
 (create-bound) create("quux.dat"): 1
 (create-bound) end
 create-bound: exit(0)
 Execution of 'create-bound' complete.
 Timer: 61 ticks
-Thread: 32 idle ticks, 27 kernel ticks, 2 user ticks
+Thread: 30 idle ticks, 31 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 81 reads, 212 writes
 hd1:0: 100 reads, 0 writes
-Console: 1236 characters output
+Console: 859 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

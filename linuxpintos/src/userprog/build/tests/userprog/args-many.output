@@ -1,11 +1,10 @@
-Copying tests/userprog/args-many into /tmp/5zCQQei4fk.dsk...
-Writing command line to /tmp/L3tajhGpwY.dsk...
-qemu -hda /tmp/L3tajhGpwY.dsk -hdb /tmp/sH39oCE3Pq.dsk -hdc /tmp/5zCQQei4fk.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/args-many into /tmp/oVWwalfHDo.dsk...
+Writing command line to /tmp/LQHwYuZ9NT.dsk...
+qemu -hda /tmp/LQHwYuZ9NT.dsk -hdb /tmp/cHvixRsEc8.dsk -hdc /tmp/oVWwalfHDo.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put args-many run 'args-many a b c d e f g h i j k l m n o p q r s t u v'
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,64 +13,6 @@ Formatting file system...done.
 Boot complete.
 Putting 'args-many' into the file system...
 Executing 'args-many a b c d e f g h i j k l m n o p q r s t u v':
-Created new child status for args-many a b c d e f g h i j k l m n o p q r s t u v 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load args-many a b c d e f g h i j k l m n o p q r s t u v 
-LOAD: file_name: args-many
-args-many
-a
-b
-c
-d
-e
-f
-g
-h
-i
-j
-k
-l
-m
-n
-o
-p
-q
-r
-s
-t
-u
-v
-arguments[1] = aGreat success!arguments[0] = args-many 
-arguments[1] = a 
-arguments[2] = b 
-arguments[3] = c 
-arguments[4] = d 
-arguments[5] = e 
-arguments[6] = f 
-arguments[7] = g 
-arguments[8] = h 
-arguments[9] = i 
-arguments[10] = j 
-arguments[11] = k 
-arguments[12] = l 
-arguments[13] = m 
-arguments[14] = n 
-arguments[15] = o 
-arguments[16] = p 
-arguments[17] = q 
-arguments[18] = r 
-arguments[19] = s 
-arguments[20] = t 
-arguments[21] = u 
-arguments[22] = v 
-Round 2
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (args) begin
 (args) argc = 23
 (args) argv[0] = 'args-many'
@@ -101,12 +42,12 @@ start_process: after sema up
 (args) end
 args-many: exit(0)
 Execution of 'args-many' complete.
-Timer: 65 ticks
-Thread: 33 idle ticks, 27 kernel ticks, 5 user ticks
+Timer: 59 ticks
+Thread: 32 idle ticks, 25 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 2307 characters output
+Console: 1420 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

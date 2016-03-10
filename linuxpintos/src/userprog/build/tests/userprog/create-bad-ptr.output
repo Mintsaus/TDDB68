@@ -1,11 +1,10 @@
-Copying tests/userprog/create-bad-ptr into /tmp/kI4wko6qfD.dsk...
-Writing command line to /tmp/qwSz59lIBA.dsk...
-qemu -hda /tmp/qwSz59lIBA.dsk -hdb /tmp/QTTBIqyZ1J.dsk -hdc /tmp/kI4wko6qfD.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-bad-ptr into /tmp/E8K3SRNooI.dsk...
+Writing command line to /tmp/LUUCqQKGsw.dsk...
+qemu -hda /tmp/LUUCqQKGsw.dsk -hdb /tmp/etTWvgDF_t.dsk -hdc /tmp/E8K3SRNooI.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-bad-ptr run create-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,39 +13,24 @@ Formatting file system...done.
 Boot complete.
 Putting 'create-bad-ptr' into the file system...
 Executing 'create-bad-ptr':
-Created new child status for create-bad-ptr 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load create-bad-ptr 
-LOAD: file_name: create-bad-ptr
-create-bad-ptr
-arguments[1] = (null)Great success!arguments[0] = create-bad-ptr 
-Round 1
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (create-bad-ptr) begin
-SYS_CREATE
 Page fault at 0x20101234: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010b551
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010b3b1
  cr2=20101234 error=00000000
  eax=00000000 ebx=c011a06c ecx=c0113a18 edx=00000007
- esi=20101234 edi=c011a04c esp=c011a02c ebp=c011a06c
+ esi=20101234 edi=c011f024 esp=c011a02c ebp=c011a06c
  cs=0008 ds=0010 es=0010 ss=a03c
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc01070ab 0xc010b551 0 0xc011c00c.
+Call stack: 0xc010709b 0xc010b3b1 0 0xc011c00c.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 60 ticks
-Thread: 33 idle ticks, 25 kernel ticks, 2 user ticks
+Timer: 58 ticks
+Thread: 33 idle ticks, 24 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 62 reads, 207 writes
 hd1:0: 98 reads, 0 writes
-Console: 1746 characters output
+Console: 1359 characters output
 Keyboard: 0 keys pressed
 Exception: 1 page faults
 Powering off...

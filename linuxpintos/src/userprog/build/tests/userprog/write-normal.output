@@ -1,12 +1,11 @@
-Copying tests/userprog/write-normal into /tmp/N1UGDod2lz.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/N1UGDod2lz.dsk...
-Writing command line to /tmp/bO21XZSav4.dsk...
-qemu -hda /tmp/bO21XZSav4.dsk -hdb /tmp/4dJp6PLefm.dsk -hdc /tmp/N1UGDod2lz.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-normal into /tmp/Phq7WWyZrc.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/Phq7WWyZrc.dsk...
+Writing command line to /tmp/KK1RXjHghM.dsk...
+qemu -hda /tmp/KK1RXjHghM.dsk -hdb /tmp/9T1KNjBpVo.dsk -hdc /tmp/Phq7WWyZrc.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-normal put sample.txt run write-normal
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -16,33 +15,18 @@ Boot complete.
 Putting 'write-normal' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'write-normal':
-Created new child status for write-normal 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load write-normal 
-LOAD: file_name: write-normal
-write-normal
-arguments[1] = (null)Great success!arguments[0] = write-normal 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (write-normal) begin
 (write-normal) create "test.txt"
-SYS_CREATE
 (write-normal) open "test.txt"
 (write-normal) end
 write-normal: exit(0)
 Execution of 'write-normal' complete.
-Timer: 61 ticks
-Thread: 31 idle ticks, 28 kernel ticks, 2 user ticks
+Timer: 57 ticks
+Thread: 32 idle ticks, 25 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 122 reads, 220 writes
 hd1:0: 102 reads, 0 writes
-Console: 1324 characters output
+Console: 947 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

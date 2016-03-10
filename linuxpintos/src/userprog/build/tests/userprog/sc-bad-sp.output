@@ -1,11 +1,10 @@
-Copying tests/userprog/sc-bad-sp into /tmp/xb1_V8fU1t.dsk...
-Writing command line to /tmp/baJzNMKAPE.dsk...
-qemu -hda /tmp/baJzNMKAPE.dsk -hdb /tmp/gb0HiIAfHH.dsk -hdc /tmp/xb1_V8fU1t.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/sc-bad-sp into /tmp/Tx5T8hL9fS.dsk...
+Writing command line to /tmp/Oz0kqLGVHW.dsk...
+qemu -hda /tmp/Oz0kqLGVHW.dsk -hdb /tmp/lMorvK2NM7.dsk -hdc /tmp/Tx5T8hL9fS.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put sc-bad-sp run sc-bad-sp
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,38 +13,24 @@ Formatting file system...done.
 Boot complete.
 Putting 'sc-bad-sp' into the file system...
 Executing 'sc-bad-sp':
-Created new child status for sc-bad-sp 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load sc-bad-sp 
-LOAD: file_name: sc-bad-sp
-sc-bad-sp
-arguments[1] = (null)Great success!arguments[0] = sc-bad-sp 
-Round 2
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (sc-bad-sp) begin
 Page fault at 0x40480a3: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a6b3
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a571
  cr2=040480a3 error=00000000
- eax=c011ffb0 ebx=040480a3 ecx=0000000e edx=00000030
- esi=c011f000 edi=c011a04c esp=0804bb40 ebp=c011f024
+ eax=c011f000 ebx=c011ffb0 ecx=0000000e edx=040480a3
+ esi=c011a04c edi=c011f024 esp=0804bb40 ebp=c011ffe8
  cs=0008 ds=0010 es=0010 ss=0012
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc01070ab 0xc010a6b3.
+Call stack: 0xc010709b 0xc010a571 0x80480aa.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 62 ticks
-Thread: 34 idle ticks, 26 kernel ticks, 2 user ticks
+Timer: 56 ticks
+Thread: 32 idle ticks, 23 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 1671 characters output
+Console: 1330 characters output
 Keyboard: 0 keys pressed
 Exception: 1 page faults
 Powering off...

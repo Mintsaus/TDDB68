@@ -1,12 +1,11 @@
-Copying tests/userprog/open-normal into /tmp/UvGSrKS4JF.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/UvGSrKS4JF.dsk...
-Writing command line to /tmp/8vy2Oz0q05.dsk...
-qemu -hda /tmp/8vy2Oz0q05.dsk -hdb /tmp/Cg0Gkfq3rc.dsk -hdc /tmp/UvGSrKS4JF.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/open-normal into /tmp/cqaV9OX8uw.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/cqaV9OX8uw.dsk...
+Writing command line to /tmp/cPeko_h1kK.dsk...
+qemu -hda /tmp/cPeko_h1kK.dsk -hdb /tmp/CyQTP0pBlG.dsk -hdc /tmp/cqaV9OX8uw.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put open-normal put sample.txt run open-normal
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -16,29 +15,16 @@ Boot complete.
 Putting 'open-normal' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'open-normal':
-Created new child status for open-normal 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load open-normal 
-LOAD: file_name: open-normal
-open-normal
-arguments[1] = (null)Great success!arguments[0] = open-normal 
-Round 0
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (open-normal) begin
 (open-normal) end
 open-normal: exit(0)
 Execution of 'open-normal' complete.
-Timer: 57 ticks
-Thread: 31 idle ticks, 24 kernel ticks, 2 user ticks
+Timer: 58 ticks
+Thread: 31 idle ticks, 27 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 90 reads, 210 writes
 hd1:0: 100 reads, 0 writes
-Console: 1220 characters output
+Console: 874 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -1,11 +1,10 @@
-Copying tests/userprog/args-single into /tmp/h3UAA6o5JH.dsk...
-Writing command line to /tmp/QQ7nzd6xHu.dsk...
-qemu -hda /tmp/QQ7nzd6xHu.dsk -hdb /tmp/waGYIYIRuT.dsk -hdc /tmp/h3UAA6o5JH.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/args-single into /tmp/xnO_4cX3UL.dsk...
+Writing command line to /tmp/zjy1dmMCqt.dsk...
+qemu -hda /tmp/zjy1dmMCqt.dsk -hdb /tmp/ScwnnmZsbS.dsk -hdc /tmp/xnO_4cX3UL.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put args-single run 'args-single onearg'
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,22 +13,6 @@ Formatting file system...done.
 Boot complete.
 Putting 'args-single' into the file system...
 Executing 'args-single onearg':
-Created new child status for args-single onearg 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load args-single onearg 
-LOAD: file_name: args-single
-args-single
-onearg
-arguments[1] = oneargGreat success!arguments[0] = args-single 
-arguments[1] = onearg 
-Round 1
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (args) begin
 (args) argc = 2
 (args) argv[0] = 'args-single'
@@ -39,11 +22,11 @@ start_process: after sema up
 args-single: exit(0)
 Execution of 'args-single' complete.
 Timer: 58 ticks
-Thread: 31 idle ticks, 25 kernel ticks, 2 user ticks
+Thread: 33 idle ticks, 25 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 1314 characters output
+Console: 909 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

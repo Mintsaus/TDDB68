@@ -1,11 +1,10 @@
-Copying tests/userprog/create-exists into /tmp/jfQFOA8kYU.dsk...
-Writing command line to /tmp/2XmYZfpatx.dsk...
-qemu -hda /tmp/2XmYZfpatx.dsk -hdb /tmp/TWN89cEuwx.dsk -hdc /tmp/jfQFOA8kYU.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-exists into /tmp/yUUduwSUNq.dsk...
+Writing command line to /tmp/TfELUTlnrL.dsk...
+qemu -hda /tmp/TfELUTlnrL.dsk -hdb /tmp/7srgRiSnHt.dsk -hdc /tmp/yUUduwSUNq.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-exists run create-exists
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,40 +13,21 @@ Formatting file system...done.
 Boot complete.
 Putting 'create-exists' into the file system...
 Executing 'create-exists':
-Created new child status for create-exists 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load create-exists 
-LOAD: file_name: create-exists
-create-exists
-arguments[1] = (null)Great success!arguments[0] = create-exists 
-Round 2
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (create-exists) begin
 (create-exists) create quux.dat
-SYS_CREATE
 (create-exists) create warble.dat
-SYS_CREATE
 (create-exists) try to re-create quux.dat
-SYS_CREATE
 (create-exists) create baffle.dat
-SYS_CREATE
 (create-exists) try to re-create quux.dat
-SYS_CREATE
 (create-exists) end
 create-exists: exit(0)
 Execution of 'create-exists' complete.
-Timer: 61 ticks
-Thread: 32 idle ticks, 25 kernel ticks, 4 user ticks
+Timer: 59 ticks
+Thread: 33 idle ticks, 24 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 142 reads, 226 writes
 hd1:0: 99 reads, 0 writes
-Console: 1439 characters output
+Console: 1013 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

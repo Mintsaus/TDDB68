@@ -1,11 +1,10 @@
-Copying tests/userprog/read-stdout into /tmp/mhXqatQCbi.dsk...
-Writing command line to /tmp/02rpiBQOyC.dsk...
-qemu -hda /tmp/02rpiBQOyC.dsk -hdb /tmp/xEDCnUDvyb.dsk -hdc /tmp/mhXqatQCbi.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/read-stdout into /tmp/Qb9ifakgrm.dsk...
+Writing command line to /tmp/AifaW6WJO1.dsk...
+qemu -hda /tmp/AifaW6WJO1.dsk -hdb /tmp/tZVSiXr1jz.dsk -hdc /tmp/Qb9ifakgrm.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put read-stdout run read-stdout
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,29 +13,16 @@ Formatting file system...done.
 Boot complete.
 Putting 'read-stdout' into the file system...
 Executing 'read-stdout':
-Created new child status for read-stdout 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load read-stdout 
-LOAD: file_name: read-stdout
-read-stdout
-arguments[1] = (null)Great success!arguments[0] = read-stdout 
-Round 0
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (read-stdout) begin
 (read-stdout) end
 read-stdout: exit(0)
 Execution of 'read-stdout' complete.
-Timer: 61 ticks
-Thread: 33 idle ticks, 27 kernel ticks, 1 user ticks
+Timer: 59 ticks
+Thread: 33 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1158 characters output
+Console: 812 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

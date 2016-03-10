@@ -1,11 +1,10 @@
-Copying tests/userprog/sc-boundary-2 into /tmp/ES3x1LCOHk.dsk...
-Writing command line to /tmp/lgAzwT7bjV.dsk...
-qemu -hda /tmp/lgAzwT7bjV.dsk -hdb /tmp/A50VuEHhLi.dsk -hdc /tmp/ES3x1LCOHk.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/sc-boundary-2 into /tmp/co2VDSqVcc.dsk...
+Writing command line to /tmp/rBoGBLKKXm.dsk...
+qemu -hda /tmp/rBoGBLKKXm.dsk -hdb /tmp/ZdRZ5OVUGA.dsk -hdc /tmp/co2VDSqVcc.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put sc-boundary-2 run sc-boundary-2
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,29 +13,15 @@ Formatting file system...done.
 Boot complete.
 Putting 'sc-boundary-2' into the file system...
 Executing 'sc-boundary-2':
-Created new child status for sc-boundary-2 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load sc-boundary-2 
-LOAD: file_name: sc-boundary-2
-sc-boundary-2
-arguments[1] = (null)Great success!arguments[0] = sc-boundary-2 
-Round 2
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (sc-boundary-2) begin
 sc-boundary-2: exit(67)
 Execution of 'sc-boundary-2' complete.
-Timer: 58 ticks
-Thread: 32 idle ticks, 26 kernel ticks, 0 user ticks
+Timer: 56 ticks
+Thread: 32 idle ticks, 24 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 210 writes
 hd1:0: 101 reads, 0 writes
-Console: 1182 characters output
+Console: 811 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

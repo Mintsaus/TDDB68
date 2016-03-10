@@ -1,12 +1,11 @@
-Copying tests/userprog/wait-killed into /tmp/LJKN1Ebv1E.dsk...
-Copying tests/userprog/child-bad into /tmp/LJKN1Ebv1E.dsk...
-Writing command line to /tmp/3OhvTzwFZ7.dsk...
-qemu -hda /tmp/3OhvTzwFZ7.dsk -hdb /tmp/hB4KqFvtl_.dsk -hdc /tmp/LJKN1Ebv1E.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/wait-killed into /tmp/vtexlVYnm8.dsk...
+Copying tests/userprog/child-bad into /tmp/vtexlVYnm8.dsk...
+Writing command line to /tmp/MUTR_bivWg.dsk...
+qemu -hda /tmp/MUTR_bivWg.dsk -hdb /tmp/fg_PoyEQbC.dsk -hdc /tmp/vtexlVYnm8.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put wait-killed put child-bad run wait-killed
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -16,53 +15,25 @@ Boot complete.
 Putting 'wait-killed' into the file system...
 Putting 'child-bad' into the file system...
 Executing 'wait-killed':
-Created new child status for wait-killed 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load wait-killed 
-LOAD: file_name: wait-killed
-wait-killed
-arguments[1] = (null)Great success!arguments[0] = wait-killed 
-Round 0
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (wait-killed) begin
-Calling process_execute in thread: 3 
-Created new child status for child-bad 
-Returning tid 4
-Beginning of start_process for thread: 4 
- About to load child-bad 
-LOAD: file_name: child-bad
-child-bad
-arguments[1] = (null)Great success!arguments[0] = child-bad 
-Round 2
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (child-bad) begin
 Page fault at 0x20101234: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a6b3
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a571
  cr2=20101234 error=00000000
- eax=c0123fb0 ebx=20101234 ecx=0000000e edx=00000030
- esi=c0123000 edi=c011a06c esp=0804bb40 ebp=c0123024
+ eax=c0123000 ebx=c0123fb0 ecx=0000000e edx=20101234
+ esi=c011a06c edi=c0123024 esp=0804bb40 ebp=c0123fe8
  cs=0008 ds=0010 es=0010 ss=0012
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc01070ab 0xc010a6b3.
+Call stack: 0xc010709b 0xc010a571 0x80480aa.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 61 ticks
-Thread: 32 idle ticks, 25 kernel ticks, 4 user ticks
+Timer: 64 ticks
+Thread: 35 idle ticks, 27 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 116 reads, 400 writes
 hd1:0: 195 reads, 0 writes
-Console: 2129 characters output
+Console: 1420 characters output
 Keyboard: 0 keys pressed
 Exception: 1 page faults
 Powering off...

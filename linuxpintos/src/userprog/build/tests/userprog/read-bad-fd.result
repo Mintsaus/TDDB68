@@ -1,5 +1,5 @@
 FAIL
 Kernel panic in run: PANIC at ../../lib/kernel/bitmap.c:202 in bitmap_test(): assertion `idx < b->bit_cnt' failed.
-Call stack: 0xc01070ab
+Call stack: 0xc010709b
 Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
+0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)

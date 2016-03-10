@@ -1,11 +1,10 @@
-Copying tests/userprog/read-bad-fd into /tmp/1wUHAo26iO.dsk...
-Writing command line to /tmp/oD4250LV3j.dsk...
-qemu -hda /tmp/oD4250LV3j.dsk -hdb /tmp/8nmZ0yPyII.dsk -hdc /tmp/1wUHAo26iO.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/read-bad-fd into /tmp/6lFgaS0EFJ.dsk...
+Writing command line to /tmp/iGNWyhU7LY.dsk...
+qemu -hda /tmp/iGNWyhU7LY.dsk -hdb /tmp/5ofaV3QEiN.dsk -hdc /tmp/6lFgaS0EFJ.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put read-bad-fd run read-bad-fd
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,31 +13,21 @@ Formatting file system...done.
 Boot complete.
 Putting 'read-bad-fd' into the file system...
 Executing 'read-bad-fd':
-Created new child status for read-bad-fd 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load read-bad-fd 
-LOAD: file_name: read-bad-fd
-read-bad-fd
-arguments[1] = (null)Great success!arguments[0] = read-bad-fd 
-Round 0
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (read-bad-fd) begin
 Kernel PANIC at ../../lib/kernel/bitmap.c:202 in bitmap_test(): assertion `idx < b->bit_cnt' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 60 ticks
-Thread: 34 idle ticks, 24 kernel ticks, 2 user ticks
+Call stack: 0xc010709bPage fault at 0xffffffff: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052d7
+ cr2=ffffffff error=00000000
+ eax=0000000b ebx=ffffffff ecx=00000606 edx=000003d4
+ esi=000000ca edi=c010cadd esp=c010de9b ebp=c011fec4
+ cs=0008 ds=0010 es=0010 ss=709b
+Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
+Timer: 56 ticks
+Thread: 32 idle ticks, 23 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1361 characters output
+Console: 1231 characters output
 Keyboard: 0 keys pressed
-Exception: 0 page faults
+Exception: 1 page faults
 Powering off...

@@ -1,11 +1,10 @@
-Copying tests/userprog/create-normal into /tmp/YfBIORAIgA.dsk...
-Writing command line to /tmp/p6SZD_h85J.dsk...
-qemu -hda /tmp/p6SZD_h85J.dsk -hdb /tmp/E22zyFlczF.dsk -hdc /tmp/YfBIORAIgA.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-normal into /tmp/kimCsjdjF7.dsk...
+Writing command line to /tmp/GOj4k_k2mu.dsk...
+qemu -hda /tmp/GOj4k_k2mu.dsk -hdb /tmp/f0_tXt7chr.dsk -hdc /tmp/kimCsjdjF7.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-normal run create-normal
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,32 +13,17 @@ Formatting file system...done.
 Boot complete.
 Putting 'create-normal' into the file system...
 Executing 'create-normal':
-Created new child status for create-normal 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load create-normal 
-LOAD: file_name: create-normal
-create-normal
-arguments[1] = (null)Great success!arguments[0] = create-normal 
-Round 2
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (create-normal) begin
 (create-normal) create quux.dat
-SYS_CREATE
 (create-normal) end
 create-normal: exit(0)
 Execution of 'create-normal' complete.
 Timer: 61 ticks
-Thread: 33 idle ticks, 27 kernel ticks, 1 user ticks
+Thread: 32 idle ticks, 29 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 81 reads, 208 writes
 hd1:0: 98 reads, 0 writes
-Console: 1242 characters output
+Console: 860 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

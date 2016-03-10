@@ -1,11 +1,10 @@
-Copying tests/userprog/halt into /tmp/JjOMpBADSp.dsk...
-Writing command line to /tmp/CRCYW_O5mV.dsk...
-qemu -hda /tmp/CRCYW_O5mV.dsk -hdb /tmp/QmMOXoyRXI.dsk -hdc /tmp/JjOMpBADSp.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/halt into /tmp/drm3_CdO1W.dsk...
+Writing command line to /tmp/YR8SC99K2w.dsk...
+qemu -hda /tmp/YR8SC99K2w.dsk -hdb /tmp/Uazn1m5WQx.dsk -hdc /tmp/drm3_CdO1W.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put halt run halt
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,27 +13,13 @@ Formatting file system...done.
 Boot complete.
 Putting 'halt' into the file system...
 Executing 'halt':
-Created new child status for halt 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load halt 
-LOAD: file_name: halt
-halt
-arguments[1] = (null)Great success!arguments[0] = halt 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (halt) begin
-Timer: 59 ticks
-Thread: 31 idle ticks, 27 kernel ticks, 1 user ticks
+Timer: 55 ticks
+Thread: 31 idle ticks, 24 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 1027 characters output
+Console: 701 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

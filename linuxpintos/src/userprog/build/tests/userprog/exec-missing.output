@@ -1,11 +1,10 @@
-Copying tests/userprog/exec-missing into /tmp/oTiBg7243G.dsk...
-Writing command line to /tmp/17_pWBE40Q.dsk...
-qemu -hda /tmp/17_pWBE40Q.dsk -hdb /tmp/0u9OVAc1pY.dsk -hdc /tmp/oTiBg7243G.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/exec-missing into /tmp/mjrQ8Cv11_.dsk...
+Writing command line to /tmp/DemYZLT6Nb.dsk...
+qemu -hda /tmp/DemYZLT6Nb.dsk -hdb /tmp/H57BNMsV2f.dsk -hdc /tmp/mjrQ8Cv11_.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put exec-missing run exec-missing
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -14,57 +13,28 @@ Formatting file system...done.
 Boot complete.
 Putting 'exec-missing' into the file system...
 Executing 'exec-missing':
-Created new child status for exec-missing 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load exec-missing 
-LOAD: file_name: exec-missing
-exec-missing
-arguments[1] = (null)Great success!arguments[0] = exec-missing 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (exec-missing) begin
-Calling process_execute in thread: 3 
-Created new child status for no-such-file 
-Returning tid 4
-Beginning of start_process for thread: 4 
- About to load no-such-file 
-LOAD: file_name: no-such-file
-no-such-file
-arguments[1] = (null)Great success!arguments[0] = no-such-file 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
 load: no-such-file: open failed
-Not success 
-Done with process_execute in thread: 3 
 (exec-missing) exec("no-such-file"): 4
 (exec-missing) end
 exec-missing: exit(0)
 Page fault at 0xcccccc94: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010925d
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010923a
  cr2=cccccc94 error=00000000
  eax=c011f250 ebx=cccccccc ecx=c01128c8 edx=c011fee4
  esi=c011f248 edi=c011f000 esp=c011f248 ebp=c011fedc
  cs=0008 ds=0010 es=0010 ss=0000
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc01070ab 0xc010925d.
+Call stack: 0xc010709b 0xc010923a.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 59 ticks
-Thread: 33 idle ticks, 22 kernel ticks, 4 user ticks
+Timer: 58 ticks
+Thread: 34 idle ticks, 22 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 76 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 2216 characters output
+Console: 1448 characters output
 Keyboard: 0 keys pressed
 Exception: 1 page faults
 Powering off...

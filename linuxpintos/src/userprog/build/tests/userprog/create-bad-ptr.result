@@ -1,6 +1,6 @@
 FAIL
 Kernel panic in run: PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc01070ab 0xc010b551
+Call stack: 0xc010709b 0xc010b3b1
 Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
-0xc010b551: dir_add (..../filesys/directory.c:152)
+0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
+0xc010b3b1: dir_add (..../filesys/directory.c:152)

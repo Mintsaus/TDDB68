@@ -1,12 +1,11 @@
-Copying tests/userprog/wait-twice into /tmp/2m6ttoHk7j.dsk...
-Copying tests/userprog/child-simple into /tmp/2m6ttoHk7j.dsk...
-Writing command line to /tmp/J1tmfLRtAV.dsk...
-qemu -hda /tmp/J1tmfLRtAV.dsk -hdb /tmp/6KuWpDDUuW.dsk -hdc /tmp/2m6ttoHk7j.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/wait-twice into /tmp/mqsOmTmLRz.dsk...
+Copying tests/userprog/child-simple into /tmp/mqsOmTmLRz.dsk...
+Writing command line to /tmp/zIqp4QRt9l.dsk...
+qemu -hda /tmp/zIqp4QRt9l.dsk -hdb /tmp/L3T7YJUl0c.dsk -hdc /tmp/mqsOmTmLRz.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put wait-twice put child-simple run wait-twice
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
@@ -16,50 +15,20 @@ Boot complete.
 Putting 'wait-twice' into the file system...
 Putting 'child-simple' into the file system...
 Executing 'wait-twice':
-Created new child status for wait-twice 
-Returning tid 3
-Beginning of start_process for thread: 3 
- About to load wait-twice 
-LOAD: file_name: wait-twice
-wait-twice
-arguments[1] = (null)Great success!arguments[0] = wait-twice 
-Round 1
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (wait-twice) begin
-Calling process_execute in thread: 3 
-Created new child status for child-simple 
-Returning tid 4
-Beginning of start_process for thread: 4 
- About to load child-simple 
-LOAD: file_name: child-simple
-child-simple
-arguments[1] = (null)Great success!arguments[0] = child-simple 
-Round 3
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-Success 
-start_process: after sema up 
 (child-simple) run
 child-simple: exit(81)
-Done with process_execute in thread: 3 
 (wait-twice) wait(exec()) = 81
 (wait-twice) wait(exec()) = -1
 (wait-twice) end
 wait-twice: exit(0)
 Execution of 'wait-twice' complete.
-Timer: 66 ticks
-Thread: 34 idle ticks, 29 kernel ticks, 3 user ticks
+Timer: 59 ticks
+Thread: 33 idle ticks, 26 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 122 reads, 398 writes
 hd1:0: 194 reads, 0 writes
-Console: 1759 characters output
+Console: 975 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...
