@@ -1,12 +1,13 @@
-Copying tests/userprog/args-many into /tmp/ISWlDklHEm.dsk...
-Writing command line to /tmp/GfOaC534hH.dsk...
-qemu -hda /tmp/GfOaC534hH.dsk -hdb /tmp/4WM2evgv7h.dsk -hdc /tmp/ISWlDklHEm.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put args-many run 'args-many a b c d e f g h i j k l m n o p q r s t u v'
+Copying tests/userprog/args-many into /tmp/5zCQQei4fk.dsk...
+Writing command line to /tmp/L3tajhGpwY.dsk...
+qemu -hda /tmp/L3tajhGpwY.dsk -hdb /tmp/sH39oCE3Pq.dsk -hdc /tmp/5zCQQei4fk.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put args-many run 'args-many a b c d e f g h i j k l m n o p q r s t u v'
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
+Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
-hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
@@ -14,7 +15,7 @@ Boot complete.
 Putting 'args-many' into the file system...
 Executing 'args-many a b c d e f g h i j k l m n o p q r s t u v':
 Created new child status for args-many a b c d e f g h i j k l m n o p q r s t u v 
-Inte en urtrad: do sema init etc 
+Returning tid 3
 Beginning of start_process for thread: 3 
  About to load args-many a b c d e f g h i j k l m n o p q r s t u v 
 LOAD: file_name: args-many
@@ -69,250 +70,6 @@ Round var > 0
 Avrundning gjord
 Pushing sentinel 
 Pushing argv[] 
-*esp is 0xbfffff58
-stack contents:
-bfffff50                          c0 ff ff bf 17 00 00 00 |        ........|
-bfffff60  64 ff ff bf f6 ff ff bf-f4 ff ff bf f2 ff ff bf |d...............|
-bfffff70  f0 ff ff bf ee ff ff bf-ec ff ff bf ea ff ff bf |................|
-bfffff80  e8 ff ff bf e6 ff ff bf-e4 ff ff bf e2 ff ff bf |................|
-bfffff90  e0 ff ff bf de ff ff bf-dc ff ff bf da ff ff bf |................|
-bfffffa0  d8 ff ff bf d6 ff ff bf-d4 ff ff bf d2 ff ff bf |................|
-bfffffb0  d0 ff ff bf ce ff ff bf-cc ff ff bf ca ff ff bf |................|
-bfffffc0  00 00 00 00 00 00 00 00-00 00 76 00 75 00 74 00 |..........v.u.t.|
-bfffffd0  73 00 72 00 71 00 70 00-6f 00 6e 00 6d 00 6c 00 |s.r.q.p.o.n.m.l.|
-bfffffe0  6b 00 6a 00 69 00 68 00-67 00 66 00 65 00 64 00 |k.j.i.h.g.f.e.d.|
-bffffff0  63 00 62 00 61 00 61 72-67 73 2d 6d 61 6e 79 00 |c.b.a.args-many.|
-c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
-c000000f	 	
-c000000e	 	
-c000000d	 	
-c000000c	S	f000ff53	
---------------------------------------------------------------
-c000000b	 	
-c000000a	 	
-c0000009	 	
-c0000008	 	f000e2c3	
---------------------------------------------------------------
-c0000007	 	
-c0000006	 	
-c0000005	 	
-c0000004	S	f000ff53	
---------------------------------------------------------------
-c0000003	 	
-c0000002	 	
-c0000001	 	
-c0000000	S	f000ff53	
-------- the border between KERNEL SPACE and USER SPACE -------
-bfffffff	 	
-bffffffe	y	
-bffffffd	n	
-bffffffc	a	796e61	
---------------------------------------------------------------
-bffffffb	m	
-bffffffa	-	
-bffffff9	s	
-bffffff8	g	6d2d7367	
---------------------------------------------------------------
-bffffff7	r	
-bffffff6	a	
-bffffff5	 	
-bffffff4	a	72610061	
---------------------------------------------------------------
-bffffff3	 	
-bffffff2	b	
-bffffff1	 	
-bffffff0	c	620063	
---------------------------------------------------------------
-bfffffef	 	
-bfffffee	d	
-bfffffed	 	
-bfffffec	e	640065	
---------------------------------------------------------------
-bfffffeb	 	
-bfffffea	f	
-bfffffe9	 	
-bfffffe8	g	660067	
---------------------------------------------------------------
-bfffffe7	 	
-bfffffe6	h	
-bfffffe5	 	
-bfffffe4	i	680069	
---------------------------------------------------------------
-bfffffe3	 	
-bfffffe2	j	
-bfffffe1	 	
-bfffffe0	k	6a006b	
---------------------------------------------------------------
-bfffffdf	 	
-bfffffde	l	
-bfffffdd	 	
-bfffffdc	m	6c006d	
---------------------------------------------------------------
-bfffffdb	 	
-bfffffda	n	
-bfffffd9	 	
-bfffffd8	o	6e006f	
---------------------------------------------------------------
-bfffffd7	 	
-bfffffd6	p	
-bfffffd5	 	
-bfffffd4	q	700071	
---------------------------------------------------------------
-bfffffd3	 	
-bfffffd2	r	
-bfffffd1	 	
-bfffffd0	s	720073	
---------------------------------------------------------------
-bfffffcf	 	
-bfffffce	t	
-bfffffcd	 	
-bfffffcc	u	740075	
---------------------------------------------------------------
-bfffffcb	 	
-bfffffca	v	
-bfffffc9	 	
-bfffffc8	 	760000	
---------------------------------------------------------------
-bfffffc7	 	
-bfffffc6	 	
-bfffffc5	 	
-bfffffc4	 	0	
---------------------------------------------------------------
-bfffffc3	 	
-bfffffc2	 	
-bfffffc1	 	
-bfffffc0	 	0	
---------------------------------------------------------------
-bfffffbf	 	
-bfffffbe	 	
-bfffffbd	 	
-bfffffbc	 	bfffffca	
---------------------------------------------------------------
-bfffffbb	 	
-bfffffba	 	
-bfffffb9	 	
-bfffffb8	 	bfffffcc	
---------------------------------------------------------------
-bfffffb7	 	
-bfffffb6	 	
-bfffffb5	 	
-bfffffb4	 	bfffffce	
---------------------------------------------------------------
-bfffffb3	 	
-bfffffb2	 	
-bfffffb1	 	
-bfffffb0	 	bfffffd0	
---------------------------------------------------------------
-bfffffaf	 	
-bfffffae	 	
-bfffffad	 	
-bfffffac	 	bfffffd2	
---------------------------------------------------------------
-bfffffab	 	
-bfffffaa	 	
-bfffffa9	 	
-bfffffa8	 	bfffffd4	
---------------------------------------------------------------
-bfffffa7	 	
-bfffffa6	 	
-bfffffa5	 	
-bfffffa4	 	bfffffd6	
---------------------------------------------------------------
-bfffffa3	 	
-bfffffa2	 	
-bfffffa1	 	
-bfffffa0	 	bfffffd8	
---------------------------------------------------------------
-bfffff9f	 	
-bfffff9e	 	
-bfffff9d	 	
-bfffff9c	 	bfffffda	
---------------------------------------------------------------
-bfffff9b	 	
-bfffff9a	 	
-bfffff99	 	
-bfffff98	 	bfffffdc	
---------------------------------------------------------------
-bfffff97	 	
-bfffff96	 	
-bfffff95	 	
-bfffff94	 	bfffffde	
---------------------------------------------------------------
-bfffff93	 	
-bfffff92	 	
-bfffff91	 	
-bfffff90	 	bfffffe0	
---------------------------------------------------------------
-bfffff8f	 	
-bfffff8e	 	
-bfffff8d	 	
-bfffff8c	 	bfffffe2	
---------------------------------------------------------------
-bfffff8b	 	
-bfffff8a	 	
-bfffff89	 	
-bfffff88	 	bfffffe4	
---------------------------------------------------------------
-bfffff87	 	
-bfffff86	 	
-bfffff85	 	
-bfffff84	 	bfffffe6	
---------------------------------------------------------------
-bfffff83	 	
-bfffff82	 	
-bfffff81	 	
-bfffff80	 	bfffffe8	
---------------------------------------------------------------
-bfffff7f	 	
-bfffff7e	 	
-bfffff7d	 	
-bfffff7c	 	bfffffea	
---------------------------------------------------------------
-bfffff7b	 	
-bfffff7a	 	
-bfffff79	 	
-bfffff78	 	bfffffec	
---------------------------------------------------------------
-bfffff77	 	
-bfffff76	 	
-bfffff75	 	
-bfffff74	 	bfffffee	
---------------------------------------------------------------
-bfffff73	 	
-bfffff72	 	
-bfffff71	 	
-bfffff70	 	bffffff0	
---------------------------------------------------------------
-bfffff6f	 	
-bfffff6e	 	
-bfffff6d	 	
-bfffff6c	 	bffffff2	
---------------------------------------------------------------
-bfffff6b	 	
-bfffff6a	 	
-bfffff69	 	
-bfffff68	 	bffffff4	
---------------------------------------------------------------
-bfffff67	 	
-bfffff66	 	
-bfffff65	 	
-bfffff64	 	bffffff6	
---------------------------------------------------------------
-bfffff63	 	
-bfffff62	 	
-bfffff61	 	
-bfffff60	d	bfffff64	
---------------------------------------------------------------
-bfffff5f	 	
-bfffff5e	 	
-bfffff5d	 	
-bfffff5c	 	17	
---------------------------------------------------------------
-bfffff5b	 	
-bfffff5a	 	
-bfffff59	 	
-bfffff58	 	bfffffc0	
---------------------------------------------------------------
 Success 
 start_process: after sema up 
 (args) begin
@@ -342,20 +99,14 @@ start_process: after sema up
 (args) argv[22] = 'v'
 (args) argv[23] = null
 (args) end
-SYS_EXIT in thread: 3 
-Before lock acquire thread: 3 
-Parent wait or doesn't care 
-Kernel PANIC at ../../threads/synch.c:232 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 85 ticks
-Thread: 32 idle ticks, 25 kernel ticks, 28 user ticks
+args-many: exit(0)
+Execution of 'args-many' complete.
+Timer: 65 ticks
+Thread: 33 idle ticks, 27 kernel ticks, 5 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 9068 characters output
+Console: 2307 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

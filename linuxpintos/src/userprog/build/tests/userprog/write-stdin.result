@@ -1,5 +1,45 @@
 FAIL
-Kernel panic in run: PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab
-Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (write-stdin) begin
+  (write-stdin) end
+  write-stdin: exit(0)
+Differences in `diff -u' format:
++ Created new child status for write-stdin 
++ Returning tid 3
++ Beginning of start_process for thread: 3 
++  About to load write-stdin 
++ LOAD: file_name: write-stdin
++ write-stdin
++ arguments[1] = (null)Great success!arguments[0] = write-stdin 
++ Round 0
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (write-stdin) begin
+  (write-stdin) end
+  write-stdin: exit(0)
+Acceptable output:
+  (write-stdin) begin
+  write-stdin: exit(-1)
+Differences in `diff -u' format:
++ Created new child status for write-stdin 
++ Returning tid 3
++ Beginning of start_process for thread: 3 
++  About to load write-stdin 
++ LOAD: file_name: write-stdin
++ write-stdin
++ arguments[1] = (null)Great success!arguments[0] = write-stdin 
++ Round 0
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (write-stdin) begin
+- write-stdin: exit(-1)
++ (write-stdin) end
++ write-stdin: exit(0)

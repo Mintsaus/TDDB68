@@ -1,18 +1,54 @@
-Copying tests/userprog/open-bad-ptr into /tmp/G_c6aBTVED.dsk...
-Writing command line to /tmp/aGC7fswfIG.dsk...
-qemu -hda /tmp/aGC7fswfIG.dsk -hdb /tmp/gHnIvmNjQT.dsk -hdc /tmp/G_c6aBTVED.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put open-bad-ptr run open-bad-ptr
+Copying tests/userprog/open-bad-ptr into /tmp/9Kjk1H6XQo.dsk...
+Writing command line to /tmp/__9rS0K2rW.dsk...
+qemu -hda /tmp/__9rS0K2rW.dsk -hdb /tmp/g72gc1nq_G.dsk -hdc /tmp/9Kjk1H6XQo.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put open-bad-ptr run open-bad-ptr
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 534 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 98 sector (49 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'open-bad-ptr' into the file system...
+Executing 'open-bad-ptr':
+Created new child status for open-bad-ptr 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load open-bad-ptr 
+LOAD: file_name: open-bad-ptr
+open-bad-ptr
+arguments[1] = (null)Great success!arguments[0] = open-bad-ptr 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(open-bad-ptr) begin
+Page fault at 0x20101234: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc0106786
+ cr2=20101234 error=00000000
+ eax=20101234 ebx=00000000 ecx=20101234 edx=c011fe8c
+ esi=00000001 edi=c011a06c esp=c011b20c ebp=c011fe88
+ cs=0008 ds=0010 es=0010 ss=0014
+Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0xc01070ab 0xc0106786 0x6e65706fPage fault at 0x4: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052e7
+ cr2=00000004 error=00000000
+ eax=0000000b ebx=00000004 ecx=000007ac edx=000003d4
+ esi=00000064 edi=c010cd85 esp=c010e047 ebp=c011fd38
+ cs=0008 ds=0010 es=0010 ss=706f
+Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
+Timer: 58 ticks
+Thread: 32 idle ticks, 23 kernel ticks, 3 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 61 reads, 204 writes
+hd1:0: 98 reads, 0 writes
+Console: 1922 characters output
 Keyboard: 0 keys pressed
-Exception: 0 page faults
+Exception: 2 page faults
 Powering off...

@@ -1,19 +1,117 @@
-Copying tests/userprog/exec-multiple into /tmp/9o0mfrfeMs.dsk...
-Copying tests/userprog/child-simple into /tmp/9o0mfrfeMs.dsk...
-Writing command line to /tmp/SKjFj_wLqd.dsk...
-qemu -hda /tmp/SKjFj_wLqd.dsk -hdb /tmp/Q12QaDnur0.dsk -hdc /tmp/9o0mfrfeMs.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put exec-multiple put child-simple run exec-multiple
+Copying tests/userprog/exec-multiple into /tmp/_e05r50QAz.dsk...
+Copying tests/userprog/child-simple into /tmp/_e05r50QAz.dsk...
+Writing command line to /tmp/eQIRv8leJW.dsk...
+qemu -hda /tmp/eQIRv8leJW.dsk -hdb /tmp/Tj6Maf5D6P.dsk -hdc /tmp/_e05r50QAz.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put exec-multiple put child-simple run exec-multiple
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 553 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 194 sector (97 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'exec-multiple' into the file system...
+Putting 'child-simple' into the file system...
+Executing 'exec-multiple':
+Created new child status for exec-multiple 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load exec-multiple 
+LOAD: file_name: exec-multiple
+exec-multiple
+arguments[1] = (null)Great success!arguments[0] = exec-multiple 
+Round 2
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(exec-multiple) begin
+Calling process_execute in thread: 3 
+Created new child status for child-simple 
+Returning tid 4
+Beginning of start_process for thread: 4 
+ About to load child-simple 
+LOAD: file_name: child-simple
+child-simple
+arguments[1] = (null)Great success!arguments[0] = child-simple 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(child-simple) run
+child-simple: exit(81)
+Done with process_execute in thread: 3 
+Calling process_execute in thread: 3 
+Created new child status for child-simple 
+Returning tid 5
+Beginning of start_process for thread: 5 
+ About to load child-simple 
+LOAD: file_name: child-simple
+child-simple
+arguments[1] = (null)Great success!arguments[0] = child-simple 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(child-simple) run
+child-simple: exit(81)
+Done with process_execute in thread: 3 
+Calling process_execute in thread: 3 
+Created new child status for child-simple 
+Returning tid 6
+Beginning of start_process for thread: 6 
+ About to load child-simple 
+LOAD: file_name: child-simple
+child-simple
+arguments[1] = (null)Great success!arguments[0] = child-simple 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(child-simple) run
+child-simple: exit(81)
+Done with process_execute in thread: 3 
+Calling process_execute in thread: 3 
+Created new child status for child-simple 
+Returning tid 7
+Beginning of start_process for thread: 7 
+ About to load child-simple 
+LOAD: file_name: child-simple
+child-simple
+arguments[1] = (null)Great success!arguments[0] = child-simple 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(child-simple) run
+child-simple: exit(81)
+Done with process_execute in thread: 3 
+(exec-multiple) end
+exec-multiple: exit(0)
+Execution of 'exec-multiple' complete.
+Timer: 69 ticks
+Thread: 35 idle ticks, 29 kernel ticks, 5 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 230 reads, 398 writes
+hd1:0: 194 reads, 0 writes
+Console: 3146 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

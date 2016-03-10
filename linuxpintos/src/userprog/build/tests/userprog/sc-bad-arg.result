@@ -1,5 +1,24 @@
 FAIL
-Kernel panic in run: PANIC at ../../threads/synch.c:232 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
-Call stack: 0xc01070ab
-Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (sc-bad-arg) begin
+  sc-bad-arg: exit(-1)
+Differences in `diff -u' format:
++ Created new child status for sc-bad-arg 
++ Returning tid 3
++ Beginning of start_process for thread: 3 
++  About to load sc-bad-arg 
++ LOAD: file_name: sc-bad-arg
++ sc-bad-arg
++ arguments[1] = (null)Great success!arguments[0] = sc-bad-arg 
++ Round 1
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (sc-bad-arg) begin
+- sc-bad-arg: exit(-1)
++ sc-bad-arg: exit(-268370093)

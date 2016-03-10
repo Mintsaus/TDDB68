@@ -1,19 +1,46 @@
-Copying tests/userprog/read-zero into /tmp/niv4XdprAH.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/niv4XdprAH.dsk...
-Writing command line to /tmp/vbybAHnC8U.dsk...
-qemu -hda /tmp/vbybAHnC8U.dsk -hdb /tmp/11xDiVNk2g.dsk -hdc /tmp/niv4XdprAH.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put read-zero put sample.txt run read-zero
+Copying tests/userprog/read-zero into /tmp/KhSC2UBNBP.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/KhSC2UBNBP.dsk...
+Writing command line to /tmp/lnoo0P9IvI.dsk...
+qemu -hda /tmp/lnoo0P9IvI.dsk -hdb /tmp/0Tn0p3xjzg.dsk -hdc /tmp/KhSC2UBNBP.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put read-zero put sample.txt run read-zero
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 543 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 101 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'read-zero' into the file system...
+Putting 'sample.txt' into the file system...
+Executing 'read-zero':
+Created new child status for read-zero 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load read-zero 
+LOAD: file_name: read-zero
+read-zero
+arguments[1] = (null)Great success!arguments[0] = read-zero 
+Round 2
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(read-zero) begin
+(read-zero) open "sample.txt"
+(read-zero) end
+read-zero: exit(0)
+Execution of 'read-zero' complete.
+Timer: 62 ticks
+Thread: 32 idle ticks, 29 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 90 reads, 212 writes
+hd1:0: 101 reads, 0 writes
+Console: 1239 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

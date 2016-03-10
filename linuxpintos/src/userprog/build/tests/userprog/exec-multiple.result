@@ -1,5 +1,105 @@
 FAIL
-Kernel panic in run: PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab
-Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (exec-multiple) begin
+  (child-simple) run
+  child-simple: exit(81)
+  (child-simple) run
+  child-simple: exit(81)
+  (child-simple) run
+  child-simple: exit(81)
+  (child-simple) run
+  child-simple: exit(81)
+  (exec-multiple) end
+  exec-multiple: exit(0)
+Differences in `diff -u' format:
++ Created new child status for exec-multiple 
++ Returning tid 3
++ Beginning of start_process for thread: 3 
++  About to load exec-multiple 
++ LOAD: file_name: exec-multiple
++ exec-multiple
++ arguments[1] = (null)Great success!arguments[0] = exec-multiple 
++ Round 2
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (exec-multiple) begin
++ Calling process_execute in thread: 3 
++ Created new child status for child-simple 
++ Returning tid 4
++ Beginning of start_process for thread: 4 
++  About to load child-simple 
++ LOAD: file_name: child-simple
++ child-simple
++ arguments[1] = (null)Great success!arguments[0] = child-simple 
++ Round 3
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (child-simple) run
+  child-simple: exit(81)
++ Done with process_execute in thread: 3 
++ Calling process_execute in thread: 3 
++ Created new child status for child-simple 
++ Returning tid 5
++ Beginning of start_process for thread: 5 
++  About to load child-simple 
++ LOAD: file_name: child-simple
++ child-simple
++ arguments[1] = (null)Great success!arguments[0] = child-simple 
++ Round 3
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (child-simple) run
+  child-simple: exit(81)
++ Done with process_execute in thread: 3 
++ Calling process_execute in thread: 3 
++ Created new child status for child-simple 
++ Returning tid 6
++ Beginning of start_process for thread: 6 
++  About to load child-simple 
++ LOAD: file_name: child-simple
++ child-simple
++ arguments[1] = (null)Great success!arguments[0] = child-simple 
++ Round 3
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (child-simple) run
+  child-simple: exit(81)
++ Done with process_execute in thread: 3 
++ Calling process_execute in thread: 3 
++ Created new child status for child-simple 
++ Returning tid 7
++ Beginning of start_process for thread: 7 
++  About to load child-simple 
++ LOAD: file_name: child-simple
++ child-simple
++ arguments[1] = (null)Great success!arguments[0] = child-simple 
++ Round 3
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (child-simple) run
+  child-simple: exit(81)
++ Done with process_execute in thread: 3 
+  (exec-multiple) end
+  exec-multiple: exit(0)

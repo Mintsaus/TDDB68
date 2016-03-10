@@ -7,7 +7,7 @@ FAIL tests/userprog/sc-bad-sp
 FAIL tests/userprog/sc-bad-arg
 FAIL tests/userprog/sc-boundary
 FAIL tests/userprog/sc-boundary-2
-FAIL tests/userprog/halt
+pass tests/userprog/halt
 FAIL tests/userprog/exit
 FAIL tests/userprog/create-normal
 FAIL tests/userprog/create-empty

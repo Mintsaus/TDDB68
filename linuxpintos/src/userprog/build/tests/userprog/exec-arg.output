@@ -1,19 +1,57 @@
-Copying tests/userprog/exec-arg into /tmp/Nf0kkwAigC.dsk...
-Copying tests/userprog/child-args into /tmp/Nf0kkwAigC.dsk...
-Writing command line to /tmp/IvAwNT9MXl.dsk...
-qemu -hda /tmp/IvAwNT9MXl.dsk -hdb /tmp/dCIrbQAdLb.dsk -hdc /tmp/Nf0kkwAigC.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put exec-arg put child-args run exec-arg
+Copying tests/userprog/exec-arg into /tmp/ksq8ULFNBz.dsk...
+Copying tests/userprog/child-args into /tmp/ksq8ULFNBz.dsk...
+Writing command line to /tmp/zeB8A0QwhK.dsk...
+qemu -hda /tmp/zeB8A0QwhK.dsk -hdb /tmp/9GyBSDH1sw.dsk -hdc /tmp/ksq8ULFNBz.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put exec-arg put child-args run exec-arg
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 541 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 195 sector (97 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'exec-arg' into the file system...
+Putting 'child-args' into the file system...
+Executing 'exec-arg':
+Created new child status for exec-arg 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load exec-arg 
+LOAD: file_name: exec-arg
+exec-arg
+arguments[1] = (null)Great success!arguments[0] = exec-arg 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(exec-arg) begin
+Calling process_execute in thread: 3 
+Page fault at 0x804a672: rights violation error writing page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc0106ad1
+ cr2=0804a672 error=00000003
+ eax=00000020 ebx=0804a668 ecx=00000020 edx=00000020
+ esi=c010e136 edi=0804a672 esp=c010e136 ebp=00000020
+ cs=0008 ds=0010 es=0010 ss=0020
+Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0xc01070ab 0xc0106ad1Page fault at 0x20: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052e7
+ cr2=00000020 error=00000000
+ eax=0000000b ebx=00000020 ecx=000007a1 edx=000003d4
+ esi=00000064 edi=c010cd85 esp=c010e047 ebp=c011fdc8
+ cs=0008 ds=0010 es=0010 ss=6ad1
+Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
+Timer: 64 ticks
+Thread: 33 idle ticks, 28 kernel ticks, 3 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 86 reads, 400 writes
+hd1:0: 195 reads, 0 writes
+Console: 1976 characters output
 Keyboard: 0 keys pressed
-Exception: 0 page faults
+Exception: 2 page faults
 Powering off...

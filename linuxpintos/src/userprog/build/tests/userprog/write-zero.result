@@ -1,5 +1,2 @@
 FAIL
-Kernel panic in run: PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab
-Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
+run: write() returned -1 instead of 0: FAILED

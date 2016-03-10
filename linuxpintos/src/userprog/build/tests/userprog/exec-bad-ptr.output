@@ -1,18 +1,52 @@
-Copying tests/userprog/exec-bad-ptr into /tmp/jl2oPUID6x.dsk...
-Writing command line to /tmp/sK4_dXCvFA.dsk...
-qemu -hda /tmp/sK4_dXCvFA.dsk -hdb /tmp/JGaNquR9Dd.dsk -hdc /tmp/jl2oPUID6x.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put exec-bad-ptr run exec-bad-ptr
+Copying tests/userprog/exec-bad-ptr into /tmp/57UWiiUxgn.dsk...
+Writing command line to /tmp/nK6ky67uKe.dsk...
+qemu -hda /tmp/nK6ky67uKe.dsk -hdb /tmp/ekIV0mmAxu.dsk -hdc /tmp/57UWiiUxgn.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put exec-bad-ptr run exec-bad-ptr
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'exec-bad-ptr' into the file system...
+Executing 'exec-bad-ptr':
+Created new child status for exec-bad-ptr 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load exec-bad-ptr 
+LOAD: file_name: exec-bad-ptr
+exec-bad-ptr
+arguments[1] = (null)Great success!arguments[0] = exec-bad-ptr 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(exec-bad-ptr) begin
+Calling process_execute in thread: 3 
+Page fault at 0x20101234: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc0106cc4
+ cr2=20101234 error=00000000
+ eax=00000000 ebx=c011d000 ecx=ffffffff edx=20101234
+ esi=00001000 edi=20101234 esp=c011f000 ebp=c011f024
+ cs=0008 ds=0010 es=0010 ss=a04c
+Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0xc01070ab 0xc0106cc4.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 534 characters output
+Timer: 57 ticks
+Thread: 34 idle ticks, 22 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 59 reads, 202 writes
+hd1:0: 97 reads, 0 writes
+Console: 1740 characters output
 Keyboard: 0 keys pressed
-Exception: 0 page faults
+Exception: 1 page faults
 Powering off...

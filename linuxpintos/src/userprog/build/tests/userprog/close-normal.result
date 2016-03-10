@@ -1,5 +1,29 @@
 FAIL
-Kernel panic in run: PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab
-Translation of call stack:
-0xc01070ab: debug_panic (.../../lib/kernel/debug.c:34)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (close-normal) begin
+  (close-normal) open "sample.txt"
+  (close-normal) close "sample.txt"
+  (close-normal) end
+  close-normal: exit(0)
+Differences in `diff -u' format:
++ Created new child status for close-normal 
++ Returning tid 3
++ Beginning of start_process for thread: 3 
++  About to load close-normal 
++ LOAD: file_name: close-normal
++ close-normal
++ arguments[1] = (null)Great success!arguments[0] = close-normal 
++ Round 3
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ Success 
++ start_process: after sema up 
+  (close-normal) begin
+  (close-normal) open "sample.txt"
+  (close-normal) close "sample.txt"
+  (close-normal) end
+  close-normal: exit(0)

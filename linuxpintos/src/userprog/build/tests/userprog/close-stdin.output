@@ -1,18 +1,42 @@
-Copying tests/userprog/close-stdin into /tmp/36OPi1WbqM.dsk...
-Writing command line to /tmp/SWlizaq7dZ.dsk...
-qemu -hda /tmp/SWlizaq7dZ.dsk -hdb /tmp/k7sxetboY7.dsk -hdc /tmp/36OPi1WbqM.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put close-stdin run close-stdin
+Copying tests/userprog/close-stdin into /tmp/rtsKvUKb7V.dsk...
+Writing command line to /tmp/psnJQlARMt.dsk...
+qemu -hda /tmp/psnJQlARMt.dsk -hdb /tmp/2lFCCYF3BH.dsk -hdc /tmp/rtsKvUKb7V.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put close-stdin run close-stdin
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 532 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'close-stdin' into the file system...
+Executing 'close-stdin':
+Created new child status for close-stdin 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load close-stdin 
+LOAD: file_name: close-stdin
+close-stdin
+arguments[1] = (null)Great success!arguments[0] = close-stdin 
+Round 0
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(close-stdin) begin
+(close-stdin) end
+close-stdin: exit(0)
+Execution of 'close-stdin' complete.
+Timer: 58 ticks
+Thread: 33 idle ticks, 25 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 59 reads, 202 writes
+hd1:0: 97 reads, 0 writes
+Console: 1158 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

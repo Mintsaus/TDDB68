@@ -1,19 +1,46 @@
-Copying tests/userprog/write-boundary into /tmp/8gRil47St7.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/8gRil47St7.dsk...
-Writing command line to /tmp/xxWtk8U8TY.dsk...
-qemu -hda /tmp/xxWtk8U8TY.dsk -hdb /tmp/Yub33k01YY.dsk -hdc /tmp/8gRil47St7.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put write-boundary put sample.txt run write-boundary
+Copying tests/userprog/write-boundary into /tmp/nTQGQAWV3L.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/nTQGQAWV3L.dsk...
+Writing command line to /tmp/FPvKON9pfR.dsk...
+qemu -hda /tmp/FPvKON9pfR.dsk -hdb /tmp/xgH8KU_6T8.dsk -hdc /tmp/nTQGQAWV3L.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put write-boundary put sample.txt run write-boundary
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 553 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 104 sector (52 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'write-boundary' into the file system...
+Putting 'sample.txt' into the file system...
+Executing 'write-boundary':
+Created new child status for write-boundary 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load write-boundary 
+LOAD: file_name: write-boundary
+write-boundary
+arguments[1] = (null)Great success!arguments[0] = write-boundary 
+Round 1
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(write-boundary) begin
+(write-boundary) open "sample.txt"
+(write-boundary) end
+write-boundary: exit(0)
+Execution of 'write-boundary' complete.
+Timer: 61 ticks
+Thread: 32 idle ticks, 28 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 99 reads, 219 writes
+hd1:0: 104 reads, 0 writes
+Console: 1309 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

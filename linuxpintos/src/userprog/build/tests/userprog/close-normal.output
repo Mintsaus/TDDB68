@@ -1,19 +1,47 @@
-Copying tests/userprog/close-normal into /tmp/3Gqh0mu53E.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/3Gqh0mu53E.dsk...
-Writing command line to /tmp/kiQFyGBQ4S.dsk...
-qemu -hda /tmp/kiQFyGBQ4S.dsk -hdb /tmp/bxWEc1Ie2J.dsk -hdc /tmp/3Gqh0mu53E.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put close-normal put sample.txt run close-normal
+Copying tests/userprog/close-normal into /tmp/jjcEabx8KJ.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/jjcEabx8KJ.dsk...
+Writing command line to /tmp/jBDgU5jpnj.dsk...
+qemu -hda /tmp/jBDgU5jpnj.dsk -hdb /tmp/GE2g4TVM48.dsk -hdc /tmp/jjcEabx8KJ.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put close-normal put sample.txt run close-normal
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 549 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 100 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'close-normal' into the file system...
+Putting 'sample.txt' into the file system...
+Executing 'close-normal':
+Created new child status for close-normal 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load close-normal 
+LOAD: file_name: close-normal
+close-normal
+arguments[1] = (null)Great success!arguments[0] = close-normal 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(close-normal) begin
+(close-normal) open "sample.txt"
+(close-normal) close "sample.txt"
+(close-normal) end
+close-normal: exit(0)
+Execution of 'close-normal' complete.
+Timer: 62 ticks
+Thread: 33 idle ticks, 28 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 90 reads, 210 writes
+hd1:0: 100 reads, 0 writes
+Console: 1315 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

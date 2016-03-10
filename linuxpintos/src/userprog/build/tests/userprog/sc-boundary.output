@@ -1,12 +1,13 @@
-Copying tests/userprog/sc-boundary into /tmp/W6TVPgdFrL.dsk...
-Writing command line to /tmp/ysDJfCeIJd.dsk...
-qemu -hda /tmp/ysDJfCeIJd.dsk -hdb /tmp/Yh4Nfo0dIh.dsk -hdc /tmp/W6TVPgdFrL.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put sc-boundary run sc-boundary
+Copying tests/userprog/sc-boundary into /tmp/cVvwcsu5Hh.dsk...
+Writing command line to /tmp/MI1X_ZXgM3.dsk...
+qemu -hda /tmp/MI1X_ZXgM3.dsk -hdb /tmp/7_F83V0h0L.dsk -hdc /tmp/cVvwcsu5Hh.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put sc-boundary run sc-boundary
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
+Returning tid 2
 Calibrating timer...  419,020,800 loops/s.
-hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 101 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
@@ -14,7 +15,7 @@ Boot complete.
 Putting 'sc-boundary' into the file system...
 Executing 'sc-boundary':
 Created new child status for sc-boundary 
-Inte en urtrad: do sema init etc 
+Returning tid 3
 Beginning of start_process for thread: 3 
  About to load sc-boundary 
 LOAD: file_name: sc-boundary
@@ -24,94 +25,17 @@ Round 0
 Avrundning gjord
 Pushing sentinel 
 Pushing argv[] 
-*esp is 0xbfffffdc
-stack contents:
-bfffffd0                                      ec ff ff bf |            ....|
-bfffffe0  01 00 00 00 e8 ff ff bf-f4 ff ff bf 00 00 00 00 |................|
-bffffff0  00 00 00 00 73 63 2d 62-6f 75 6e 64 61 72 79 00 |....sc-boundary.|
-c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
-c000000f	 	
-c000000e	 	
-c000000d	 	
-c000000c	S	f000ff53	
---------------------------------------------------------------
-c000000b	 	
-c000000a	 	
-c0000009	 	
-c0000008	 	f000e2c3	
---------------------------------------------------------------
-c0000007	 	
-c0000006	 	
-c0000005	 	
-c0000004	S	f000ff53	
---------------------------------------------------------------
-c0000003	 	
-c0000002	 	
-c0000001	 	
-c0000000	S	f000ff53	
-------- the border between KERNEL SPACE and USER SPACE -------
-bfffffff	 	
-bffffffe	y	
-bffffffd	r	
-bffffffc	a	797261	
---------------------------------------------------------------
-bffffffb	d	
-bffffffa	n	
-bffffff9	u	
-bffffff8	o	646e756f	
---------------------------------------------------------------
-bffffff7	b	
-bffffff6	-	
-bffffff5	c	
-bffffff4	s	622d6373	
---------------------------------------------------------------
-bffffff3	 	
-bffffff2	 	
-bffffff1	 	
-bffffff0	 	0	
---------------------------------------------------------------
-bfffffef	 	
-bfffffee	 	
-bfffffed	 	
-bfffffec	 	0	
---------------------------------------------------------------
-bfffffeb	 	
-bfffffea	 	
-bfffffe9	 	
-bfffffe8	 	bffffff4	
---------------------------------------------------------------
-bfffffe7	 	
-bfffffe6	 	
-bfffffe5	 	
-bfffffe4	 	bfffffe8	
---------------------------------------------------------------
-bfffffe3	 	
-bfffffe2	 	
-bfffffe1	 	
-bfffffe0	 	1	
---------------------------------------------------------------
-bfffffdf	 	
-bfffffde	 	
-bfffffdd	 	
-bfffffdc	 	bfffffec	
---------------------------------------------------------------
 Success 
 start_process: after sema up 
 (sc-boundary) begin
-SYS_EXIT in thread: 3 
-Before lock acquire thread: 3 
-Parent wait or doesn't care 
-Kernel PANIC at ../../threads/synch.c:232 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 64 ticks
-Thread: 30 idle ticks, 26 kernel ticks, 8 user ticks
+sc-boundary: exit(42)
+Execution of 'sc-boundary' complete.
+Timer: 57 ticks
+Thread: 32 idle ticks, 23 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 210 writes
 hd1:0: 101 reads, 0 writes
-Console: 3343 characters output
+Console: 1143 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

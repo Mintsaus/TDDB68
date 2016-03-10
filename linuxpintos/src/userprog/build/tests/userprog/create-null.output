@@ -1,18 +1,45 @@
-Copying tests/userprog/create-null into /tmp/gspLUurHiC.dsk...
-Writing command line to /tmp/cZ5VKzqSkq.dsk...
-qemu -hda /tmp/cZ5VKzqSkq.dsk -hdb /tmp/Rs6ZQAR6zz.dsk -hdc /tmp/gspLUurHiC.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put create-null run create-null
+Copying tests/userprog/create-null into /tmp/WfoET2MUig.dsk...
+Writing command line to /tmp/8rD3d3xkZk.dsk...
+qemu -hda /tmp/8rD3d3xkZk.dsk -hdb /tmp/FNoNDCa6L6.dsk -hdc /tmp/WfoET2MUig.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put create-null run create-null
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 98 sector (49 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'create-null' into the file system...
+Executing 'create-null':
+Created new child status for create-null 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load create-null 
+LOAD: file_name: create-null
+create-null
+arguments[1] = (null)Great success!arguments[0] = create-null 
+Round 0
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(create-null) begin
+SYS_CREATE
+Kernel PANIC at ../../filesys/directory.c:149 in dir_add(): assertion `name != NULL' failed.
+Call stack: 0xc01070ab 0 0xc011c00c.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 532 characters output
+Timer: 61 ticks
+Thread: 35 idle ticks, 25 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 62 reads, 207 writes
+hd1:0: 98 reads, 0 writes
+Console: 1377 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

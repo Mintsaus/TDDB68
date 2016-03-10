@@ -1,18 +1,45 @@
-Copying tests/userprog/create-empty into /tmp/8VUsrtXxFD.dsk...
-Writing command line to /tmp/WPI30fKYEH.dsk...
-qemu -hda /tmp/WPI30fKYEH.dsk -hdb /tmp/Orublsklx2.dsk -hdc /tmp/8VUsrtXxFD.dsk -m 4 -net none -nographic -monitor null
-in init.c main()Kernel command line: -q -f put create-empty run create-empty
+Copying tests/userprog/create-empty into /tmp/SPpCFc11uc.dsk...
+Writing command line to /tmp/C9swT7loeg.dsk...
+qemu -hda /tmp/C9swT7loeg.dsk -hdb /tmp/a9UpDscB2U.dsk -hdc /tmp/SPpCFc11uc.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put create-empty run create-empty
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
-Kernel PANIC at ../../lib/kernel/list.c:171 in list_insert(): assertion `is_interior (before) || is_tail (before)' failed.
-Call stack: 0xc01070ab.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 0 ticks
-Thread: 0 idle ticks, 0 kernel ticks, 0 user ticks
-Console: 534 characters output
+Returning tid 2
+Calibrating timer...  419,020,800 loops/s.
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 98 sector (49 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'create-empty' into the file system...
+Executing 'create-empty':
+Created new child status for create-empty 
+Returning tid 3
+Beginning of start_process for thread: 3 
+ About to load create-empty 
+LOAD: file_name: create-empty
+create-empty
+arguments[1] = (null)Great success!arguments[0] = create-empty 
+Round 3
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+Success 
+start_process: after sema up 
+(create-empty) begin
+SYS_CREATE
+(create-empty) create(""): 0
+(create-empty) end
+create-empty: exit(0)
+Execution of 'create-empty' complete.
+Timer: 57 ticks
+Thread: 31 idle ticks, 26 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 63 reads, 208 writes
+hd1:0: 98 reads, 0 writes
+Console: 1226 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...
