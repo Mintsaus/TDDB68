@@ -1,6 +1,6 @@
-Copying tests/userprog/exec-missing into /tmp/mjrQ8Cv11_.dsk...
-Writing command line to /tmp/DemYZLT6Nb.dsk...
-qemu -hda /tmp/DemYZLT6Nb.dsk -hdb /tmp/H57BNMsV2f.dsk -hdc /tmp/mjrQ8Cv11_.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/exec-missing into /tmp/jtS1c7hNBB.dsk...
+Writing command line to /tmp/0xk5IuMu4e.dsk...
+qemu -hda /tmp/0xk5IuMu4e.dsk -hdb /tmp/zruR6XZwav.dsk -hdc /tmp/jtS1c7hNBB.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put exec-missing run exec-missing
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -15,26 +15,26 @@ Putting 'exec-missing' into the file system...
 Executing 'exec-missing':
 (exec-missing) begin
 load: no-such-file: open failed
-(exec-missing) exec("no-such-file"): 4
+(exec-missing) exec("no-such-file"): -1072612936
 (exec-missing) end
 exec-missing: exit(0)
 Page fault at 0xcccccc94: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010923a
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010923c
  cr2=cccccc94 error=00000000
  eax=c011f250 ebx=cccccccc ecx=c01128c8 edx=c011fee4
  esi=c011f248 edi=c011f000 esp=c011f248 ebp=c011fedc
  cs=0008 ds=0010 es=0010 ss=0000
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc010923a.
+Call stack: 0xc010709b 0xc010923c.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 58 ticks
-Thread: 34 idle ticks, 22 kernel ticks, 2 user ticks
+Timer: 60 ticks
+Thread: 32 idle ticks, 26 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 76 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1448 characters output
+Console: 1458 characters output
 Keyboard: 0 keys pressed
 Exception: 1 page faults
 Powering off...

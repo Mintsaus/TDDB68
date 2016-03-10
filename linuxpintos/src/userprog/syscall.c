@@ -101,7 +101,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			break;
 		
 		case (SYS_CREATE)://Done
-    printf("SYS_CREATE\n");
+    //printf("SYS_CREATE\n");
 			name = (char *)(*(p + 1));
 			size = *(p + 2);
 			f -> eax = filesys_create(name, size);
@@ -149,9 +149,9 @@ syscall_handler (struct intr_frame *f UNUSED)
 		   * 
 		   * */
 			name = (char *)(*(p + 1));
-			printf("Calling process_execute in thread: %d \n", curr_thread->tid);
+			//printf("Calling process_execute in thread: %d \n", curr_thread->tid);
 			tid = process_execute(name);
-			printf("Done with process_execute in thread: %d \n", curr_thread->tid);
+			//printf("Done with process_execute in thread: %d \n", curr_thread->tid);
 			f->eax = tid;
 			break;
 			

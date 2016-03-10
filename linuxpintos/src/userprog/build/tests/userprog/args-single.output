@@ -1,120 +1,18 @@
-Copying tests/userprog/args-single into /tmp/O7EVHTJn_n.dsk...
-Writing command line to /tmp/T2BFinLf8G.dsk...
-qemu -hda /tmp/T2BFinLf8G.dsk -hdb /tmp/_u5U1RAL1D.dsk -hdc /tmp/O7EVHTJn_n.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/args-single into /tmp/LJR_fELxB9.dsk...
+Writing command line to /tmp/pCIRFr4ZVu.dsk...
+qemu -hda /tmp/pCIRFr4ZVu.dsk -hdb /tmp/_H39YXQsE6.dsk -hdc /tmp/LJR_fELxB9.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put args-single run 'args-single onearg'
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
 Calibrating timer...  419,020,800 loops/s.
-hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
 Boot complete.
 Putting 'args-single' into the file system...
 Executing 'args-single onearg':
-Created new child status for args-single onearg 
-Inte en urtrad: do sema init etc 
-Beginning of start_process for thread: 3 
- About to load args-single onearg 
-LOAD: file_name: args-single
-args-single
-onearg
-arguments[1] = oneargGreat success!arguments[0] = args-single 
-arguments[1] = onearg 
-Round 1
-Round var > 0 
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-*esp is 0xbfffffd0
-stack contents:
-bfffffd0  e4 ff ff bf 02 00 00 00-dc ff ff bf f4 ff ff bf |................|
-bfffffe0  ed ff ff bf 00 00 00 00-00 00 00 00 00 6f 6e 65 |.............one|
-bffffff0  61 72 67 00 61 72 67 73-2d 73 69 6e 67 6c 65 00 |arg.args-single.|
-c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
-c000000f	 	
-c000000e	 	
-c000000d	 	
-c000000c	S	f000ff53	
---------------------------------------------------------------
-c000000b	 	
-c000000a	 	
-c0000009	 	
-c0000008	 	f000e2c3	
---------------------------------------------------------------
-c0000007	 	
-c0000006	 	
-c0000005	 	
-c0000004	S	f000ff53	
---------------------------------------------------------------
-c0000003	 	
-c0000002	 	
-c0000001	 	
-c0000000	S	f000ff53	
-------- the border between KERNEL SPACE and USER SPACE -------
-bfffffff	 	
-bffffffe	e	
-bffffffd	l	
-bffffffc	g	656c67	
---------------------------------------------------------------
-bffffffb	n	
-bffffffa	i	
-bffffff9	s	
-bffffff8	-	6e69732d	
---------------------------------------------------------------
-bffffff7	s	
-bffffff6	g	
-bffffff5	r	
-bffffff4	a	73677261	
---------------------------------------------------------------
-bffffff3	 	
-bffffff2	g	
-bffffff1	r	
-bffffff0	a	677261	
---------------------------------------------------------------
-bfffffef	e	
-bfffffee	n	
-bfffffed	o	
-bfffffec	 	656e6f00	
---------------------------------------------------------------
-bfffffeb	 	
-bfffffea	 	
-bfffffe9	 	
-bfffffe8	 	0	
---------------------------------------------------------------
-bfffffe7	 	
-bfffffe6	 	
-bfffffe5	 	
-bfffffe4	 	0	
---------------------------------------------------------------
-bfffffe3	 	
-bfffffe2	 	
-bfffffe1	 	
-bfffffe0	 	bfffffed	
---------------------------------------------------------------
-bfffffdf	 	
-bfffffde	 	
-bfffffdd	 	
-bfffffdc	 	bffffff4	
---------------------------------------------------------------
-bfffffdb	 	
-bfffffda	 	
-bfffffd9	 	
-bfffffd8	 	bfffffdc	
---------------------------------------------------------------
-bfffffd7	 	
-bfffffd6	 	
-bfffffd5	 	
-bfffffd4	 	2	
---------------------------------------------------------------
-bfffffd3	 	
-bfffffd2	 	
-bfffffd1	 	
-bfffffd0	 	bfffffe4	
---------------------------------------------------------------
-Success 
-start_process: after sema up 
 (args) begin
 (args) argc = 2
 (args) argv[0] = 'args-single'
@@ -123,12 +21,12 @@ start_process: after sema up
 (args) end
 args-single: exit(0)
 Execution of 'args-single' complete.
-Timer: 66 ticks
-Thread: 33 idle ticks, 24 kernel ticks, 9 user ticks
+Timer: 58 ticks
+Thread: 35 idle ticks, 22 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 3554 characters output
+Console: 909 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

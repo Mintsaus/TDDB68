@@ -1,111 +1,27 @@
-Copying tests/userprog/sc-boundary into /tmp/FwNsdeUn1v.dsk...
-Writing command line to /tmp/ZX1t_2Kl4E.dsk...
-qemu -hda /tmp/ZX1t_2Kl4E.dsk -hdb /tmp/AH70KrD8t7.dsk -hdc /tmp/FwNsdeUn1v.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/sc-boundary into /tmp/UuytqfEiSy.dsk...
+Writing command line to /tmp/rYT6RLkAVJ.dsk...
+qemu -hda /tmp/rYT6RLkAVJ.dsk -hdb /tmp/PoB4Mwk6jB.dsk -hdc /tmp/UuytqfEiSy.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put sc-boundary run sc-boundary
 Pintos booting with 4,088 kB RAM...
-371 pages available in kernel pool.
+372 pages available in kernel pool.
 371 pages available in user pool.
 Calibrating timer...  419,020,800 loops/s.
-hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 101 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
 Boot complete.
 Putting 'sc-boundary' into the file system...
 Executing 'sc-boundary':
-Created new child status for sc-boundary 
-Inte en urtrad: do sema init etc 
-Beginning of start_process for thread: 3 
- About to load sc-boundary 
-LOAD: file_name: sc-boundary
-sc-boundary
-arguments[1] = (null)Great success!arguments[0] = sc-boundary 
-Round 0
-Avrundning gjord
-Pushing sentinel 
-Pushing argv[] 
-*esp is 0xbfffffdc
-stack contents:
-bfffffd0                                      ec ff ff bf |            ....|
-bfffffe0  01 00 00 00 e8 ff ff bf-f4 ff ff bf 00 00 00 00 |................|
-bffffff0  00 00 00 00 73 63 2d 62-6f 75 6e 64 61 72 79 00 |....sc-boundary.|
-c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
-c000000f	 	
-c000000e	 	
-c000000d	 	
-c000000c	S	f000ff53	
---------------------------------------------------------------
-c000000b	 	
-c000000a	 	
-c0000009	 	
-c0000008	 	f000e2c3	
---------------------------------------------------------------
-c0000007	 	
-c0000006	 	
-c0000005	 	
-c0000004	S	f000ff53	
---------------------------------------------------------------
-c0000003	 	
-c0000002	 	
-c0000001	 	
-c0000000	S	f000ff53	
-------- the border between KERNEL SPACE and USER SPACE -------
-bfffffff	 	
-bffffffe	y	
-bffffffd	r	
-bffffffc	a	797261	
---------------------------------------------------------------
-bffffffb	d	
-bffffffa	n	
-bffffff9	u	
-bffffff8	o	646e756f	
---------------------------------------------------------------
-bffffff7	b	
-bffffff6	-	
-bffffff5	c	
-bffffff4	s	622d6373	
---------------------------------------------------------------
-bffffff3	 	
-bffffff2	 	
-bffffff1	 	
-bffffff0	 	0	
---------------------------------------------------------------
-bfffffef	 	
-bfffffee	 	
-bfffffed	 	
-bfffffec	 	0	
---------------------------------------------------------------
-bfffffeb	 	
-bfffffea	 	
-bfffffe9	 	
-bfffffe8	 	bffffff4	
---------------------------------------------------------------
-bfffffe7	 	
-bfffffe6	 	
-bfffffe5	 	
-bfffffe4	 	bfffffe8	
---------------------------------------------------------------
-bfffffe3	 	
-bfffffe2	 	
-bfffffe1	 	
-bfffffe0	 	1	
---------------------------------------------------------------
-bfffffdf	 	
-bfffffde	 	
-bfffffdd	 	
-bfffffdc	 	bfffffec	
---------------------------------------------------------------
-Success 
-start_process: after sema up 
 (sc-boundary) begin
 sc-boundary: exit(42)
 Execution of 'sc-boundary' complete.
-Timer: 64 ticks
-Thread: 32 idle ticks, 26 kernel ticks, 6 user ticks
+Timer: 60 ticks
+Thread: 34 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 210 writes
 hd1:0: 101 reads, 0 writes
-Console: 3025 characters output
+Console: 797 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

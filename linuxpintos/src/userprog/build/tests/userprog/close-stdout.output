@@ -1,6 +1,6 @@
-Copying tests/userprog/close-stdout into /tmp/ZXItX7fUzs.dsk...
-Writing command line to /tmp/umHEExa3Am.dsk...
-qemu -hda /tmp/umHEExa3Am.dsk -hdb /tmp/X4lBCAucWv.dsk -hdc /tmp/ZXItX7fUzs.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/close-stdout into /tmp/Y3C9Twiar3.dsk...
+Writing command line to /tmp/XUkNfl9Noz.dsk...
+qemu -hda /tmp/XUkNfl9Noz.dsk -hdb /tmp/zwy4W3GKAy.dsk -hdc /tmp/Y3C9Twiar3.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put close-stdout run close-stdout
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -18,7 +18,7 @@ Executing 'close-stdout':
 close-stdout: exit(0)
 Execution of 'close-stdout' complete.
 Timer: 58 ticks
-Thread: 32 idle ticks, 25 kernel ticks, 1 user ticks
+Thread: 31 idle ticks, 26 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes

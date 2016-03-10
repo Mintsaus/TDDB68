@@ -1,6 +1,6 @@
-Copying tests/userprog/create-null into /tmp/SZJ1mkiJcG.dsk...
-Writing command line to /tmp/FUHAj2U7a8.dsk...
-qemu -hda /tmp/FUHAj2U7a8.dsk -hdb /tmp/dsXjAFWAqE.dsk -hdc /tmp/SZJ1mkiJcG.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-null into /tmp/oXtnG7Elr0.dsk...
+Writing command line to /tmp/2egOurgBwv.dsk...
+qemu -hda /tmp/2egOurgBwv.dsk -hdb /tmp/316Lg6nHQ5.dsk -hdc /tmp/oXtnG7Elr0.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-null run create-null
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -20,7 +20,7 @@ The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
 Timer: 59 ticks
-Thread: 33 idle ticks, 25 kernel ticks, 1 user ticks
+Thread: 34 idle ticks, 25 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 62 reads, 207 writes
 hd1:0: 98 reads, 0 writes

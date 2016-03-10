@@ -50,14 +50,14 @@ process_execute (const char *file_name)
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
   cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leaks
-	printf("Created new child status for %s \n", cs->fn_copy);
+	//printf("Created new child status for %s \n", cs->fn_copy);
 
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (file_name_no_args, PRI_DEFAULT, start_process, cs);
   
   /*-------------Lab3-----------------*/
   //if(tid > 2 ){       //curr_thread->tid >= 2){ //We don't need to check anymore cause' we're in proc_execute.
-	  printf("Inte en urtrad: do sema init etc \n");
+	  //printf("Inte en urtrad: do sema init etc \n");
 	  sema_init(&cs->sema_exec, 0);
 	  lock_init(&cs->cs_lock);
 	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
@@ -82,13 +82,13 @@ static void
 start_process (void *file_name_)
 {
 	struct thread *curr_thread = thread_current();
-  printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
+  //printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
   struct child_status *cs = (struct child_status *)file_name_;
   char *file_name;
   if(curr_thread->tid >= 2){
 		file_name = &cs->filename; //Lab3 file_name_ is our struct cs
 	}else{
-		printf("Using old method for file_name \n");
+		//printf("Using old method for file_name \n");
 		file_name = (char *) file_name_;
 	}
   struct intr_frame if_;
@@ -98,7 +98,7 @@ start_process (void *file_name_)
   if_.gs = if_.fs = if_.es = if_.ds = if_.ss = SEL_UDSEG;
   if_.cs = SEL_UCSEG;
   if_.eflags = FLAG_IF | FLAG_MBS;
-  printf(" About to load %s \n", cs->fn_copy);
+  //printf(" About to load %s \n", cs->fn_copy);
   success = load (cs->fn_copy, &if_.eip, &if_.esp); //cs->fn_copy
 
   /* If load failed, quit. */
@@ -106,7 +106,7 @@ start_process (void *file_name_)
   palloc_free_page (cs->fn_copy); //cs->fn_copy   free:as rätt?
   
   if (!success){ 
-		printf("Not success \n");
+		//printf("Not success \n");
 		cs->pid = -1;
 		sema_up(&cs->sema_exec);
 		lock_acquire(&cs->cs_lock);
@@ -115,9 +115,9 @@ start_process (void *file_name_)
     thread_exit ();
 	}else{
 		//printf("%s", cs->sema_exec);
-		printf("Success \n");
+		//printf("Success \n");
 		sema_up(&cs->sema_exec); //Causes problems. Is not initialized? Try to comment out and run lab3test, interesting stuff.
-		printf("start_process: after sema up \n");
+		//printf("start_process: after sema up \n");
 	}
 
   /* Start the user process by simulating a return from an
@@ -184,17 +184,17 @@ process_exit (void)
   
   
   // If parent dead we need to destroy the cs. If parent waiting wake it up. //
-  //lock_acquire(&cs_parent->cs_lock);
+  lock_acquire(&cs_parent->cs_lock);
   cs_parent->ref_cnt--;
   if(cs_parent->ref_cnt == 0){		//Parent is dead
     //printf("Parent of thread %d is dead \n", cur -> tid);
-    //lock_release(&cs_parent->cs_lock);
+    lock_release(&cs_parent->cs_lock);
     free(cs_parent);
   }else {								//Parent waits or doesn't care
     //printf("Parent wait or doesn't care \n");
-    //lock_release(&cs_parent->cs_lock);
+    lock_release(&cs_parent->cs_lock);
     //printf("EXIT: sema up \n");
-    //sema_up(&cs_parent->sema_exec);
+    sema_up(&cs_parent->sema_exec);
   }
   
   
@@ -365,7 +365,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
   const char delim[] = " ";
   char *token, *save_ptr;
   char *file_name = strtok_r(file_name_, delim, &save_ptr);
-  printf("LOAD: file_name: %s\n", file_name);
+  //printf("LOAD: file_name: %s\n", file_name);
   
   const char *arguments[32];
   int arg_cnt = 0;   
@@ -376,9 +376,9 @@ load (const char *file_name_, void (**eip) (void), void **esp)
     arg_cnt++;
   };
   int i;
-  for(i = 0; i < arg_cnt; i++){
-	printf("%s\n", arguments[i]);
-  }
+  //for(i = 0; i < arg_cnt; i++){
+	//printf("%s\n", arguments[i]);
+  //}
 
   /* Allocate and activate page directory. */
   t->pagedir = pagedir_create ();
@@ -394,7 +394,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
    /* Uncomment the following line to print some debug
      information. This will be useful when you debug the program
      stack.*/
-#define STACK_DEBUG
+//#define STACK_DEBUG
 
 #ifdef STACK_DEBUG
   printf("*esp is %p\nstack contents:\n", *esp);
@@ -636,17 +636,17 @@ setup_stack (void **esp, const char **arguments)
   uint8_t *kpage;
   bool success = false;
 	
-  printf("arguments[%d] = %s", 1, arguments[1]);
+  //printf("arguments[%d] = %s", 1, arguments[1]);
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
     {
       success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
       if (success){
-		printf("Great success!");
+		//printf("Great success!");
         *esp = PHYS_BASE;
       }else{
         palloc_free_page (kpage);
-        printf("Free page in setup_stack");
+        //printf("Free page in setup_stack");
         return success;
 	}
     }
@@ -658,30 +658,30 @@ setup_stack (void **esp, const char **arguments)
   for(i = 0; arguments[i] != NULL; i++){
     *esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
     memcpy(*esp, arguments[i], strlen(arguments[i])); //the actual pushing to the stack
-    printf("arguments[%d] = %s \n", i, arguments[i]);
+    //printf("arguments[%d] = %s \n", i, arguments[i]);
     argv[i] = *esp;   //saving a pointer to were on the stack each argument is placed
   }
   argc = i;
   /*--------Avrunda *esp till närmsta 4-tal---------------*/
   char *np = 0;
   int round =  ((size_t) * esp)%4;
-  printf("Round %d\n", round);
+  //printf("Round %d\n", round);
   if(round>0){
-	printf("Round var > 0 \n");
+	//printf("Round var > 0 \n");
 	*esp -= round;
 	memcpy(*esp, &np, round);
 	
   }
-  printf("Avrundning gjord\n");
+  //printf("Avrundning gjord\n");
   
   /*--------Pusha argv, adresser till argumenten ovan-----*/
   
-  printf("Pushing sentinel \n");
+  //printf("Pushing sentinel \n");
   *esp -= 4;
   memcpy(*esp, &np, 4);   //NULL-pointer sentinel
 
   int j;
-  printf("Pushing argv[] \n");
+  //printf("Pushing argv[] \n");
   for(j = i; j >= 0; j--){
     *esp -= 4;
     memcpy(*esp, &argv[j], 4);
