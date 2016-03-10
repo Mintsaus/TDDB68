@@ -1,18 +1,138 @@
-Copying tests/userprog/args-dbl-space into /tmp/flQ7aauAWz.dsk...
-Writing command line to /tmp/Obhnbb2odl.dsk...
-qemu -hda /tmp/Obhnbb2odl.dsk -hdb /tmp/KH6_Ciga5Z.dsk -hdc /tmp/flQ7aauAWz.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/args-dbl-space into /tmp/MaRi8TegMW.dsk...
+Writing command line to /tmp/6gdqfEVKvk.dsk...
+qemu -hda /tmp/6gdqfEVKvk.dsk -hdb /tmp/RSgER7wdjz.dsk -hdc /tmp/MaRi8TegMW.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put args-dbl-space run 'args-dbl-space two  spaces!'
 Pintos booting with 4,088 kB RAM...
-372 pages available in kernel pool.
+371 pages available in kernel pool.
 371 pages available in user pool.
 Calibrating timer...  419,020,800 loops/s.
-hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:0: detected 161 sector (80 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 97 sector (48 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
 Boot complete.
 Putting 'args-dbl-space' into the file system...
 Executing 'args-dbl-space two  spaces!':
+Created new child status for args-dbl-space two  spaces! 
+Inte en urtrad: do sema init etc 
+Beginning of start_process for thread: 3 
+ About to load args-dbl-space two  spaces! 
+LOAD: file_name: args-dbl-space
+args-dbl-space
+two
+spaces!
+arguments[1] = twoGreat success!arguments[0] = args-dbl-space 
+arguments[1] = two 
+arguments[2] = spaces! 
+Round 1
+Round var > 0 
+Avrundning gjord
+Pushing sentinel 
+Pushing argv[] 
+*esp is 0xbfffffc4
+stack contents:
+bfffffc0              dc ff ff bf-03 00 00 00 d0 ff ff bf |    ............|
+bfffffd0  f1 ff ff bf ed ff ff bf-e5 ff ff bf 00 00 00 00 |................|
+bfffffe0  00 00 00 00 00 73 70 61-63 65 73 21 00 74 77 6f |.....spaces!.two|
+bffffff0  00 61 72 67 73 2d 64 62-6c 2d 73 70 61 63 65 00 |.args-dbl-space.|
+c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
+c000000f	 	
+c000000e	 	
+c000000d	 	
+c000000c	S	f000ff53	
+--------------------------------------------------------------
+c000000b	 	
+c000000a	 	
+c0000009	 	
+c0000008	 	f000e2c3	
+--------------------------------------------------------------
+c0000007	 	
+c0000006	 	
+c0000005	 	
+c0000004	S	f000ff53	
+--------------------------------------------------------------
+c0000003	 	
+c0000002	 	
+c0000001	 	
+c0000000	S	f000ff53	
+------- the border between KERNEL SPACE and USER SPACE -------
+bfffffff	 	
+bffffffe	e	
+bffffffd	c	
+bffffffc	a	656361	
+--------------------------------------------------------------
+bffffffb	p	
+bffffffa	s	
+bffffff9	-	
+bffffff8	l	70732d6c	
+--------------------------------------------------------------
+bffffff7	b	
+bffffff6	d	
+bffffff5	-	
+bffffff4	s	62642d73	
+--------------------------------------------------------------
+bffffff3	g	
+bffffff2	r	
+bffffff1	a	
+bffffff0	 	67726100	
+--------------------------------------------------------------
+bfffffef	o	
+bfffffee	w	
+bfffffed	t	
+bfffffec	 	6f777400	
+--------------------------------------------------------------
+bfffffeb	!	
+bfffffea	s	
+bfffffe9	e	
+bfffffe8	c	21736563	
+--------------------------------------------------------------
+bfffffe7	a	
+bfffffe6	p	
+bfffffe5	s	
+bfffffe4	 	61707300	
+--------------------------------------------------------------
+bfffffe3	 	
+bfffffe2	 	
+bfffffe1	 	
+bfffffe0	 	0	
+--------------------------------------------------------------
+bfffffdf	 	
+bfffffde	 	
+bfffffdd	 	
+bfffffdc	 	0	
+--------------------------------------------------------------
+bfffffdb	 	
+bfffffda	 	
+bfffffd9	 	
+bfffffd8	 	bfffffe5	
+--------------------------------------------------------------
+bfffffd7	 	
+bfffffd6	 	
+bfffffd5	 	
+bfffffd4	 	bfffffed	
+--------------------------------------------------------------
+bfffffd3	 	
+bfffffd2	 	
+bfffffd1	 	
+bfffffd0	 	bffffff1	
+--------------------------------------------------------------
+bfffffcf	 	
+bfffffce	 	
+bfffffcd	 	
+bfffffcc	 	bfffffd0	
+--------------------------------------------------------------
+bfffffcb	 	
+bfffffca	 	
+bfffffc9	 	
+bfffffc8	 	3	
+--------------------------------------------------------------
+bfffffc7	 	
+bfffffc6	 	
+bfffffc5	 	
+bfffffc4	 	bfffffdc	
+--------------------------------------------------------------
+Success 
+start_process: after sema up 
 (args) begin
 (args) argc = 3
 (args) argv[0] = 'args-dbl-space'
@@ -22,12 +142,12 @@ Executing 'args-dbl-space two  spaces!':
 (args) end
 args-dbl-space: exit(0)
 Execution of 'args-dbl-space' complete.
-Timer: 59 ticks
-Thread: 32 idle ticks, 27 kernel ticks, 0 user ticks
+Timer: 70 ticks
+Thread: 33 idle ticks, 27 kernel ticks, 10 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 966 characters output
+Console: 4101 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -174,34 +174,8 @@ syscall_handler (struct intr_frame *f UNUSED)
 		 * exit normally" */	
 		case (SYS_WAIT):
 			tid = *(p + 1);
-			cs_list = &curr_thread->cs_list;
-			struct list_elem *el;
-			struct child_status *cs2 = NULL;
-			int exit_code;
-			for (el = list_begin (cs_list); el != list_end (cs_list); el = list_next(el))	//FInds 
-			 {
-				cs2 = list_entry (el, struct child_status, cs_elem);
-				
-			   if(cs2->pid == tid){
-					break;
-				}					
-			 }
-			 if(cs2 == NULL){
-				f->eax = -1;
-				break; 
-			}
-			lock_acquire(&cs2->cs_lock);
-			if(cs2->ref_cnt == 2){
-				lock_release(&cs2->cs_lock);
-				sema_down(&cs2->sema_exec);
-			}else{ lock_release(&cs2->cs_lock); }
-						
-			exit_code = cs2->exit_status;
-			list_remove(el);
-			free(cs2);
-			f->eax = exit_code;
-			break;
-			
+			f->eax = process_wait(tid);
+			break;			
 			
 		default:
 			printf ("system call!\n");

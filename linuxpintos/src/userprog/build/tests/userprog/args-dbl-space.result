@@ -1,1 +1,141 @@
-PASS
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (args) begin
+  (args) argc = 3
+  (args) argv[0] = 'args-dbl-space'
+  (args) argv[1] = 'two'
+  (args) argv[2] = 'spaces!'
+  (args) argv[3] = null
+  (args) end
+  args-dbl-space: exit(0)
+Differences in `diff -u' format:
++ Created new child status for args-dbl-space two  spaces! 
++ Inte en urtrad: do sema init etc 
++ Beginning of start_process for thread: 3 
++  About to load args-dbl-space two  spaces! 
++ LOAD: file_name: args-dbl-space
++ args-dbl-space
++ two
++ spaces!
++ arguments[1] = twoGreat success!arguments[0] = args-dbl-space 
++ arguments[1] = two 
++ arguments[2] = spaces! 
++ Round 1
++ Round var > 0 
++ Avrundning gjord
++ Pushing sentinel 
++ Pushing argv[] 
++ *esp is 0xbfffffc4
++ stack contents:
++ bfffffc0              dc ff ff bf-03 00 00 00 d0 ff ff bf |    ............|
++ bfffffd0  f1 ff ff bf ed ff ff bf-e5 ff ff bf 00 00 00 00 |................|
++ bfffffe0  00 00 00 00 00 73 70 61-63 65 73 21 00 74 77 6f |.....spaces!.two|
++ bffffff0  00 61 72 67 73 2d 64 62-6c 2d 73 70 61 63 65 00 |.args-dbl-space.|
++ c0000000  53 ff 00 f0 53 ff 00 f0-c3 e2 00 f0 53 ff 00 f0 |S...S.......S...|
++ c000000f	 	
++ c000000e	 	
++ c000000d	 	
++ c000000c	S	f000ff53	
++ --------------------------------------------------------------
++ c000000b	 	
++ c000000a	 	
++ c0000009	 	
++ c0000008	 	f000e2c3	
++ --------------------------------------------------------------
++ c0000007	 	
++ c0000006	 	
++ c0000005	 	
++ c0000004	S	f000ff53	
++ --------------------------------------------------------------
++ c0000003	 	
++ c0000002	 	
++ c0000001	 	
++ c0000000	S	f000ff53	
++ ------- the border between KERNEL SPACE and USER SPACE -------
++ bfffffff	 	
++ bffffffe	e	
++ bffffffd	c	
++ bffffffc	a	656361	
++ --------------------------------------------------------------
++ bffffffb	p	
++ bffffffa	s	
++ bffffff9	-	
++ bffffff8	l	70732d6c	
++ --------------------------------------------------------------
++ bffffff7	b	
++ bffffff6	d	
++ bffffff5	-	
++ bffffff4	s	62642d73	
++ --------------------------------------------------------------
++ bffffff3	g	
++ bffffff2	r	
++ bffffff1	a	
++ bffffff0	 	67726100	
++ --------------------------------------------------------------
++ bfffffef	o	
++ bfffffee	w	
++ bfffffed	t	
++ bfffffec	 	6f777400	
++ --------------------------------------------------------------
++ bfffffeb	!	
++ bfffffea	s	
++ bfffffe9	e	
++ bfffffe8	c	21736563	
++ --------------------------------------------------------------
++ bfffffe7	a	
++ bfffffe6	p	
++ bfffffe5	s	
++ bfffffe4	 	61707300	
++ --------------------------------------------------------------
++ bfffffe3	 	
++ bfffffe2	 	
++ bfffffe1	 	
++ bfffffe0	 	0	
++ --------------------------------------------------------------
++ bfffffdf	 	
++ bfffffde	 	
++ bfffffdd	 	
++ bfffffdc	 	0	
++ --------------------------------------------------------------
++ bfffffdb	 	
++ bfffffda	 	
++ bfffffd9	 	
++ bfffffd8	 	bfffffe5	
++ --------------------------------------------------------------
++ bfffffd7	 	
++ bfffffd6	 	
++ bfffffd5	 	
++ bfffffd4	 	bfffffed	
++ --------------------------------------------------------------
++ bfffffd3	 	
++ bfffffd2	 	
++ bfffffd1	 	
++ bfffffd0	 	bffffff1	
++ --------------------------------------------------------------
++ bfffffcf	 	
++ bfffffce	 	
++ bfffffcd	 	
++ bfffffcc	 	bfffffd0	
++ --------------------------------------------------------------
++ bfffffcb	 	
++ bfffffca	 	
++ bfffffc9	 	
++ bfffffc8	 	3	
++ --------------------------------------------------------------
++ bfffffc7	 	
++ bfffffc6	 	
++ bfffffc5	 	
++ bfffffc4	 	bfffffdc	
++ --------------------------------------------------------------
++ Success 
++ start_process: after sema up 
+  (args) begin
+  (args) argc = 3
+  (args) argv[0] = 'args-dbl-space'
+  (args) argv[1] = 'two'
+  (args) argv[2] = 'spaces!'
+  (args) argv[3] = null
+  (args) end
+  args-dbl-space: exit(0)
