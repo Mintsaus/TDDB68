@@ -34,18 +34,21 @@ static bool load (const char *cmdline, void (**eip) (void), void **esp);
 tid_t
 process_execute (const char *file_name) 
 {
-  char *fn_copy;
+  char *fn_copy, *fn_copy2;
   char *file_name_no_args;
   char *save_ptr;
   tid_t tid;
   /* Make a copy of FILE_NAME.
      Otherwise there's a race between the caller and load(). */
   fn_copy = palloc_get_page (0);
+  fn_copy2 = palloc_get_page (0);
   if (fn_copy == NULL)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
-   file_name_no_args = strtok_r(file_name, " ", &save_ptr);
-  
+  strlcpy (fn_copy2, file_name, PGSIZE); //Added to be used to create file_name_no_args
+  printf("Before file_name_no_args \n");
+   file_name_no_args = strtok_r(fn_copy2, " ", &save_ptr);
+  printf("After file_name_no_args \n");
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
@@ -64,13 +67,14 @@ process_execute (const char *file_name)
 	  cs->pid = tid;
   //}
   
-  
-  sema_down(&cs->sema_exec);
+	sema_down(&cs->sema_exec);
+	
 	//Get tid from child_status
 	tid = cs->pid;
 	if(tid == TID_ERROR){		//om -1 misslyckades load, kan ta bort strukten
 		free(cs);
     palloc_free_page (fn_copy);
+    palloc_free_page (fn_copy2);
 	}
   
   return tid;
@@ -184,19 +188,23 @@ process_exit (void)
   
   
   // If parent dead we need to destroy the cs. If parent waiting wake it up. //
-  lock_acquire(&cs_parent->cs_lock);
-  cs_parent->ref_cnt--;
-  if(cs_parent->ref_cnt == 0){		//Parent is dead
-    //printf("Parent of thread %d is dead \n", cur -> tid);
-    lock_release(&cs_parent->cs_lock);
-    free(cs_parent);
-  }else {								//Parent waits or doesn't care
-    //printf("Parent wait or doesn't care \n");
-    lock_release(&cs_parent->cs_lock);
-    //printf("EXIT: sema up \n");
-    sema_up(&cs_parent->sema_exec);
+  printf("Proc_exit: Before cs_parent \n");
+  if(!cs_parent){
+	  lock_acquire(&cs_parent->cs_lock); //----------THIS IS WHERE CRASH OCCURS-------------
+	  printf("Proc_exit: After cs_parent \n");
+	  cs_parent->ref_cnt--;                 
+	  
+	  if(cs_parent->ref_cnt == 0){		//Parent is dead
+		//printf("Parent of thread %d is dead \n", cur -> tid);
+		lock_release(&cs_parent->cs_lock);
+		free(cs_parent);
+	  }else {								//Parent waits or doesn't care
+		//printf("Parent wait or doesn't care \n");
+		lock_release(&cs_parent->cs_lock);
+		//printf("EXIT: sema up \n");
+		sema_up(&cs_parent->sema_exec);
+	  }
   }
-  
   
   
   //Struct to be able to save pointers to the children from list
@@ -204,7 +212,6 @@ process_exit (void)
     struct list_elem *pointer;
     struct list_elem elem;
   };
-  
   //Creating necessary variables for the loops
   struct list *cs_list;
   cs_list = &cur->cs_list;
@@ -217,14 +224,14 @@ process_exit (void)
   for (e = list_begin (cs_list); e != list_end (cs_list); e = list_next(e))
    {
     cs = list_entry (e, struct child_status, cs_elem);
-    //lock_acquire(&cs->cs_lock);		
+    lock_acquire(&cs->cs_lock);		
     cs->ref_cnt--;
     if(cs->ref_cnt == 0){
       struct elem_copy *ec = (struct elem_copy *)malloc(sizeof(struct elem_copy));
       ec->pointer = e;
       list_push_front(&children_to_delete, &ec->elem);
     }
-    //lock_release(&cs->cs_lock);			
+    lock_release(&cs->cs_lock);			
    }
    //printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
    
@@ -394,7 +401,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
    /* Uncomment the following line to print some debug
      information. This will be useful when you debug the program
      stack.*/
-//#define STACK_DEBUG
+#define STACK_DEBUG
 
 #ifdef STACK_DEBUG
   printf("*esp is %p\nstack contents:\n", *esp);
@@ -653,15 +660,32 @@ setup_stack (void **esp, const char **arguments)
     
     
   /*--------Pusha argument på stacken---------------------*/  
-  char *argv[32];
+  char *argv[32]; 
   int i, argc;
-  for(i = 0; arguments[i] != NULL; i++){
+  
+  //Changed order in which arguments are pushed to the stack. Starting with the last argument
+  for(i = 0; arguments[i] != NULL; i++){ //Counts the number of arguments, the result will be actual #args-1 since we start from zero.
+	  argc = i;
+  }
+  
+  //Pushes arguments to stack from the last to the first arg
+  for(i = argc; i >= 0; i--){ 
+	*esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
+	memcpy(*esp, arguments[i], strlen(arguments[i])+1); //the actual pushing to the stack
+	argv[i] = *esp;   //saving a pointer to where on the stack each argument is placed
+  }
+  argc++; //This is needed to reflect the true number of args
+  
+  /* -------Old solution-------------------------
+    for(i = 0; arguments[i] != NULL; i++){
     *esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
     memcpy(*esp, arguments[i], strlen(arguments[i])); //the actual pushing to the stack
     //printf("arguments[%d] = %s \n", i, arguments[i]);
-    argv[i] = *esp;   //saving a pointer to were on the stack each argument is placed
+    argv[i] = *esp;   //saving a pointer to where on the stack each argument is placed
   }
-  argc = i;
+  argc = i; */
+  
+  
   /*--------Avrunda *esp till närmsta 4-tal---------------*/
   char *np = 0;
   int round =  ((size_t) * esp)%4;
@@ -677,15 +701,18 @@ setup_stack (void **esp, const char **arguments)
   /*--------Pusha argv, adresser till argumenten ovan-----*/
   
   //printf("Pushing sentinel \n");
-  *esp -= 4;
+  
+  /* ------This was removed since starting the next step from argc accomplishes the same thing 
+   *esp -= 4;
   memcpy(*esp, &np, 4);   //NULL-pointer sentinel
-
+	*/
+	
   int j;
   //printf("Pushing argv[] \n");
-  for(j = i; j >= 0; j--){
+  for(j = argc; j >= 0; j--){ //Since this now starts from argc the first iteration will push the null-pointer sentinel. This is because &argv[argc] doesn't point to anything.
     *esp -= 4;
     memcpy(*esp, &argv[j], 4);
-    argv[j] = *esp;
+    argv[j] = *esp; // What does this do? Nothing?
   }
   char *argv_onstack = *esp;    //save the adress of argv on the stack to be able to point to it in next step.
   *esp -= sizeof(char **);
@@ -693,7 +720,7 @@ setup_stack (void **esp, const char **arguments)
   *esp -= sizeof(int);
   memcpy(*esp, &argc, sizeof(int));    //push argc
   *esp -= sizeof(void *);
-  memcpy(*esp, &argv[argc], sizeof(void *));    //push fake return address
+  memcpy(*esp, argv[argc], sizeof(void *));    //push fake return address
   return success;
   
 }

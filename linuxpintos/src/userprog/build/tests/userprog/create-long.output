@@ -1,6 +1,6 @@
-Copying tests/userprog/create-long into /tmp/KY9xUOlXXY.dsk...
-Writing command line to /tmp/SFbG6_qcnt.dsk...
-qemu -hda /tmp/SFbG6_qcnt.dsk -hdb /tmp/bNuPKjsnOH.dsk -hdc /tmp/KY9xUOlXXY.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-long into /tmp/cRcGFBryX9.dsk...
+Writing command line to /tmp/Y3sxwvGJON.dsk...
+qemu -hda /tmp/Y3sxwvGJON.dsk -hdb /tmp/rsToIxXGhp.dsk -hdc /tmp/cRcGFBryX9.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-long run create-long
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -19,7 +19,7 @@ Executing 'create-long':
 create-long: exit(0)
 Execution of 'create-long' complete.
 Timer: 59 ticks
-Thread: 34 idle ticks, 24 kernel ticks, 1 user ticks
+Thread: 33 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 63 reads, 208 writes
 hd1:0: 98 reads, 0 writes

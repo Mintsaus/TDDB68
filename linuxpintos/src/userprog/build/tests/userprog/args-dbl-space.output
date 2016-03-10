@@ -1,6 +1,6 @@
-Copying tests/userprog/args-dbl-space into /tmp/lxMIbISbuf.dsk...
-Writing command line to /tmp/4GH8wj8GvO.dsk...
-qemu -hda /tmp/4GH8wj8GvO.dsk -hdb /tmp/Qx8MI9FcKW.dsk -hdc /tmp/lxMIbISbuf.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/args-dbl-space into /tmp/qA_TpCDHWp.dsk...
+Writing command line to /tmp/H7Qz3ojDZF.dsk...
+qemu -hda /tmp/H7Qz3ojDZF.dsk -hdb /tmp/T8gbZVJVr9.dsk -hdc /tmp/qA_TpCDHWp.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put args-dbl-space run 'args-dbl-space two  spaces!'
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -22,8 +22,8 @@ Executing 'args-dbl-space two  spaces!':
 (args) end
 args-dbl-space: exit(0)
 Execution of 'args-dbl-space' complete.
-Timer: 56 ticks
-Thread: 31 idle ticks, 25 kernel ticks, 0 user ticks
+Timer: 59 ticks
+Thread: 31 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes

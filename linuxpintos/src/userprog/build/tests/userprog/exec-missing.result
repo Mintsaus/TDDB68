@@ -3,4 +3,4 @@ Kernel panic in run: PANIC at ../../userprog/exception.c:100 in kill(): Kernel b
 Call stack: 0xc010709b 0xc010923c
 Translation of call stack:
 0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
-0xc010923c: process_exit (...../userprog/process.c:221)
+0xc010923c: process_exit (...../userprog/process.c:222)

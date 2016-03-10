@@ -1,12 +1,12 @@
-Copying tests/userprog/write-bad-ptr into /tmp/whR8ZewfNZ.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/whR8ZewfNZ.dsk...
-Writing command line to /tmp/rjr84jZ5SG.dsk...
-qemu -hda /tmp/rjr84jZ5SG.dsk -hdb /tmp/ix1lqjm2pB.dsk -hdc /tmp/whR8ZewfNZ.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-bad-ptr into /tmp/A8iDbvG_8s.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/A8iDbvG_8s.dsk...
+Writing command line to /tmp/rCv_oDVYWY.dsk...
+qemu -hda /tmp/rCv_oDVYWY.dsk -hdb /tmp/DvDlQshl4J.dsk -hdc /tmp/A8iDbvG_8s.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-bad-ptr put sample.txt run write-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 100 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -29,7 +29,7 @@ The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
 Timer: 61 ticks
-Thread: 31 idle ticks, 29 kernel ticks, 1 user ticks
+Thread: 33 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 91 reads, 210 writes
 hd1:0: 100 reads, 0 writes

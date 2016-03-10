@@ -1,6 +1,6 @@
-Copying tests/userprog/exec-bad-ptr into /tmp/9wmXCZSDeR.dsk...
-Writing command line to /tmp/04k6MrdvBh.dsk...
-qemu -hda /tmp/04k6MrdvBh.dsk -hdb /tmp/GQk5mkBxwK.dsk -hdc /tmp/9wmXCZSDeR.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/exec-bad-ptr into /tmp/VgrvUcQqPd.dsk...
+Writing command line to /tmp/8vG9Ux4bTW.dsk...
+qemu -hda /tmp/8vG9Ux4bTW.dsk -hdb /tmp/l42vf1o6gY.dsk -hdc /tmp/VgrvUcQqPd.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put exec-bad-ptr run exec-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -25,8 +25,8 @@ Call stack: 0xc010709b 0xc0106cb4 0x804a116 0x80480af.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 60 ticks
-Thread: 30 idle ticks, 29 kernel ticks, 1 user ticks
+Timer: 58 ticks
+Thread: 30 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
