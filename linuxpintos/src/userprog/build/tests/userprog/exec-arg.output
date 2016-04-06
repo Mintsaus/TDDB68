@@ -1,7 +1,7 @@
-Copying tests/userprog/exec-arg into /tmp/dxtJbH8IAS.dsk...
-Copying tests/userprog/child-args into /tmp/dxtJbH8IAS.dsk...
-Writing command line to /tmp/ktoZUIhe5c.dsk...
-qemu -hda /tmp/ktoZUIhe5c.dsk -hdb /tmp/skccrF_0ht.dsk -hdc /tmp/dxtJbH8IAS.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/exec-arg into /tmp/R8uRVecWON.dsk...
+Copying tests/userprog/child-args into /tmp/R8uRVecWON.dsk...
+Writing command line to /tmp/0XEx7fvsIH.dsk...
+qemu -hda /tmp/0XEx7fvsIH.dsk -hdb /tmp/d_PdyRgswz.dsk -hdc /tmp/R8uRVecWON.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put exec-arg put child-args run exec-arg
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -16,26 +16,22 @@ Putting 'exec-arg' into the file system...
 Putting 'child-args' into the file system...
 Executing 'exec-arg':
 (exec-arg) begin
-Page fault at 0x804a672: rights violation error writing page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc0106ac1
- cr2=0804a672 error=00000003
- eax=00000020 ebx=0804a668 ecx=00000020 edx=00000020
- esi=c010df8a edi=0804a672 esp=c010df8a ebp=00000020
- cs=0008 ds=0010 es=0010 ss=0020
-Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc0106ac1Page fault at 0x20: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052d7
- cr2=00000020 error=00000000
- eax=0000000b ebx=00000020 ecx=000007a1 edx=000003d4
- esi=00000064 edi=c010cbe5 esp=c010de9b ebp=c011fdc8
- cs=0008 ds=0010 es=0010 ss=6ac1
-Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
-Timer: 62 ticks
-Thread: 33 idle ticks, 28 kernel ticks, 1 user ticks
+(args) begin
+(args) argc = 2
+(args) argv[0] = 'child-args'
+(args) argv[1] = 'childarg'
+(args) argv[2] = null
+(args) end
+child-args: exit(0)
+(exec-arg) end
+exec-arg: exit(0)
+Execution of 'exec-arg' complete.
+Timer: 60 ticks
+Thread: 33 idle ticks, 26 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 86 reads, 400 writes
+hd0:1: 116 reads, 400 writes
 hd1:0: 195 reads, 0 writes
-Console: 1592 characters output
+Console: 991 characters output
 Keyboard: 0 keys pressed
-Exception: 2 page faults
+Exception: 0 page faults
 Powering off...

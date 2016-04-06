@@ -39,7 +39,7 @@ FAIL tests/userprog/write-zero
 pass tests/userprog/write-stdin
 FAIL tests/userprog/write-bad-fd
 pass tests/userprog/exec-once
-FAIL tests/userprog/exec-arg
+pass tests/userprog/exec-arg
 pass tests/userprog/exec-multiple
 FAIL tests/userprog/exec-missing
 FAIL tests/userprog/exec-bad-ptr

@@ -46,9 +46,9 @@ process_execute (const char *file_name)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
   strlcpy (fn_copy2, file_name, PGSIZE); //Added to be used to create file_name_no_args
-  printf("Before file_name_no_args \n");
+  //printf("Before file_name_no_args \n");
    file_name_no_args = strtok_r(fn_copy2, " ", &save_ptr);
-  printf("After file_name_no_args \n");
+  //printf("After file_name_no_args \n");
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
@@ -187,11 +187,11 @@ process_exit (void)
   cs_parent = cur->cs_parent;
   
   
-  // If parent dead we need to destroy the cs. If parent waiting wake it up. //
-  printf("Proc_exit: Before cs_parent \n");
-  if(!cs_parent){
+  // If parent dead we need to destroy the cs. If parent waiting, wake it up. //
+  //printf("Proc_exit: Before cs_parent \n");
+  if(cs_parent){
 	  lock_acquire(&cs_parent->cs_lock); //----------THIS IS WHERE CRASH OCCURS-------------
-	  printf("Proc_exit: After cs_parent \n");
+	  //printf("Proc_exit: After cs_parent \n");
 	  cs_parent->ref_cnt--;                 
 	  
 	  if(cs_parent->ref_cnt == 0){		//Parent is dead
@@ -246,7 +246,7 @@ process_exit (void)
       free(ec);
       free(cs);		
     } 
-   //printf("after while\n");
+   //printf("PROC_EXIT after while\n");
    
 
 
@@ -401,7 +401,7 @@ load (const char *file_name_, void (**eip) (void), void **esp)
    /* Uncomment the following line to print some debug
      information. This will be useful when you debug the program
      stack.*/
-#define STACK_DEBUG
+//#define STACK_DEBUG
 
 #ifdef STACK_DEBUG
   printf("*esp is %p\nstack contents:\n", *esp);

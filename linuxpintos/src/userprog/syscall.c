@@ -148,13 +148,13 @@ syscall_handler (struct intr_frame *f UNUSED)
      * Jag har lokaliserat problemet till när cs_parent ska accessas vad jag tror är sista gången. Den verkar helt enkelt inte finnas eller så får vi inte accessa den.
      * Här låg det locks som var bortkommenterade som jag la till igen.
      * 
-     * Snackade mer med Erik och han tror att det antagligen är utråden som ställer till det eftersom den inte har en parent. Jag la till en check om cs_parent existerar. 
+     * Snackade mer med Erik och han tror att det antagligen är urtråden som ställer till det eftersom den inte har en parent. Jag la till en check om cs_parent existerar. 
      * Detta tar bort crashen, men skapar istället en deadlock. 
      * Erik snackade om att det möjligtvis kan vara något med när process_wait i init.c kallas och att parent då aldrig släpps. (Hängde inte helt med)
      * 
      * Checken jag la till gör att det blir en sema_up som aldrig körs. Detta kan också vara det som orsakar problemet. Behöver tänka på var motsvarade sema_down sätts.
      * 
-     * En sista tanke innan jag drar. In process_execute verkar vi har snurrat till det lite. Vet inte vad tanken är med tid:en som ska returnas och är för trött för att tänka, 
+     * En sista tanke innan jag drar. I process_execute verkar vi har snurrat till det lite. Vet inte vad tanken är med tid:en som ska returnas och är för trött för att tänka, 
      * men tid returnas för thread_create, sedan sätt cs->pid = tid, lite senare sätts tid = cs->pid = tid. Crazy shit helt enkelt. Vet inte om det har något med det här att göra
      * men värt att tänka på vad som ska ske där egentligen.
      * */	

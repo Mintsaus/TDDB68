@@ -1,6 +1,6 @@
-Copying tests/userprog/exec-missing into /tmp/rh1V309I3P.dsk...
-Writing command line to /tmp/dFCNlk4M3U.dsk...
-qemu -hda /tmp/dFCNlk4M3U.dsk -hdb /tmp/cutSNflNuW.dsk -hdc /tmp/rh1V309I3P.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/exec-missing into /tmp/VqZnAj7DSI.dsk...
+Writing command line to /tmp/Za0chYqiL0.dsk...
+qemu -hda /tmp/Za0chYqiL0.dsk -hdb /tmp/TUqjBDcVyL.dsk -hdc /tmp/VqZnAj7DSI.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put exec-missing run exec-missing
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -18,23 +18,26 @@ load: no-such-file: open failed
 (exec-missing) exec("no-such-file"): -1072612936
 (exec-missing) end
 exec-missing: exit(0)
-Page fault at 0xcccccc94: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010923c
- cr2=cccccc94 error=00000000
- eax=c011f250 ebx=cccccccc ecx=c01128c8 edx=c011fee4
- esi=c011f248 edi=c011f000 esp=c011f248 ebp=c011fedc
- cs=0008 ds=0010 es=0010 ss=0000
+Page fault at 0xcccccccc: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010767f
+ cr2=cccccccc error=00000000
+ eax=cccccccc ebx=cccccccc ecx=c01128c8 edx=cccccccb
+ esi=c011f0a0 edi=00000001 esp=c011f0a0 ebp=c0120000
+ cs=0008 ds=0010 es=0010 ss=000a
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc010923c.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 61 ticks
-Thread: 33 idle ticks, 26 kernel ticks, 2 user ticks
+Call stack: 0xc010709b 0xc010767f 0Page fault at 0x3: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052d7
+ cr2=00000003 error=00000000
+ eax=00000002 ebx=00000003 ecx=000007a3 edx=000003d4
+ esi=00000064 edi=c010cc45 esp=c010defb ebp=c0120d28
+ cs=0008 ds=0010 es=0010 ss=0000
+Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
+Timer: 59 ticks
+Thread: 30 idle ticks, 27 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 76 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1458 characters output
+Console: 1669 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 2 page faults
 Powering off...
