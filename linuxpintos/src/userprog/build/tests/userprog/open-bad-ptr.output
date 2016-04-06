@@ -1,6 +1,6 @@
-Copying tests/userprog/open-bad-ptr into /tmp/m6lybhu0hs.dsk...
-Writing command line to /tmp/dtY1jK0iAh.dsk...
-qemu -hda /tmp/dtY1jK0iAh.dsk -hdb /tmp/8Fy4D13Cxv.dsk -hdc /tmp/m6lybhu0hs.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/open-bad-ptr into /tmp/yhukNq5QBo.dsk...
+Writing command line to /tmp/ZHwLQY4czx.dsk...
+qemu -hda /tmp/ZHwLQY4czx.dsk -hdb /tmp/sJqA44np9f.dsk -hdc /tmp/yhukNq5QBo.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put open-bad-ptr run open-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -25,11 +25,11 @@ Call stack: 0xc010709b 0xc0106776 0x6e65706fPage fault at 0x4: not present error
 Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052d7
  cr2=00000004 error=00000000
  eax=0000000b ebx=00000004 ecx=000007ac edx=000003d4
- esi=00000064 edi=c010cc45 esp=c010defb ebp=c0120d38
+ esi=00000064 edi=c010cc85 esp=c010df3b ebp=c0120d38
  cs=0008 ds=0010 es=0010 ss=706f
 Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
-Timer: 56 ticks
-Thread: 31 idle ticks, 24 kernel ticks, 1 user ticks
+Timer: 61 ticks
+Thread: 31 idle ticks, 28 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 61 reads, 204 writes
 hd1:0: 98 reads, 0 writes

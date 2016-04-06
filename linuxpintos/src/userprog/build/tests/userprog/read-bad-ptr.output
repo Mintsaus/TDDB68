@@ -1,7 +1,7 @@
-Copying tests/userprog/read-bad-ptr into /tmp/NWCNFg0JuB.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/NWCNFg0JuB.dsk...
-Writing command line to /tmp/IK114xCZqW.dsk...
-qemu -hda /tmp/IK114xCZqW.dsk -hdb /tmp/HzV5aPx5iP.dsk -hdc /tmp/NWCNFg0JuB.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/read-bad-ptr into /tmp/FgN0Ihdku6.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/FgN0Ihdku6.dsk...
+Writing command line to /tmp/4q8kQtzgUo.dsk...
+qemu -hda /tmp/4q8kQtzgUo.dsk -hdb /tmp/gzcmpORFwS.dsk -hdc /tmp/FgN0Ihdku6.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put read-bad-ptr put sample.txt run read-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -21,18 +21,18 @@ Page fault at 0xc0100000: rights violation error writing page in kernel context.
 Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010658d
  cr2=c0100000 error=00000003
  eax=c0100000 ebx=0000007b ecx=00000022 edx=00000000
- esi=c011b20c edi=c011b20c esp=c0113a28 ebp=0000007b
+ esi=c011b20c edi=c011b20c esp=c0113a48 ebp=0000007b
  cs=0008 ds=0010 es=0010 ss=a06c
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
 Call stack: 0xc010709b 0xc010658dPage fault at 0x7b: not present error reading page in kernel context.
 Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052d7
  cr2=0000007b error=00000000
  eax=0000000b ebx=0000007b ecx=000007a1 edx=000003d4
- esi=00000064 edi=c010cc45 esp=c010defb ebp=c0120db8
+ esi=00000064 edi=c010cc85 esp=c010df3b ebp=c0120db8
  cs=0008 ds=0010 es=0010 ss=658d
 Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
-Timer: 59 ticks
-Thread: 31 idle ticks, 26 kernel ticks, 2 user ticks
+Timer: 60 ticks
+Thread: 33 idle ticks, 25 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 91 reads, 210 writes
 hd1:0: 100 reads, 0 writes

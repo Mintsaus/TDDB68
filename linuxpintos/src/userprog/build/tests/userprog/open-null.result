@@ -1,4 +1,5 @@
 FAIL
 Kernel panic in run: PANIC at ../../filesys/directory.c:125 in dir_lookup(): assertion `name != NULL' failed.
-Call stack:
+Call stack: 0xc010709b
 Translation of call stack:
+0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)

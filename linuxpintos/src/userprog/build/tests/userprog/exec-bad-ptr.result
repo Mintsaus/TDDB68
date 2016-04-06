@@ -1,13 +1,6 @@
 FAIL
 Kernel panic in run: PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc0106cb4 0x804a116 0x80480af
+Call stack: 0xc010709b 0xc0106cb4
 Translation of call stack:
-In kernel.o:
 0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
 0xc0106cb4: strlcpy (...ld/../../lib/string.c:333)
-In tests/userprog/exec-bad-ptr:
-0x0804a116: exec (.../../lib/user/syscall.c:81)
-0x080480af: test_main (...serprog/exec-bad-ptr.c:11)
-Translations of user virtual addresses above are based on a guess at
-the binary to use.  If this guess is incorrect, then those
-translations will be misleading.

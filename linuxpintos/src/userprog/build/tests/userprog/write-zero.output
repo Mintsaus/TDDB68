@@ -1,7 +1,7 @@
-Copying tests/userprog/write-zero into /tmp/aDGIoJSPU6.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/aDGIoJSPU6.dsk...
-Writing command line to /tmp/jLLmOP80LV.dsk...
-qemu -hda /tmp/jLLmOP80LV.dsk -hdb /tmp/5ECemQbhwq.dsk -hdc /tmp/aDGIoJSPU6.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-zero into /tmp/crB02s13iH.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/crB02s13iH.dsk...
+Writing command line to /tmp/OLEhP_0tOK.dsk...
+qemu -hda /tmp/OLEhP_0tOK.dsk -hdb /tmp/vCmgGHUPnr.dsk -hdc /tmp/crB02s13iH.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-zero put sample.txt run write-zero
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -9,7 +9,7 @@ Pintos booting with 4,088 kB RAM...
 Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
-hd1:0: detected 101 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:0: detected 100 sector (50 kB) disk, model "QEMU HARDDISK", serial "QM00003"
 Formatting file system...done.
 Boot complete.
 Putting 'write-zero' into the file system...
@@ -20,11 +20,11 @@ Executing 'write-zero':
 (write-zero) write() returned -1 instead of 0: FAILED
 write-zero: exit(1)
 Execution of 'write-zero' complete.
-Timer: 59 ticks
-Thread: 35 idle ticks, 23 kernel ticks, 1 user ticks
+Timer: 56 ticks
+Thread: 30 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 90 reads, 212 writes
-hd1:0: 101 reads, 0 writes
+hd0:1: 90 reads, 210 writes
+hd1:0: 100 reads, 0 writes
 Console: 934 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults

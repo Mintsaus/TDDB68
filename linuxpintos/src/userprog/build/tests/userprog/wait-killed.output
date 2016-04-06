@@ -1,7 +1,7 @@
-Copying tests/userprog/wait-killed into /tmp/44noxCCi4H.dsk...
-Copying tests/userprog/child-bad into /tmp/44noxCCi4H.dsk...
-Writing command line to /tmp/lMiZgi40aI.dsk...
-qemu -hda /tmp/lMiZgi40aI.dsk -hdb /tmp/11uDyV2G2j.dsk -hdc /tmp/44noxCCi4H.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/wait-killed into /tmp/CqqUd7Qcxx.dsk...
+Copying tests/userprog/child-bad into /tmp/CqqUd7Qcxx.dsk...
+Writing command line to /tmp/ncMmo4DgDF.dsk...
+qemu -hda /tmp/ncMmo4DgDF.dsk -hdb /tmp/rbWBQivTbs.dsk -hdc /tmp/CqqUd7Qcxx.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put wait-killed put child-bad run wait-killed
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -17,23 +17,17 @@ Putting 'child-bad' into the file system...
 Executing 'wait-killed':
 (wait-killed) begin
 (child-bad) begin
-Page fault at 0x20101234: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a5b1
- cr2=20101234 error=00000000
- eax=c0125000 ebx=c0125fb0 ecx=0000000e edx=20101234
- esi=c011a06c edi=c0125024 esp=0804bb40 ebp=c0125fe8
- cs=0008 ds=0010 es=0010 ss=0012
-Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc010a5b1 0x80480aa.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 62 ticks
-Thread: 31 idle ticks, 30 kernel ticks, 1 user ticks
+child-bad: exit(-1)
+(wait-killed) wait(exec()) = -1
+(wait-killed) end
+wait-killed: exit(0)
+Execution of 'wait-killed' complete.
+Timer: 59 ticks
+Thread: 31 idle ticks, 28 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 116 reads, 400 writes
 hd1:0: 195 reads, 0 writes
-Console: 1420 characters output
+Console: 943 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...

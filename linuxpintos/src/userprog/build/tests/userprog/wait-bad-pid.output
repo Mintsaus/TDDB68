@@ -1,6 +1,6 @@
-Copying tests/userprog/wait-bad-pid into /tmp/hvxsnAcSSP.dsk...
-Writing command line to /tmp/DnuKewlkMY.dsk...
-qemu -hda /tmp/DnuKewlkMY.dsk -hdb /tmp/5Qr9tKq1EZ.dsk -hdc /tmp/hvxsnAcSSP.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/wait-bad-pid into /tmp/uFHl6ya1T5.dsk...
+Writing command line to /tmp/u7ibPUgITN.dsk...
+qemu -hda /tmp/u7ibPUgITN.dsk -hdb /tmp/ti2R1ddKV4.dsk -hdc /tmp/uFHl6ya1T5.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put wait-bad-pid run wait-bad-pid
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -17,8 +17,8 @@ Executing 'wait-bad-pid':
 (wait-bad-pid) end
 wait-bad-pid: exit(0)
 Execution of 'wait-bad-pid' complete.
-Timer: 55 ticks
-Thread: 31 idle ticks, 24 kernel ticks, 0 user ticks
+Timer: 59 ticks
+Thread: 32 idle ticks, 27 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes

@@ -1,6 +1,6 @@
-Copying tests/userprog/create-bad-ptr into /tmp/3kLHSfGhxc.dsk...
-Writing command line to /tmp/DtWxFcXFjd.dsk...
-qemu -hda /tmp/DtWxFcXFjd.dsk -hdb /tmp/a7TC7FNF3Y.dsk -hdc /tmp/3kLHSfGhxc.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-bad-ptr into /tmp/8yI7_Cioqp.dsk...
+Writing command line to /tmp/jLImnNfoTt.dsk...
+qemu -hda /tmp/jLImnNfoTt.dsk -hdb /tmp/OB3KB95Vau.dsk -hdc /tmp/8yI7_Cioqp.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-bad-ptr run create-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -15,18 +15,18 @@ Putting 'create-bad-ptr' into the file system...
 Executing 'create-bad-ptr':
 (create-bad-ptr) begin
 Page fault at 0x20101234: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010b401
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010b441
  cr2=20101234 error=00000000
- eax=00000000 ebx=c011a06c ecx=c0113a18 edx=00000007
- esi=20101234 edi=c0120024 esp=c011a02c ebp=c011a06c
+ eax=00000000 ebx=c011a06c ecx=c0113a38 edx=00000007
+ esi=20101234 edi=c011a04c esp=c011a02c ebp=c011a06c
  cs=0008 ds=0010 es=0010 ss=a03c
 Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc010b401 0 0xc011c00c.
+Call stack: 0xc010709b 0xc010b441 0 0xc011c00c.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 59 ticks
-Thread: 31 idle ticks, 27 kernel ticks, 1 user ticks
+Timer: 58 ticks
+Thread: 32 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 62 reads, 207 writes
 hd1:0: 98 reads, 0 writes

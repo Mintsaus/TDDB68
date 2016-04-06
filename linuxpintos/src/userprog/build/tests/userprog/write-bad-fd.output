@@ -1,6 +1,6 @@
-Copying tests/userprog/write-bad-fd into /tmp/fYlzCZgtwr.dsk...
-Writing command line to /tmp/SIvHrLokjE.dsk...
-qemu -hda /tmp/SIvHrLokjE.dsk -hdb /tmp/Dp4fDRoLsP.dsk -hdc /tmp/fYlzCZgtwr.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-bad-fd into /tmp/3BEGyGLStk.dsk...
+Writing command line to /tmp/Kk6nieBF07.dsk...
+qemu -hda /tmp/Kk6nieBF07.dsk -hdb /tmp/sSOowulYNb.dsk -hdc /tmp/3BEGyGLStk.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-bad-fd run write-bad-fd
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -15,19 +15,16 @@ Putting 'write-bad-fd' into the file system...
 Executing 'write-bad-fd':
 (write-bad-fd) begin
 Kernel PANIC at ../../lib/kernel/bitmap.c:202 in bitmap_test(): assertion `idx < b->bit_cnt' failed.
-Call stack: 0xc010709bPage fault at 0xfffffffb: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc01052d7
- cr2=fffffffb error=00000000
- eax=0000000b ebx=fffffffb ecx=00000606 edx=000003d4
- esi=000000ca edi=c010cb3d esp=c010defb ebp=c0120ec4
- cs=0008 ds=0010 es=0010 ss=709b
-Kernel PANIC recursion at ../../userprog/exception.c:100 in kill().
-Timer: 56 ticks
-Thread: 30 idle ticks, 25 kernel ticks, 1 user ticks
+Call stack: 0xc010709b.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 58 ticks
+Thread: 32 idle ticks, 26 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1236 characters output
+Console: 1020 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...

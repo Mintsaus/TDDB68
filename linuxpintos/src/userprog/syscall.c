@@ -7,10 +7,13 @@
 #include "filesys/file.h"
 #include <lib/kernel/bitmap.h>
 #include <lib/kernel/list.h>
+#include "threads/vaddr.h"
+#include "userprog/pagedir.h"
 
 static void syscall_handler (struct intr_frame *);
 void power_off(void);
 void putbuf(const char *buffer, size_t n);
+void exit(int status);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
 tid_t process_execute(const char *);
@@ -50,6 +53,13 @@ syscall_handler (struct intr_frame *f UNUSED)
 	struct file **file_names = curr_thread->file_names;			/* Gets pointer to array of file names from current thread */
 	struct list *cs_list;
 	int *p = f->esp;
+  //Check that stack pointer is ok
+  //printf("syscall before *p check \n");
+  if(!is_user_vaddr((const void *)p) || pagedir_get_page(curr_thread->pagedir, (const void *)p) == NULL)
+  {
+    //printf("syscall *p check failed \n");
+    exit(-1);
+    }
 	switch(*p)
 	{
 		case (SYS_HALT)://Done			
@@ -189,12 +199,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			//printf("SYS_EXIT in thread: %d \n", curr_thread -> tid);
 			
       //kolla om parent existerar?? Fråga Erik
-			struct child_status *cs_parent;
-			cs_parent = curr_thread->cs_parent;
-			cs_parent->exit_status = status;
-      
-      printf("%s: exit(%d)\n", curr_thread -> name, status);
-      thread_exit();
+			exit(status);
       
 			break;
 			
@@ -210,6 +215,14 @@ syscall_handler (struct intr_frame *f UNUSED)
 			thread_exit ();
 	}
 	
-	
-  
 }
+
+void exit(int status){
+    struct child_status *cs_parent;
+    struct thread *curr_thread = thread_current();
+    cs_parent = curr_thread->cs_parent;
+    cs_parent->exit_status = status;
+    
+    printf("%s: exit(%d)\n", curr_thread -> name, status);
+    thread_exit();
+	}

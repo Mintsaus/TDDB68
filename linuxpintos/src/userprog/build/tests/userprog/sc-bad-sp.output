@@ -1,6 +1,6 @@
-Copying tests/userprog/sc-bad-sp into /tmp/mDzAAZcJZ0.dsk...
-Writing command line to /tmp/X_CEX6Lued.dsk...
-qemu -hda /tmp/X_CEX6Lued.dsk -hdb /tmp/OKlcNUZ953.dsk -hdc /tmp/mDzAAZcJZ0.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/sc-bad-sp into /tmp/ZM9RaX3wjB.dsk...
+Writing command line to /tmp/Na5UI4M4Xk.dsk...
+qemu -hda /tmp/Na5UI4M4Xk.dsk -hdb /tmp/FyRhBhodXG.dsk -hdc /tmp/ZM9RaX3wjB.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put sc-bad-sp run sc-bad-sp
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -14,23 +14,14 @@ Boot complete.
 Putting 'sc-bad-sp' into the file system...
 Executing 'sc-bad-sp':
 (sc-bad-sp) begin
-Page fault at 0x40480a3: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a5b1
- cr2=040480a3 error=00000000
- eax=c0120000 ebx=c0120fb0 ecx=0000000e edx=040480a3
- esi=c011a04c edi=c0120024 esp=0804bb40 ebp=c0120fe8
- cs=0008 ds=0010 es=0010 ss=0012
-Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc010a5b1 0x80480aa.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 56 ticks
-Thread: 32 idle ticks, 23 kernel ticks, 1 user ticks
+sc-bad-sp: exit(-1)
+Execution of 'sc-bad-sp' complete.
+Timer: 58 ticks
+Thread: 32 idle ticks, 25 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 1330 characters output
+Console: 781 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...
