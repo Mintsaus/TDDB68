@@ -1,1 +1,14 @@
-PASS
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (read-boundary) begin
+  (read-boundary) open "sample.txt"
+  (read-boundary) end
+  read-boundary: exit(0)
+Differences in `diff -u' format:
++ after filesys_open
+  (read-boundary) begin
+  (read-boundary) open "sample.txt"
+  (read-boundary) end
+  read-boundary: exit(0)

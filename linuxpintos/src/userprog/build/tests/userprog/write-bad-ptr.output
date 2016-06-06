@@ -1,7 +1,7 @@
-Copying tests/userprog/write-bad-ptr into /tmp/WKB00dgHBJ.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/WKB00dgHBJ.dsk...
-Writing command line to /tmp/oybRhhoQjo.dsk...
-qemu -hda /tmp/oybRhhoQjo.dsk -hdb /tmp/C99Dx2rpP9.dsk -hdc /tmp/WKB00dgHBJ.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-bad-ptr into /tmp/fkMBWYVH1V.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/fkMBWYVH1V.dsk...
+Writing command line to /tmp/qYQwduVblE.dsk...
+qemu -hda /tmp/qYQwduVblE.dsk -hdb /tmp/1cJF4ootl_.dsk -hdc /tmp/fkMBWYVH1V.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-bad-ptr put sample.txt run write-bad-ptr
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -15,25 +15,17 @@ Boot complete.
 Putting 'write-bad-ptr' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'write-bad-ptr':
+after filesys_open
 (write-bad-ptr) begin
 (write-bad-ptr) open "sample.txt"
-Page fault at 0x10123420: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc0106589
- cr2=10123420 error=00000000
- eax=c011b20c ebx=0000007b ecx=00000000 edx=00000000
- esi=10123420 edi=c011b20c esp=c0113a48 ebp=00000000
- cs=0008 ds=0010 es=0010 ss=a06c
-Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 60 ticks
-Thread: 32 idle ticks, 27 kernel ticks, 1 user ticks
+write-bad-ptr: exit(-1)
+Execution of 'write-bad-ptr' complete.
+Timer: 58 ticks
+Thread: 33 idle ticks, 24 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
-hd0:1: 91 reads, 210 writes
+hd0:1: 90 reads, 210 writes
 hd1:0: 100 reads, 0 writes
-Console: 1426 characters output
+Console: 924 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...

@@ -1,12 +1,12 @@
-Copying tests/userprog/wait-simple into /tmp/OyfYLZdS8s.dsk...
-Copying tests/userprog/child-simple into /tmp/OyfYLZdS8s.dsk...
-Writing command line to /tmp/5Co24wBJ3B.dsk...
-qemu -hda /tmp/5Co24wBJ3B.dsk -hdb /tmp/6lgjC0rXtP.dsk -hdc /tmp/OyfYLZdS8s.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/wait-simple into /tmp/JKIsuHPqYK.dsk...
+Copying tests/userprog/child-simple into /tmp/JKIsuHPqYK.dsk...
+Writing command line to /tmp/UXFWklTI5D.dsk...
+qemu -hda /tmp/UXFWklTI5D.dsk -hdb /tmp/GiAlFv0Wk0.dsk -hdc /tmp/JKIsuHPqYK.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put wait-simple put child-simple run wait-simple
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 194 sector (97 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -15,19 +15,21 @@ Boot complete.
 Putting 'wait-simple' into the file system...
 Putting 'child-simple' into the file system...
 Executing 'wait-simple':
+after filesys_open
 (wait-simple) begin
+after filesys_open
 (child-simple) run
 child-simple: exit(81)
 (wait-simple) wait(exec()) = 81
 (wait-simple) end
 wait-simple: exit(0)
 Execution of 'wait-simple' complete.
-Timer: 60 ticks
+Timer: 61 ticks
 Thread: 33 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 122 reads, 398 writes
 hd1:0: 194 reads, 0 writes
-Console: 953 characters output
+Console: 991 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

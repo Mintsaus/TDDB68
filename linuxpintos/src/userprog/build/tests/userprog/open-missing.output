@@ -1,6 +1,6 @@
-Copying tests/userprog/open-missing into /tmp/RdX6W5aE_6.dsk...
-Writing command line to /tmp/lo5vULIywh.dsk...
-qemu -hda /tmp/lo5vULIywh.dsk -hdb /tmp/f7YDDEGLDZ.dsk -hdc /tmp/RdX6W5aE_6.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/open-missing into /tmp/eDb2gVZ6KX.dsk...
+Writing command line to /tmp/8PJmYY_4YX.dsk...
+qemu -hda /tmp/8PJmYY_4YX.dsk -hdb /tmp/XfNRWsWjM6.dsk -hdc /tmp/eDb2gVZ6KX.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put open-missing run open-missing
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -13,16 +13,17 @@ Formatting file system...done.
 Boot complete.
 Putting 'open-missing' into the file system...
 Executing 'open-missing':
+after filesys_open
 (open-missing) begin
 (open-missing) end
 open-missing: exit(0)
 Execution of 'open-missing' complete.
-Timer: 56 ticks
-Thread: 32 idle ticks, 24 kernel ticks, 0 user ticks
+Timer: 58 ticks
+Thread: 31 idle ticks, 26 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 76 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 820 characters output
+Console: 839 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

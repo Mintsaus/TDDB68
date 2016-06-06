@@ -1,6 +1,24 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc010658d
-Translation of call stack:
-0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
-0xc010658d: memcpy (...ild/../../lib/string.c:16)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (read-bad-ptr) begin
+  (read-bad-ptr) open "sample.txt"
+  read-bad-ptr: exit(-1)
+Differences in `diff -u' format:
++ after filesys_open
+  (read-bad-ptr) begin
+  (read-bad-ptr) open "sample.txt"
+  read-bad-ptr: exit(-1)
+Acceptable output:
+  (read-bad-ptr) begin
+  (read-bad-ptr) open "sample.txt"
+  (read-bad-ptr) end
+  read-bad-ptr: exit(0)
+Differences in `diff -u' format:
++ after filesys_open
+  (read-bad-ptr) begin
+  (read-bad-ptr) open "sample.txt"
+- (read-bad-ptr) end
+- read-bad-ptr: exit(0)
++ read-bad-ptr: exit(-1)

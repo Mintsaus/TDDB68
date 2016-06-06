@@ -1,6 +1,6 @@
-Copying tests/userprog/read-stdout into /tmp/TBMCydwMvv.dsk...
-Writing command line to /tmp/FCZIqa1M5B.dsk...
-qemu -hda /tmp/FCZIqa1M5B.dsk -hdb /tmp/ATQJ2O9LA_.dsk -hdc /tmp/TBMCydwMvv.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/read-stdout into /tmp/LE9eF2KtDl.dsk...
+Writing command line to /tmp/Ck8Rkd5k0f.dsk...
+qemu -hda /tmp/Ck8Rkd5k0f.dsk -hdb /tmp/FvczD5pfnh.dsk -hdc /tmp/LE9eF2KtDl.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put read-stdout run read-stdout
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -13,16 +13,17 @@ Formatting file system...done.
 Boot complete.
 Putting 'read-stdout' into the file system...
 Executing 'read-stdout':
+after filesys_open
 (read-stdout) begin
 (read-stdout) end
 read-stdout: exit(0)
 Execution of 'read-stdout' complete.
-Timer: 56 ticks
-Thread: 31 idle ticks, 25 kernel ticks, 0 user ticks
+Timer: 57 ticks
+Thread: 32 idle ticks, 25 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 202 writes
 hd1:0: 97 reads, 0 writes
-Console: 812 characters output
+Console: 831 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

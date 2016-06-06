@@ -1,1 +1,21 @@
-PASS
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (read-stdout) begin
+  (read-stdout) end
+  read-stdout: exit(0)
+Differences in `diff -u' format:
++ after filesys_open
+  (read-stdout) begin
+  (read-stdout) end
+  read-stdout: exit(0)
+Acceptable output:
+  (read-stdout) begin
+  read-stdout: exit(-1)
+Differences in `diff -u' format:
++ after filesys_open
+  (read-stdout) begin
+- read-stdout: exit(-1)
++ (read-stdout) end
++ read-stdout: exit(0)

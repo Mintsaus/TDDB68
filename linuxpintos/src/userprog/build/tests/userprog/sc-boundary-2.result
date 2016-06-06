@@ -1,1 +1,10 @@
-PASS
+FAIL
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (sc-boundary-2) begin
+  sc-boundary-2: exit(67)
+Differences in `diff -u' format:
++ after filesys_open
+  (sc-boundary-2) begin
+  sc-boundary-2: exit(67)

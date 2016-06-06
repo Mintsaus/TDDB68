@@ -1,6 +1,20 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b 0xc0106cb4
-Translation of call stack:
-0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
-0xc0106cb4: strlcpy (...ld/../../lib/string.c:333)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (exec-bad-ptr) begin
+  (exec-bad-ptr) end
+  exec-bad-ptr: exit(0)
+Differences in `diff -u' format:
++ after filesys_open
+  (exec-bad-ptr) begin
+- (exec-bad-ptr) end
+- exec-bad-ptr: exit(0)
++ exec-bad-ptr: exit(-1)
+Acceptable output:
+  (exec-bad-ptr) begin
+  exec-bad-ptr: exit(-1)
+Differences in `diff -u' format:
++ after filesys_open
+  (exec-bad-ptr) begin
+  exec-bad-ptr: exit(-1)

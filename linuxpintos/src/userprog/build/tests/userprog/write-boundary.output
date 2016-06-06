@@ -1,12 +1,12 @@
-Copying tests/userprog/write-boundary into /tmp/A5jS0j1tA2.dsk...
-Copying ../../tests/userprog/sample.txt into /tmp/A5jS0j1tA2.dsk...
-Writing command line to /tmp/21VIk8ho0T.dsk...
-qemu -hda /tmp/21VIk8ho0T.dsk -hdb /tmp/yhtJCMuAdf.dsk -hdc /tmp/A5jS0j1tA2.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-boundary into /tmp/BT2mWrIwhQ.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/BT2mWrIwhQ.dsk...
+Writing command line to /tmp/RfrI6mRK68.dsk...
+qemu -hda /tmp/RfrI6mRK68.dsk -hdb /tmp/qe45htZVcC.dsk -hdc /tmp/BT2mWrIwhQ.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-boundary put sample.txt run write-boundary
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  419,020,800 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 104 sector (52 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -15,17 +15,18 @@ Boot complete.
 Putting 'write-boundary' into the file system...
 Putting 'sample.txt' into the file system...
 Executing 'write-boundary':
+after filesys_open
 (write-boundary) begin
 (write-boundary) open "sample.txt"
 (write-boundary) end
 write-boundary: exit(0)
 Execution of 'write-boundary' complete.
-Timer: 58 ticks
-Thread: 30 idle ticks, 28 kernel ticks, 0 user ticks
+Timer: 60 ticks
+Thread: 32 idle ticks, 27 kernel ticks, 1 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 99 reads, 219 writes
 hd1:0: 104 reads, 0 writes
-Console: 933 characters output
+Console: 952 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -1,5 +1,10 @@
 FAIL
-Kernel panic in run: PANIC at ../../filesys/directory.c:149 in dir_add(): assertion `name != NULL' failed.
-Call stack: 0xc010709b
-Translation of call stack:
-0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (create-null) begin
+  create-null: exit(-1)
+Differences in `diff -u' format:
++ after filesys_open
+  (create-null) begin
+  create-null: exit(-1)

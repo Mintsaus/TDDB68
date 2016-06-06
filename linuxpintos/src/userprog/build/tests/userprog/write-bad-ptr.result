@@ -1,5 +1,24 @@
 FAIL
-Kernel panic in run: PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc010709b
-Translation of call stack:
-0xc010709b: debug_panic (.../../lib/kernel/debug.c:34)
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (write-bad-ptr) begin
+  (write-bad-ptr) open "sample.txt"
+  write-bad-ptr: exit(-1)
+Differences in `diff -u' format:
++ after filesys_open
+  (write-bad-ptr) begin
+  (write-bad-ptr) open "sample.txt"
+  write-bad-ptr: exit(-1)
+Acceptable output:
+  (write-bad-ptr) begin
+  (write-bad-ptr) open "sample.txt"
+  (write-bad-ptr) end
+  write-bad-ptr: exit(0)
+Differences in `diff -u' format:
++ after filesys_open
+  (write-bad-ptr) begin
+  (write-bad-ptr) open "sample.txt"
+- (write-bad-ptr) end
+- write-bad-ptr: exit(0)
++ write-bad-ptr: exit(-1)

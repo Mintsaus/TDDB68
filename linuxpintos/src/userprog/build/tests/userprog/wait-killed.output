@@ -1,12 +1,12 @@
-Copying tests/userprog/wait-killed into /tmp/CqqUd7Qcxx.dsk...
-Copying tests/userprog/child-bad into /tmp/CqqUd7Qcxx.dsk...
-Writing command line to /tmp/ncMmo4DgDF.dsk...
-qemu -hda /tmp/ncMmo4DgDF.dsk -hdb /tmp/rbWBQivTbs.dsk -hdc /tmp/CqqUd7Qcxx.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/wait-killed into /tmp/Iemoh1QuLu.dsk...
+Copying tests/userprog/child-bad into /tmp/Iemoh1QuLu.dsk...
+Writing command line to /tmp/GphR2xZ1iG.dsk...
+qemu -hda /tmp/GphR2xZ1iG.dsk -hdb /tmp/i1dUYG69iX.dsk -hdc /tmp/Iemoh1QuLu.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put wait-killed put child-bad run wait-killed
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
 371 pages available in user pool.
-Calibrating timer...  419,020,800 loops/s.
+Calibrating timer...  314,163,200 loops/s.
 hd0:0: detected 153 sector (76 kB) disk, model "QEMU HARDDISK", serial "QM00001"
 hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
 hd1:0: detected 195 sector (97 kB) disk, model "QEMU HARDDISK", serial "QM00003"
@@ -15,19 +15,27 @@ Boot complete.
 Putting 'wait-killed' into the file system...
 Putting 'child-bad' into the file system...
 Executing 'wait-killed':
+after filesys_open
 (wait-killed) begin
+after filesys_open
 (child-bad) begin
-child-bad: exit(-1)
-(wait-killed) wait(exec()) = -1
-(wait-killed) end
-wait-killed: exit(0)
-Execution of 'wait-killed' complete.
-Timer: 59 ticks
-Thread: 31 idle ticks, 28 kernel ticks, 0 user ticks
+Page fault at 0x20101234: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc010a642
+ cr2=20101234 error=00000000
+ eax=20101234 ebx=20101234 ecx=0000000e edx=00000030
+ esi=c0125fb0 edi=c011a06c esp=20101234 ebp=c0125024
+ cs=0008 ds=0010 es=0010 ss=0012
+Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0xc010709b 0xc010a642.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 65 ticks
+Thread: 32 idle ticks, 31 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 116 reads, 400 writes
 hd1:0: 195 reads, 0 writes
-Console: 943 characters output
+Console: 1448 characters output
 Keyboard: 0 keys pressed
-Exception: 0 page faults
+Exception: 1 page faults
 Powering off...

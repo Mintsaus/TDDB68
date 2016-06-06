@@ -46,26 +46,20 @@ process_execute (const char *file_name)
     return TID_ERROR;
   strlcpy (fn_copy, file_name, PGSIZE);
   strlcpy (fn_copy2, file_name, PGSIZE); //Added to be used to create file_name_no_args
-  //printf("Before file_name_no_args \n");
-   file_name_no_args = strtok_r(fn_copy2, " ", &save_ptr);
-  //printf("After file_name_no_args \n");
+  file_name_no_args = strtok_r(fn_copy2, " ", &save_ptr);
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
-  cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leaks
-	//printf("Created new child status for %s \n", cs->fn_copy);
+  cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leak
 
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (file_name_no_args, PRI_DEFAULT, start_process, cs);
   
   /*-------------Lab3-----------------*/
-  //if(tid > 2 ){       //curr_thread->tid >= 2){ //We don't need to check anymore cause' we're in proc_execute.
-	  //printf("Inte en urtrad: do sema init etc \n");
 	  sema_init(&cs->sema_exec, 0);
 	  lock_init(&cs->cs_lock);
 	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
 	  cs->pid = tid;
-  //}
   
 	sema_down(&cs->sema_exec);
 	
@@ -383,9 +377,6 @@ load (const char *file_name_, void (**eip) (void), void **esp)
     arg_cnt++;
   };
   int i;
-  //for(i = 0; i < arg_cnt; i++){
-	//printf("%s\n", arguments[i]);
-  //}
 
   /* Allocate and activate page directory. */
   t->pagedir = pagedir_create ();
@@ -437,7 +428,9 @@ load (const char *file_name_, void (**eip) (void), void **esp)
 #endif
 
   /* Open executable file. */
+  printf("Before file_sys_open\n");
   file = filesys_open (file_name);
+  printf("after filesys_open\n");
   if (file == NULL) 
     {
       printf ("load: %s: open failed\n", file_name);
