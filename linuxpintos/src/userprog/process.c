@@ -34,6 +34,7 @@ static bool load (const char *cmdline, void (**eip) (void), void **esp);
 tid_t
 process_execute (const char *file_name) 
 {
+  //~ printf("in process exec\n");
   char *fn_copy, *fn_copy2;
   char *file_name_no_args;
   char *save_ptr;
@@ -53,19 +54,24 @@ process_execute (const char *file_name)
   cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leak
 
   /* Create a new thread to execute FILE_NAME. */
+  //~ printf("Before thread create, tid: %d\n", thread_current()->tid);
   tid = thread_create (file_name_no_args, PRI_DEFAULT, start_process, cs);
-  
+  //~ printf("After thread create\n");
   /*-------------Lab3-----------------*/
 	  sema_init(&cs->sema_exec, 0);
 	  lock_init(&cs->cs_lock);
 	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
 	  cs->pid = tid;
   
+	
 	sema_down(&cs->sema_exec);
 	
 	//Get tid from child_status
 	tid = cs->pid;
+	//~ printf("Process exec tid: %d\n", tid);
+	//~ printf("Process exec after sema_down, cs ref_cnt: %d\n", cs->ref_cnt);
 	if(tid == TID_ERROR){		//om -1 misslyckades load, kan ta bort strukten
+		list_remove(&cs->cs_elem);
 		free(cs);
     palloc_free_page (fn_copy);
     palloc_free_page (fn_copy2);
@@ -80,7 +86,7 @@ static void
 start_process (void *file_name_)
 {
 	struct thread *curr_thread = thread_current();
-  //printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
+  //~ printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
   struct child_status *cs = (struct child_status *)file_name_;
   char *file_name;
   if(curr_thread->tid >= 2){
@@ -101,21 +107,18 @@ start_process (void *file_name_)
 
   /* If load failed, quit. */
  
-  palloc_free_page (cs->fn_copy); //cs->fn_copy   free:as rätt?
+  //~ palloc_free_page (cs->fn_copy); //cs->fn_copy   free:as rätt?
   
   if (!success){ 
-		//printf("Not success \n");
+		//~ printf("Not success \n");
 		cs->pid = -1;
 		sema_up(&cs->sema_exec);
-		lock_acquire(&cs->cs_lock);
-		cs->ref_cnt--;
-		lock_release(&cs->cs_lock);
-    thread_exit ();
+		//~ lock_acquire(&cs->cs_lock);  //This should be done in process exit, not here
+		//~ cs->ref_cnt--;
+		//~ lock_release(&cs->cs_lock);
+		thread_exit ();
 	}else{
-		//printf("%s", cs->sema_exec);
-		//printf("Success \n");
 		sema_up(&cs->sema_exec); //Causes problems. Is not initialized? Try to comment out and run lab3test, interesting stuff.
-		//printf("start_process: after sema up \n");
 	}
 
   /* Start the user process by simulating a return from an
@@ -175,27 +178,27 @@ process_exit (void)
 {
   struct thread *cur = thread_current ();
   uint32_t *pd;
-  
+  //~ printf("Process exit, thread_tid: %d\n", thread_current()->tid);
    //If parent is alive: That needs to be checked
   struct child_status *cs_parent;
   cs_parent = cur->cs_parent;
-  
+  //~ printf("cs_parent ref_cont: %d\n", cs_parent->ref_cnt);
   
   // If parent dead we need to destroy the cs. If parent waiting, wake it up. //
-  //printf("Proc_exit: Before cs_parent \n");
+  //~ printf("Proc_exit: Before cs_parent \n");
   if(cs_parent){
 	  lock_acquire(&cs_parent->cs_lock); //----------THIS IS WHERE CRASH OCCURS-------------
-	  //printf("Proc_exit: After cs_parent \n");
+	  //~ printf("Proc_exit: After cs_parent \n");
 	  cs_parent->ref_cnt--;                 
 	  
 	  if(cs_parent->ref_cnt == 0){		//Parent is dead
-		//printf("Parent of thread %d is dead \n", cur -> tid);
+		//~ printf("Parent of thread %d is dead \n", cur -> tid);
 		lock_release(&cs_parent->cs_lock);
 		free(cs_parent);
 	  }else {								//Parent waits or doesn't care
-		//printf("Parent wait or doesn't care \n");
+		//~ printf("Parent wait or doesn't care \n");
 		lock_release(&cs_parent->cs_lock);
-		//printf("EXIT: sema up \n");
+		//~ printf("EXIT: sema up \n");
 		sema_up(&cs_parent->sema_exec);
 	  }
   }
@@ -213,23 +216,27 @@ process_exit (void)
   struct child_status *cs;
   struct list children_to_delete;
   list_init(&children_to_delete);
-  //printf("Before for in proc_exit\n");
   //Loops through list of children and adds the ones to be deleted to a separate list
   for (e = list_begin (cs_list); e != list_end (cs_list); e = list_next(e))
    {
+	//~ printf("inside for loop\n");
     cs = list_entry (e, struct child_status, cs_elem);
-    lock_acquire(&cs->cs_lock);		
+    //~ printf("before lock_acquire\n");
+    lock_acquire(&cs->cs_lock);
+    //~ printf("after lock_acquire\n");	
     cs->ref_cnt--;
     if(cs->ref_cnt == 0){
+		//~ printf("ref_cnt == 0\n");
       struct elem_copy *ec = (struct elem_copy *)malloc(sizeof(struct elem_copy));
       ec->pointer = e;
       list_push_front(&children_to_delete, &ec->elem);
     }
-    lock_release(&cs->cs_lock);			
+    lock_release(&cs->cs_lock);
+    //~ printf("end of loop\n");			
    }
-   //printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
+   //~ printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
    
-   //printf("Before while in proc_exit\n");
+   //~ printf("Before while in proc_exit\n");
    //Loops through the children to delete, and deletes them
    while (!list_empty (&children_to_delete))
     {
@@ -240,7 +247,7 @@ process_exit (void)
       free(ec);
       free(cs);		
     } 
-   //printf("PROC_EXIT after while\n");
+   //~ printf("PROC_EXIT after while\n");
    
 
 
@@ -428,9 +435,8 @@ load (const char *file_name_, void (**eip) (void), void **esp)
 #endif
 
   /* Open executable file. */
-  printf("Before file_sys_open\n");
   file = filesys_open (file_name);
-  printf("after filesys_open\n");
+  
   if (file == NULL) 
     {
       printf ("load: %s: open failed\n", file_name);

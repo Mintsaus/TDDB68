@@ -149,6 +149,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 		
 		case (SYS_EXEC):
 			name = (char *)(*(p + 1));
+      //~ printf("in sys_exec\n");
       check_valid_pointer((const void *) name);
       check_pagedir((const void *) name);
       if(name == NULL){
@@ -157,6 +158,7 @@ syscall_handler (struct intr_frame *f UNUSED)
       }
       
 			tid = process_execute(name);
+      //~ printf("sys_exec: %d\n", tid);
 			f->eax = tid;
 			break;
 			

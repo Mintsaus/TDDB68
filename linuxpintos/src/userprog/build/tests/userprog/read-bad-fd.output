@@ -1,6 +1,6 @@
-Copying tests/userprog/read-bad-fd into /tmp/tGtlUJy4Vx.dsk...
-Writing command line to /tmp/kuS3in4cnu.dsk...
-qemu -hda /tmp/kuS3in4cnu.dsk -hdb /tmp/z8gdyFqTyR.dsk -hdc /tmp/tGtlUJy4Vx.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/read-bad-fd into /tmp/q8h09lsvFF.dsk...
+Writing command line to /tmp/TOwQdR1Kun.dsk...
+qemu -hda /tmp/TOwQdR1Kun.dsk -hdb /tmp/ttQpy6kRU5.dsk -hdc /tmp/q8h09lsvFF.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put read-bad-fd run read-bad-fd
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -13,19 +13,18 @@ Formatting file system...done.
 Boot complete.
 Putting 'read-bad-fd' into the file system...
 Executing 'read-bad-fd':
-after filesys_open
 (read-bad-fd) begin
 Kernel PANIC at ../../lib/kernel/bitmap.c:202 in bitmap_test(): assertion `idx < b->bit_cnt' failed.
 Call stack: 0xc010709b.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 58 ticks
-Thread: 33 idle ticks, 24 kernel ticks, 1 user ticks
+Timer: 57 ticks
+Thread: 31 idle ticks, 26 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1034 characters output
+Console: 1015 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

@@ -1,6 +1,6 @@
-Copying tests/userprog/create-exists into /tmp/YlRC3MKNiG.dsk...
-Writing command line to /tmp/MQxCgyqZBz.dsk...
-qemu -hda /tmp/MQxCgyqZBz.dsk -hdb /tmp/9SFzzqy45r.dsk -hdc /tmp/YlRC3MKNiG.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/create-exists into /tmp/N11DuQ6fdn.dsk...
+Writing command line to /tmp/eEnmT3R7EJ.dsk...
+qemu -hda /tmp/eEnmT3R7EJ.dsk -hdb /tmp/M_4Ok2VB6G.dsk -hdc /tmp/N11DuQ6fdn.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put create-exists run create-exists
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -13,7 +13,6 @@ Formatting file system...done.
 Boot complete.
 Putting 'create-exists' into the file system...
 Executing 'create-exists':
-after filesys_open
 (create-exists) begin
 (create-exists) create quux.dat
 (create-exists) create warble.dat
@@ -23,12 +22,12 @@ after filesys_open
 (create-exists) end
 create-exists: exit(0)
 Execution of 'create-exists' complete.
-Timer: 60 ticks
-Thread: 34 idle ticks, 23 kernel ticks, 3 user ticks
+Timer: 58 ticks
+Thread: 31 idle ticks, 27 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 142 reads, 226 writes
 hd1:0: 99 reads, 0 writes
-Console: 1032 characters output
+Console: 1013 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

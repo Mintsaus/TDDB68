@@ -205,7 +205,7 @@ thread_create (const char *name, int priority,
   kf = alloc_frame (t, sizeof *kf);
   kf->eip = NULL;
   kf->function = function;
-  kf->aux = aux; //cs instead of aux Lab3
+  kf->aux = aux; 
 
   /* Stack frame for switch_entry(). */
   ef = alloc_frame (t, sizeof *ef);

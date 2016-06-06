@@ -1,7 +1,7 @@
-Copying tests/userprog/exec-arg into /tmp/fdDWpKIEgT.dsk...
-Copying tests/userprog/child-args into /tmp/fdDWpKIEgT.dsk...
-Writing command line to /tmp/Nadgn5zp8Y.dsk...
-qemu -hda /tmp/Nadgn5zp8Y.dsk -hdb /tmp/l0mdLRDVON.dsk -hdc /tmp/fdDWpKIEgT.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/exec-arg into /tmp/PmjDF0uF87.dsk...
+Copying tests/userprog/child-args into /tmp/PmjDF0uF87.dsk...
+Writing command line to /tmp/Vgx4u40DsA.dsk...
+qemu -hda /tmp/Vgx4u40DsA.dsk -hdb /tmp/0UdVy0voPG.dsk -hdc /tmp/PmjDF0uF87.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put exec-arg put child-args run exec-arg
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -15,9 +15,7 @@ Boot complete.
 Putting 'exec-arg' into the file system...
 Putting 'child-args' into the file system...
 Executing 'exec-arg':
-after filesys_open
 (exec-arg) begin
-after filesys_open
 (args) begin
 (args) argc = 2
 (args) argv[0] = 'child-args'
@@ -28,12 +26,12 @@ child-args: exit(0)
 (exec-arg) end
 exec-arg: exit(0)
 Execution of 'exec-arg' complete.
-Timer: 61 ticks
-Thread: 34 idle ticks, 25 kernel ticks, 2 user ticks
+Timer: 60 ticks
+Thread: 32 idle ticks, 26 kernel ticks, 2 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 116 reads, 398 writes
 hd1:0: 194 reads, 0 writes
-Console: 1029 characters output
+Console: 991 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

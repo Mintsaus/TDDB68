@@ -1,6 +1,6 @@
-Copying tests/userprog/write-bad-fd into /tmp/s4KPYTRuiQ.dsk...
-Writing command line to /tmp/Ad3KJdnR7a.dsk...
-qemu -hda /tmp/Ad3KJdnR7a.dsk -hdb /tmp/256_GRRjzM.dsk -hdc /tmp/s4KPYTRuiQ.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/write-bad-fd into /tmp/aGI63MXQO5.dsk...
+Writing command line to /tmp/wqumb5UcRR.dsk...
+qemu -hda /tmp/wqumb5UcRR.dsk -hdb /tmp/ZLAzpyUPxx.dsk -hdc /tmp/aGI63MXQO5.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put write-bad-fd run write-bad-fd
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -13,7 +13,6 @@ Formatting file system...done.
 Boot complete.
 Putting 'write-bad-fd' into the file system...
 Executing 'write-bad-fd':
-after filesys_open
 (write-bad-fd) begin
 Kernel PANIC at ../../lib/kernel/bitmap.c:202 in bitmap_test(): assertion `idx < b->bit_cnt' failed.
 Call stack: 0xc010709b.
@@ -21,11 +20,11 @@ The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
 Timer: 56 ticks
-Thread: 31 idle ticks, 25 kernel ticks, 0 user ticks
+Thread: 32 idle ticks, 24 kernel ticks, 0 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 59 reads, 204 writes
 hd1:0: 98 reads, 0 writes
-Console: 1039 characters output
+Console: 1020 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

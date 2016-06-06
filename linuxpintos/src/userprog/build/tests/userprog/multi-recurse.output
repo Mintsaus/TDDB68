@@ -1,6 +1,6 @@
-Copying tests/userprog/multi-recurse into /tmp/nXsL3t9LDp.dsk...
-Writing command line to /tmp/l_atix7lRt.dsk...
-qemu -hda /tmp/l_atix7lRt.dsk -hdb /tmp/FwJCGe_KP9.dsk -hdc /tmp/nXsL3t9LDp.dsk -m 4 -net none -nographic -monitor null
+Copying tests/userprog/multi-recurse into /tmp/sTOaoWQt5N.dsk...
+Writing command line to /tmp/xqi6xmJR_O.dsk...
+qemu -hda /tmp/xqi6xmJR_O.dsk -hdb /tmp/yuUeWbqW_r.dsk -hdc /tmp/sTOaoWQt5N.dsk -m 4 -net none -nographic -monitor null
 Kernel command line: -q -f put multi-recurse run 'multi-recurse 15'
 Pintos booting with 4,088 kB RAM...
 372 pages available in kernel pool.
@@ -13,52 +13,36 @@ Formatting file system...done.
 Boot complete.
 Putting 'multi-recurse' into the file system...
 Executing 'multi-recurse 15':
-after filesys_open
 (multi-recurse) begin 15
 (multi-recurse) exec("multi-recurse 14")
-after filesys_open
 (multi-recurse) begin 14
 (multi-recurse) exec("multi-recurse 13")
-after filesys_open
 (multi-recurse) begin 13
 (multi-recurse) exec("multi-recurse 12")
-after filesys_open
 (multi-recurse) begin 12
 (multi-recurse) exec("multi-recurse 11")
-after filesys_open
 (multi-recurse) begin 11
 (multi-recurse) exec("multi-recurse 10")
-after filesys_open
 (multi-recurse) begin 10
 (multi-recurse) exec("multi-recurse 9")
-after filesys_open
 (multi-recurse) begin 9
 (multi-recurse) exec("multi-recurse 8")
-after filesys_open
 (multi-recurse) begin 8
 (multi-recurse) exec("multi-recurse 7")
-after filesys_open
 (multi-recurse) begin 7
 (multi-recurse) exec("multi-recurse 6")
-after filesys_open
 (multi-recurse) begin 6
 (multi-recurse) exec("multi-recurse 5")
-after filesys_open
 (multi-recurse) begin 5
 (multi-recurse) exec("multi-recurse 4")
-after filesys_open
 (multi-recurse) begin 4
 (multi-recurse) exec("multi-recurse 3")
-after filesys_open
 (multi-recurse) begin 3
 (multi-recurse) exec("multi-recurse 2")
-after filesys_open
 (multi-recurse) begin 2
 (multi-recurse) exec("multi-recurse 1")
-after filesys_open
 (multi-recurse) begin 1
 (multi-recurse) exec("multi-recurse 0")
-after filesys_open
 (multi-recurse) begin 0
 (multi-recurse) end 0
 multi-recurse: exit(0)
@@ -94,11 +78,11 @@ multi-recurse: exit(14)
 multi-recurse: exit(15)
 Execution of 'multi-recurse 15' complete.
 Timer: 77 ticks
-Thread: 36 idle ticks, 27 kernel ticks, 14 user ticks
+Thread: 33 idle ticks, 30 kernel ticks, 14 user ticks
 hd0:0: 0 reads, 0 writes
 hd0:1: 654 reads, 228 writes
 hd1:0: 110 reads, 0 writes
-Console: 2809 characters output
+Console: 2505 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...
