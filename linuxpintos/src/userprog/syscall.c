@@ -164,7 +164,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_EXIT):
 			status = *(p + 1);
-      check_valid_pointer((const void *) p + 1);
+      check_valid_pointer((const void *) (p + 1));
 			exit(status);
       
 			break;
@@ -198,6 +198,8 @@ void check_valid_pointer(const void *p){
   if(!is_user_vaddr(p) || p < (void *) 0x08048000)
   {
     exit(-1);
+  } else {
+    //printf("This is a valid pointer: %p\n", p);
   }
 }
 
