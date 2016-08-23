@@ -29,7 +29,7 @@ syscall_init (void)
 
 int fd_ok(int fd, struct bitmap *map)
 	{
-		if ((fd < (int)bitmap_size(map)) && bitmap_test(map, fd))
+		if ((fd < (int)bitmap_size(map)) && (fd >= 0 ) && bitmap_test(map, fd))
 		{
 			return 1;
 		}else
@@ -64,12 +64,13 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_READ): //Done	
 			fd = *(p + 1);
-      check_valid_pointer((const void *) p+1);
+      //printf("FD: %d", fd);
+      check_valid_pointer((const void *) (p + 1));
 			buffer = (char *)(*(p + 2));
       check_valid_pointer((const void *) buffer);
-      check_pagedir((const void *) buffer);
+      check_pagedir((const void *) (p + 2));
 			size = *(p + 3);
-      check_valid_pointer((const void *) p+3);
+      check_valid_pointer((const void *) (p + 3));
 			if(fd == 0) /* Reads from console */
 			{
 				int i;
@@ -84,33 +85,29 @@ syscall_handler (struct intr_frame *f UNUSED)
 				f->eax = file_read(file_names[fd], buffer, size);
 			}else /* Something went wrong */
 			{
-				f->eax = -1;
+        exit(-1);
+				//f->eax = -1;
 			}
 			break;
 
 		case (SYS_WRITE)://Done
 			fd = *(p + 1);
-      check_valid_pointer((const void *) p+1);
+      check_valid_pointer((const void *) (p + 1));
 			buffer = (char *)(*(p + 2));
       check_valid_pointer((const void *) buffer);
       check_pagedir((const void *) buffer);
 			size = *(p + 3);
-      check_valid_pointer((const void *) p+3);
+      check_valid_pointer((const void *) (p + 3));
 			if(fd == 1){									/* Writes to console */
 				putbuf(buffer, size);
 			}else if(fd == 0 || !fd_ok(fd, fd_map)){		/*invalid fd */
 				f->eax = -1;
+        exit(-1);
 				break;
 			}else{											/* Writes to file */
 				file_handle = file_names[fd];
 				status = file_write(file_handle, buffer, size);
-				
-				if(status == 0){
-					f->eax = -1;
-				}else{
-					f->eax = status;
-				}
-				
+				f->eax = status;
 			}
 			break;
 		
@@ -119,7 +116,7 @@ syscall_handler (struct intr_frame *f UNUSED)
       check_valid_pointer((const void *) name);
       check_pagedir((const void *) name);
 			size = *(p + 2);
-      check_valid_pointer((const void *) p+3);
+      check_valid_pointer((const void *) (p + 3));
 			f -> eax = filesys_create(name, size);
 			break;
 		
@@ -139,7 +136,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_CLOSE)://Done
 			fd = *(p + 1);
-      check_valid_pointer((const void *) p + 1);
+      check_valid_pointer((const void *) (p + 1));
 			if(!fd_ok(fd, fd_map)){ break; }
 			file_handle = file_names[fd];
 			file_names[fd] = NULL;
@@ -173,7 +170,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 		 * exit normally" */	
 		case (SYS_WAIT):
 			tid = *(p + 1);
-      check_valid_pointer((const void *) p + 1);
+      check_valid_pointer((const void *) (p + 1));
 			f->eax = process_wait(tid);
 			break;			
 			
@@ -195,11 +192,11 @@ void exit(int status){
 	}
   
 void check_valid_pointer(const void *p){
-  if(!is_user_vaddr(p) || p < (void *) 0x08048000)
+  if(!is_user_vaddr(p) || p < (void *) 0x08048000) //nr from 3.1.4.1 in Pintos docs
   {
     exit(-1);
   } else {
-    //printf("This is a valid pointer: %p\n", p);
+    printf("This is a valid pointer: %p\n", p);
   }
 }
 
