@@ -56,6 +56,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 	int *p = f->esp;
   //Check that stack pointer is ok
   check_valid_pointer((const void *)p);
+  check_pagedir((const void *)p);
 	switch(*p)
 	{
 		case (SYS_HALT)://Done			
@@ -64,7 +65,6 @@ syscall_handler (struct intr_frame *f UNUSED)
 			
 		case (SYS_READ): //Done	
 			fd = *(p + 1);
-      //printf("FD: %d", fd);
       check_valid_pointer((const void *) (p + 1));
 			buffer = (char *)(*(p + 2));
       check_valid_pointer((const void *) buffer);
@@ -127,6 +127,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			fd = (int)bitmap_scan_and_flip(fd_map, 0, 1, 0);		/* Get next free position in bitmap (fd) */
 			if(fd == (int)BITMAP_ERROR || (file_handle = filesys_open(name)) == NULL){
 				f -> eax = -1;
+        exit(-1);
 			} else 
 			{
 				file_names[fd] = file_handle;
@@ -151,6 +152,7 @@ syscall_handler (struct intr_frame *f UNUSED)
       check_pagedir((const void *) name);
       if(name == NULL){
         f->eax = -1;
+        exit(-1);
         break;
       }
       
@@ -175,7 +177,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			break;			
 			
 		default:
-			printf ("system call!\n");
+			//printf ("system call!\n");
 			thread_exit ();
 	}
 	
@@ -196,7 +198,7 @@ void check_valid_pointer(const void *p){
   {
     exit(-1);
   } else {
-    printf("This is a valid pointer: %p\n", p);
+    //printf("This is a valid pointer: %p\n", p);
   }
 }
 
