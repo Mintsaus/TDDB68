@@ -5,12 +5,14 @@
 #include "filesys/filesys.h"
 #include "filesys/inode.h"
 #include "threads/malloc.h"
+#include "threads/synch.h"
 
 /* A directory. */
 struct dir 
   {
     struct inode *inode;                /* Backing store. */
     off_t pos;                          /* Current position. */
+    struct lock dir_lock;               /* Synch for directory operations*/
   };
 
 /* A single directory entry. */
@@ -39,6 +41,7 @@ dir_open (struct inode *inode)
     {
       dir->inode = inode;
       dir->pos = 0;
+      lock_init(&dir->dir_lock);
       return dir;
     }
   else
@@ -119,6 +122,7 @@ bool
 dir_lookup (const struct dir *dir, const char *name,
             struct inode **inode) 
 {
+  lock_acquire(&dir->dir_lock);
   struct dir_entry e;
 
   ASSERT (dir != NULL);
@@ -128,7 +132,8 @@ dir_lookup (const struct dir *dir, const char *name,
     *inode = inode_open (e.inode_sector);
   else
     *inode = NULL;
-
+  
+  lock_release(&dir->dir_lock);
   return *inode != NULL;
 }
 
@@ -141,6 +146,7 @@ dir_lookup (const struct dir *dir, const char *name,
 bool
 dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector) 
 {
+  lock_acquire(&dir->dir_lock);
   struct dir_entry e;
   off_t ofs;
   bool success = false;
@@ -173,8 +179,10 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector)
   strlcpy (e.name, name, sizeof e.name);
   e.inode_sector = inode_sector;
   success = inode_write_at (dir->inode, &e, sizeof e, ofs) == sizeof e;
-
+  
+  
  done:
+  lock_release(&dir->dir_lock);
   return success;
 }
 
@@ -184,6 +192,7 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector)
 bool
 dir_remove (struct dir *dir, const char *name) 
 {
+  lock_acquire(&dir->dir_lock);
   struct dir_entry e;
   struct inode *inode = NULL;
   bool success = false;
@@ -210,7 +219,9 @@ dir_remove (struct dir *dir, const char *name)
   inode_remove (inode);
   success = true;
 
+  
  done:
+  lock_release(&dir->dir_lock);
   inode_close (inode);
   return success;
 }
