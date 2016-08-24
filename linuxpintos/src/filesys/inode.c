@@ -38,6 +38,7 @@ struct inode
     bool removed;                       /* True if deleted, false otherwise. */
     int deny_write_cnt;                 /* 0: writes ok, >0: deny writes. */
     struct inode_disk data;             /* Inode content. */
+    int reader_cnt;
     struct lock write_lock; 
     struct lock read_lock;
   };
@@ -139,6 +140,7 @@ inode_open (disk_sector_t sector)
   inode->sector = sector;
   inode->open_cnt = 1;
   inode->deny_write_cnt = 0;
+  inode->reader_cnt = 0;
   inode->removed = false;
   disk_read (filesys_disk, inode->sector, &inode->data);
   lock_init(&inode->write_lock);  //Added
@@ -377,7 +379,17 @@ inode_release_write_lock(struct inode *inode)
 }
 
 int
-inode_deny_write_cnt(struct inode *inode)
+inode_reader_cnt(struct inode *inode)
 {
-  return inode->deny_write_cnt;
+  return inode->reader_cnt;
+}
+
+void inode_add_reader(struct inode *inode)
+{
+  inode->reader_cnt++;
+}
+
+void inode_remove_reader(struct inode *inode)
+{
+  inode->reader_cnt--;
 }
