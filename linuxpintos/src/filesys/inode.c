@@ -393,3 +393,9 @@ void inode_remove_reader(struct inode *inode)
 {
   inode->reader_cnt--;
 }
+
+bool
+inode_is_removed(struct inode *inode)
+{
+ return inode->removed;
+}

@@ -5,6 +5,7 @@
 #include "threads/thread.h"
 #include "filesys/filesys.h"
 #include "filesys/file.h"
+#include "filesys/inode.h"
 #include <lib/kernel/bitmap.h>
 #include <lib/kernel/list.h>
 #include "threads/vaddr.h"
@@ -15,6 +16,7 @@ void power_off(void);
 void putbuf(const char *buffer, size_t n);
 void exit(int status);
 void check_valid_pointer(const void * p);
+void check_pagedir(const void * p);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
 tid_t process_execute(const char *);
@@ -46,6 +48,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 	int status;
 	size_t size;
   off_t position;
+  off_t filesize;
 	uint8_t key;
 	char *buffer;
 	char *name;
@@ -53,7 +56,6 @@ syscall_handler (struct intr_frame *f UNUSED)
 	struct thread *curr_thread = thread_current();				/* Gets current thread*/
 	struct bitmap *fd_map = curr_thread->fd_bitmap;				/* Gets bitmap from current thread*/
 	struct file **file_names = curr_thread->file_names;			/* Gets pointer to array of file names from current thread */
-	struct list *cs_list;
 	int *p = f->esp;
   //Check that stack pointer is ok
   check_valid_pointer((const void *)p);
@@ -124,7 +126,8 @@ syscall_handler (struct intr_frame *f UNUSED)
       check_valid_pointer((const void *) name);
       check_pagedir((const void *) name);
 			fd = (int)bitmap_scan_and_flip(fd_map, 0, 1, 0);		/* Get next free position in bitmap (fd) */
-			if(fd == (int)BITMAP_ERROR || (file_handle = filesys_open(name)) == NULL){
+			
+      if(fd == (int)BITMAP_ERROR || (file_handle = filesys_open(name)) == NULL){
 				f -> eax = -1;
 			} else 
 			{
@@ -152,15 +155,34 @@ syscall_handler (struct intr_frame *f UNUSED)
       if(fd <= 1 || !fd_ok(fd, fd_map)){
         break;
       }
-      //Needs to check if position exceeds file size
       file_handle = file_names[fd]; //Gets file from fd
+      filesize = file_length(file_handle);
+      if (position > filesize){
+        position = filesize;
+      }
       file_seek(file_handle, position);
       break;
     
     case (SYS_TELL):
+      fd = *(p + 1);
+      check_valid_pointer((const void *) (p + 1));
+      if(fd <= 1 || !fd_ok(fd, fd_map)){
+        break;
+      }
+      file_handle = file_names[fd]; //Gets file from fd
+      filesize = file_tell(file_handle);
+      f->eax = (unsigned)filesize;
       break;
       
     case (SYS_FILESIZE):
+      fd = *(p + 1);
+      check_valid_pointer((const void *) (p + 1));
+      if(fd <= 1 || !fd_ok(fd, fd_map)){
+        break;
+      }
+      file_handle = file_names[fd]; //Gets file from fd
+      filesize = file_length(file_handle);
+      f->eax = (int)filesize;
       break;
       
     case (SYS_REMOVE):
