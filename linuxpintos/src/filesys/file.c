@@ -71,8 +71,8 @@ file_read (struct file *file, void *buffer, off_t size)
 {
   //If we are the first reader, lock the inode from being written to.
   inode_acquire_read_lock(file->inode); //----Beginning CS---
-  file_deny_write(file);
-  if(inode_deny_write_cnt(file->inode)==1){
+  inode_add_reader(file->inode);
+  if(inode_reader_cnt(file->inode)==1){
     inode_acquire_write_lock(file->inode);
   }
   inode_release_read_lock(file->inode); //----End CS
@@ -82,8 +82,8 @@ file_read (struct file *file, void *buffer, off_t size)
   
   //If we are the last reader, release write_lock.
   inode_acquire_read_lock(file->inode); //----Beginning CS---
-  file_allow_write(file); //Added
-  if(inode_deny_write_cnt(file->inode)==0){
+  inode_remove_reader(file->inode); //Added
+  if(inode_reader_cnt(file->inode)==0){
     inode_release_write_lock(file->inode);
   }
   inode_release_read_lock(file->inode); //----End CS
