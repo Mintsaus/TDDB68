@@ -85,8 +85,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 				f->eax = file_read(file_names[fd], buffer, size);
 			}else /* Something went wrong */
 			{
-        exit(-1);
-				//f->eax = -1;
+				f->eax = -1;
 			}
 			break;
 
@@ -102,7 +101,6 @@ syscall_handler (struct intr_frame *f UNUSED)
 				putbuf(buffer, size);
 			}else if(fd == 0 || !fd_ok(fd, fd_map)){		/*invalid fd */
 				f->eax = -1;
-        exit(-1);
 				break;
 			}else{											/* Writes to file */
 				file_handle = file_names[fd];
@@ -127,7 +125,6 @@ syscall_handler (struct intr_frame *f UNUSED)
 			fd = (int)bitmap_scan_and_flip(fd_map, 0, 1, 0);		/* Get next free position in bitmap (fd) */
 			if(fd == (int)BITMAP_ERROR || (file_handle = filesys_open(name)) == NULL){
 				f -> eax = -1;
-        exit(-1);
 			} else 
 			{
 				file_names[fd] = file_handle;
@@ -152,7 +149,6 @@ syscall_handler (struct intr_frame *f UNUSED)
       check_pagedir((const void *) name);
       if(name == NULL){
         f->eax = -1;
-        exit(-1);
         break;
       }
       
