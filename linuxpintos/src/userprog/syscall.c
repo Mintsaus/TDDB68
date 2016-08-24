@@ -45,6 +45,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 	int fd;
 	int status;
 	size_t size;
+  off_t position;
 	uint8_t key;
 	char *buffer;
 	char *name;
@@ -144,6 +145,29 @@ syscall_handler (struct intr_frame *f UNUSED)
 			bitmap_set(fd_map, fd, 0);
 			file_close(file_handle);
 			break;
+    
+    case (SYS_SEEK):
+      fd = *(p + 1);
+      position = *(p + 2);
+      check_valid_pointer((const void *) (p + 1));
+      check_valid_pointer((const void *) (p + 2));
+      
+      if(fd <= 1 || !fd_ok(fd, fd_map)){
+        break;
+      }
+      //Needs to check if position exceeds file size
+      file_handle = file_names[fd]; //Gets file from fd
+      file_seek(file_handle, position);
+      break;
+    
+    case (SYS_TELL):
+      break;
+      
+    case (SYS_FILESIZE):
+      break;
+      
+    case (SYS_REMOVE):
+      break;
 		
 		case (SYS_EXEC):
 			name = (char *)(*(p + 1));
