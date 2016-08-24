@@ -21,4 +21,13 @@ void inode_deny_write (struct inode *);
 void inode_allow_write (struct inode *);
 off_t inode_length (const struct inode *);
 
+//Added
+void inode_acquire_read_lock(struct inode *inode);
+void inode_release_read_lock(struct inode *inode);
+void inode_acquire_write_lock(struct inode *inode);
+void inode_release_write_lock(struct inode *inode);
+int inode_reader_cnt(struct inode *inode);
+void inode_add_reader(struct inode *inode);
+void inode_remove_reader(struct inode *inode);
+
 #endif /* filesys/inode.h */
