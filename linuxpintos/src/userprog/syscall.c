@@ -44,6 +44,7 @@ static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {	
 	tid_t tid; //Added lab 3
+  bool ok;
 	int fd;
 	int status;
 	size_t size;
@@ -186,6 +187,10 @@ syscall_handler (struct intr_frame *f UNUSED)
       break;
       
     case (SYS_REMOVE):
+      name = (char *)(*(p + 1));
+      check_valid_pointer((const void *) name);
+      ok = filesys_remove(name);
+      f->eax = ok;
       break;
 		
 		case (SYS_EXEC):
