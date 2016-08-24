@@ -2,6 +2,7 @@
 #include <debug.h>
 #include "filesys/inode.h"
 #include "threads/malloc.h"
+#include "threads/synch.h" //Added
 
 /* An open file. */
 struct file 
@@ -68,8 +69,25 @@ file_get_inode (struct file *file)
 off_t
 file_read (struct file *file, void *buffer, off_t size) 
 {
+  //If we are the first reader, lock the inode from being written to.
+  inode_acquire_read_lock(file->inode); //----Beginning CS---
+  file_deny_write(file);
+  if(inode_deny_write_cnt(file->inode)==1){
+    inode_acquire_write_lock(file->inode);
+  }
+  inode_release_read_lock(file->inode); //----End CS
+  
   off_t bytes_read = inode_read_at (file->inode, buffer, size, file->pos);
   file->pos += bytes_read;
+  
+  //If we are the last reader, release write_lock.
+  inode_acquire_read_lock(file->inode); //----Beginning CS---
+  file_allow_write(file); //Added
+  if(inode_deny_write_cnt(file->inode)==0){
+    inode_release_write_lock(file->inode);
+  }
+  inode_release_read_lock(file->inode); //----End CS
+  
   return bytes_read;
 }
 
@@ -94,8 +112,12 @@ file_read_at (struct file *file, void *buffer, off_t size, off_t file_ofs)
 off_t
 file_write (struct file *file, const void *buffer, off_t size) 
 {
+  inode_acquire_write_lock(file->inode); //Try to write
+  
   off_t bytes_written = inode_write_at (file->inode, buffer, size, file->pos);
   file->pos += bytes_written;
+  
+  inode_release_write_lock(file->inode); //Done writing
   return bytes_written;
 }
 

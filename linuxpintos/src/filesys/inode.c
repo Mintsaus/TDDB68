@@ -6,6 +6,7 @@
 #include "filesys/filesys.h"
 #include "filesys/free-map.h"
 #include "threads/malloc.h"
+#include "threads/synch.h" //Added
 
 /* Identifies an inode. */
 #define INODE_MAGIC 0x494e4f44
@@ -37,6 +38,8 @@ struct inode
     bool removed;                       /* True if deleted, false otherwise. */
     int deny_write_cnt;                 /* 0: writes ok, >0: deny writes. */
     struct inode_disk data;             /* Inode content. */
+    struct lock write_lock; 
+    struct lock read_lock;
   };
 
 /* Returns the disk sector that contains byte offset POS within
@@ -138,6 +141,8 @@ inode_open (disk_sector_t sector)
   inode->deny_write_cnt = 0;
   inode->removed = false;
   disk_read (filesys_disk, inode->sector, &inode->data);
+  lock_init(&inode->write_lock);  //Added
+  lock_init(&inode->read_lock);  //Added
   return inode;
 }
 
@@ -345,4 +350,34 @@ off_t
 inode_length (const struct inode *inode)
 {
   return inode->data.length;
+}
+
+void
+inode_acquire_read_lock(struct inode *inode)
+{
+ lock_acquire(&inode->read_lock); 
+}
+
+void
+inode_release_read_lock(struct inode *inode)
+{
+ lock_release(&inode->read_lock); 
+}
+
+void
+inode_acquire_write_lock(struct inode *inode)
+{
+ lock_acquire(&inode->write_lock); 
+}
+
+void
+inode_release_write_lock(struct inode *inode)
+{
+ lock_release(&inode->write_lock); 
+}
+
+int
+inode_deny_write_cnt(struct inode *inode)
+{
+  return inode->deny_write_cnt;
 }
