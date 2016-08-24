@@ -29,5 +29,6 @@ void inode_release_write_lock(struct inode *inode);
 int inode_reader_cnt(struct inode *inode);
 void inode_add_reader(struct inode *inode);
 void inode_remove_reader(struct inode *inode);
+bool inode_is_removed(struct inode *inode);
 
 #endif /* filesys/inode.h */

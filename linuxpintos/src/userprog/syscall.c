@@ -20,6 +20,7 @@ void check_pagedir(const void * p);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
 tid_t process_execute(const char *);
+int process_wait (tid_t child_tid);
 void free(void*);
 void* malloc(size_t);
 
