@@ -12,7 +12,6 @@ struct dir
   {
     struct inode *inode;                /* Backing store. */
     off_t pos;                          /* Current position. */
-    struct lock dir_lock;               /* Synch for directory operations*/
   };
 
 /* A single directory entry. */
@@ -36,16 +35,18 @@ dir_create (disk_sector_t sector, size_t entry_cnt)
 struct dir *
 dir_open (struct inode *inode) 
 {
+  inode_acquire_write_lock(inode);
   struct dir *dir = calloc (1, sizeof *dir);
   if (inode != NULL && dir != NULL)
     {
       dir->inode = inode;
       dir->pos = 0;
-      lock_init(&dir->dir_lock);
+      inode_release_write_lock(inode);
       return dir;
     }
   else
     {
+      inode_release_write_lock(inode);
       inode_close (inode);
       free (dir);
       return NULL; 
@@ -122,7 +123,7 @@ bool
 dir_lookup (const struct dir *dir, const char *name,
             struct inode **inode) 
 {
-  lock_acquire(&dir->dir_lock);
+  inode_acquire_write_lock(dir->inode);
   struct dir_entry e;
 
   ASSERT (dir != NULL);
@@ -132,8 +133,7 @@ dir_lookup (const struct dir *dir, const char *name,
     *inode = inode_open (e.inode_sector);
   else
     *inode = NULL;
-  
-  lock_release(&dir->dir_lock);
+  inode_release_write_lock(dir->inode);
   return *inode != NULL;
 }
 
@@ -146,7 +146,7 @@ dir_lookup (const struct dir *dir, const char *name,
 bool
 dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector) 
 {
-  lock_acquire(&dir->dir_lock);
+  inode_acquire_write_lock(dir->inode);
   struct dir_entry e;
   off_t ofs;
   bool success = false;
@@ -182,7 +182,7 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector)
   
   
  done:
-  lock_release(&dir->dir_lock);
+  inode_release_write_lock(dir->inode);
   return success;
 }
 
@@ -192,7 +192,7 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector)
 bool
 dir_remove (struct dir *dir, const char *name) 
 {
-  lock_acquire(&dir->dir_lock);
+  inode_acquire_write_lock(dir->inode);
   struct dir_entry e;
   struct inode *inode = NULL;
   bool success = false;
@@ -221,7 +221,7 @@ dir_remove (struct dir *dir, const char *name)
 
   
  done:
-  lock_release(&dir->dir_lock);
+  inode_release_write_lock(dir->inode);
   inode_close (inode);
   return success;
 }
