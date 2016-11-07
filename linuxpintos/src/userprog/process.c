@@ -51,22 +51,21 @@ process_execute (const char *file_name)
   /* Lab 3 */
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
-  cs->fn_copy = fn_copy; //Är nu en hård kopia //palloc:as inte tänk efter om mem. leak
+  cs->fn_copy = fn_copy;
 
-  /* Create a new thread to execute FILE_NAME. */
-  //~ printf("Before thread create, tid: %d\n", thread_current()->tid);
-  tid = thread_create (file_name_no_args, PRI_DEFAULT, start_process, cs);
-  //~ printf("After thread create\n");
-  /*-------------Lab3-----------------*/
-	  sema_init(&cs->sema_exec, 0);
-	  lock_init(&cs->cs_lock);
-	  list_push_front(&thread_current()->cs_list, &cs->cs_elem);
-	  cs->pid = tid;
   
+  /*-------------Lab3-----------------*/
+  // Init cs locks.
+  sema_init(&cs->sema_exec, 0);
+  lock_init(&cs->cs_lock);
+  list_push_front(&thread_current()->cs_list, &cs->cs_elem); //Adds the new cs to the parent's list of children
+  
+  /* Create a new thread to execute FILE_NAME. */
+  tid = thread_create (file_name_no_args, PRI_DEFAULT, start_process, cs);
+  cs->pid = tid; //Sets 
 	
-	sema_down(&cs->sema_exec);
-	
-	//Get tid from child_status
+	sema_down(&cs->sema_exec);// Makes sure start_process is finished before proceeding
+	//Get tid from child_status, cs can change this to -1 if it fails
 	tid = cs->pid;
 	//~ printf("Process exec tid: %d\n", tid);
 	//~ printf("Process exec after sema_down, cs ref_cnt: %d\n", cs->ref_cnt);
@@ -113,9 +112,6 @@ start_process (void *file_name_)
 		//~ printf("Not success \n");
 		cs->pid = -1;
 		sema_up(&cs->sema_exec);
-		//~ lock_acquire(&cs->cs_lock);  //This should be done in process exit, not here
-		//~ cs->ref_cnt--;
-		//~ lock_release(&cs->cs_lock);
 		thread_exit ();
 	}else{
 		sema_up(&cs->sema_exec); //Causes problems. Is not initialized? Try to comment out and run lab3test, interesting stuff.
@@ -160,11 +156,12 @@ process_wait (tid_t child_tid UNUSED)
    if(cs == NULL){
     return -1; //Did not find the child, something went wrong
   }
-  lock_acquire(&cs->cs_lock);
-  if(cs->ref_cnt == 2){
-    lock_release(&cs->cs_lock);
+  // These commented-out lines should be unnecessary since all children calls sema_up when exiting if the parent is alive.
+  //lock_acquire(&cs->cs_lock);
+  //if(cs->ref_cnt == 2){
+    //lock_release(&cs->cs_lock); 
     sema_down(&cs->sema_exec);
-  }else{ lock_release(&cs->cs_lock); }
+  //}else{ lock_release(&cs->cs_lock); }
         
   exit_code = cs->exit_status;
   list_remove(el);
@@ -178,28 +175,21 @@ process_exit (void)
 {
   struct thread *cur = thread_current ();
   uint32_t *pd;
-  //~ printf("Process exit, thread_tid: %d\n", thread_current()->tid);
-   //If parent is alive: That needs to be checked
   struct child_status *cs_parent;
   cs_parent = cur->cs_parent;
-  //~ printf("cs_parent ref_cont: %d\n", cs_parent->ref_cnt);
   
   // If parent dead we need to destroy the cs. If parent waiting, wake it up. //
-  //~ printf("Proc_exit: Before cs_parent \n");
   if(cs_parent){
-	  lock_acquire(&cs_parent->cs_lock); //----------THIS IS WHERE CRASH OCCURS-------------
-	  //~ printf("Proc_exit: After cs_parent \n");
+	  lock_acquire(&cs_parent->cs_lock);
 	  cs_parent->ref_cnt--;                 
 	  
 	  if(cs_parent->ref_cnt == 0){		//Parent is dead
-		//~ printf("Parent of thread %d is dead \n", cur -> tid);
-		lock_release(&cs_parent->cs_lock);
-		free(cs_parent);
+      //~ printf("Parent of thread %d is dead \n", cur -> tid);
+      lock_release(&cs_parent->cs_lock);
+      free(cs_parent);
 	  }else {								//Parent waits or doesn't care
-		//~ printf("Parent wait or doesn't care \n");
-		lock_release(&cs_parent->cs_lock);
-		//~ printf("EXIT: sema up \n");
-		sema_up(&cs_parent->sema_exec);
+      lock_release(&cs_parent->cs_lock);
+      sema_up(&cs_parent->sema_exec);
 	  }
   }
   
@@ -219,24 +209,17 @@ process_exit (void)
   //Loops through list of children and adds the ones to be deleted to a separate list
   for (e = list_begin (cs_list); e != list_end (cs_list); e = list_next(e))
    {
-	//~ printf("inside for loop\n");
     cs = list_entry (e, struct child_status, cs_elem);
-    //~ printf("before lock_acquire\n");
     lock_acquire(&cs->cs_lock);
-    //~ printf("after lock_acquire\n");	
     cs->ref_cnt--;
     if(cs->ref_cnt == 0){
-		//~ printf("ref_cnt == 0\n");
       struct elem_copy *ec = (struct elem_copy *)malloc(sizeof(struct elem_copy));
       ec->pointer = e;
       list_push_front(&children_to_delete, &ec->elem);
     }
     lock_release(&cs->cs_lock);
-    //~ printf("end of loop\n");			
    }
-   //~ printf("Children to delete is filled. Size: %d \n", list_size(&children_to_delete));
    
-   //~ printf("Before while in proc_exit\n");
    //Loops through the children to delete, and deletes them
    while (!list_empty (&children_to_delete))
     {
@@ -662,56 +645,36 @@ setup_stack (void **esp, const char **arguments)
   char *argv[32]; 
   int i, argc;
   
-  //Changed order in which arguments are pushed to the stack. Starting with the last argument
+  // Arguments are pushed to the stack. Starting with the last argument
   for(i = 0; arguments[i] != NULL; i++){ //Counts the number of arguments, the result will be actual #args-1 since we start from zero.
 	  argc = i;
   }
   
   //Pushes arguments to stack from the last to the first arg
   for(i = argc; i >= 0; i--){ 
-	*esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
-	memcpy(*esp, arguments[i], strlen(arguments[i])+1); //the actual pushing to the stack
-	argv[i] = *esp;   //saving a pointer to where on the stack each argument is placed
-  }
-  argc++; //This is needed to reflect the true number of args
-  
-  /* -------Old solution-------------------------
-    for(i = 0; arguments[i] != NULL; i++){
     *esp -= strlen(arguments[i]) + 1; //+1 because of \0 at end of each string
-    memcpy(*esp, arguments[i], strlen(arguments[i])); //the actual pushing to the stack
-    //printf("arguments[%d] = %s \n", i, arguments[i]);
+    memcpy(*esp, arguments[i], strlen(arguments[i])+1); //the actual pushing to the stack
     argv[i] = *esp;   //saving a pointer to where on the stack each argument is placed
   }
-  argc = i; */
+  argc++; //This is needed to reflect the true number of args
   
   
   /*--------Avrunda *esp till närmsta 4-tal---------------*/
   char *np = 0;
   int round =  ((size_t) * esp)%4;
-  //printf("Round %d\n", round);
   if(round>0){
-	//printf("Round var > 0 \n");
 	*esp -= round;
-	memcpy(*esp, &np, round);
+	memcpy(*esp, &np, round); //round is the number of bytes of padding written
 	
   }
-  //printf("Avrundning gjord\n");
   
   /*--------Pusha argv, adresser till argumenten ovan-----*/
-  
-  //printf("Pushing sentinel \n");
-  
-  /* ------This was removed since starting the next step from argc accomplishes the same thing 
-   *esp -= 4;
-  memcpy(*esp, &np, 4);   //NULL-pointer sentinel
-	*/
 	
   int j;
   //printf("Pushing argv[] \n");
   for(j = argc; j >= 0; j--){ //Since this now starts from argc the first iteration will push the null-pointer sentinel. This is because &argv[argc] doesn't point to anything.
     *esp -= 4;
     memcpy(*esp, &argv[j], 4);
-    argv[j] = *esp; // What does this do? Nothing?
   }
   char *argv_onstack = *esp;    //save the adress of argv on the stack to be able to point to it in next step.
   *esp -= sizeof(char **);
@@ -719,7 +682,7 @@ setup_stack (void **esp, const char **arguments)
   *esp -= sizeof(int);
   memcpy(*esp, &argc, sizeof(int));    //push argc
   *esp -= sizeof(void *);
-  memcpy(*esp, argv[argc], sizeof(void *));    //push fake return address
+  memcpy(*esp, &argv[argc], sizeof(void *));    //push fake return address
   return success;
   
 }

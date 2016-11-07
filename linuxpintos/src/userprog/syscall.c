@@ -214,9 +214,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			exit(status);
       
 			break;
-			
-		/*Fråga Erik om "Reconsider all the situations under the condition that the child does not 
-		 * exit normally" */	
+	
 		case (SYS_WAIT):
 			tid = *(p + 1);
       check_valid_pointer((const void *) (p + 1));
@@ -224,7 +222,6 @@ syscall_handler (struct intr_frame *f UNUSED)
 			break;			
 			
 		default:
-			//printf ("system call!\n");
 			thread_exit ();
 	}
 	
