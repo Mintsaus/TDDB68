@@ -113,10 +113,8 @@ off_t
 file_write (struct file *file, const void *buffer, off_t size) 
 {
   inode_acquire_write_lock(file->inode); //Try to write
-  
   off_t bytes_written = inode_write_at (file->inode, buffer, size, file->pos);
   file->pos += bytes_written;
-  
   inode_release_write_lock(file->inode); //Done writing
   return bytes_written;
 }
@@ -132,7 +130,10 @@ off_t
 file_write_at (struct file *file, const void *buffer, off_t size,
                off_t file_ofs) 
 {
-  return inode_write_at (file->inode, buffer, size, file_ofs);
+  inode_acquire_write_lock(file->inode); //Try to write
+  off_t bytes_written = inode_write_at (file->inode, buffer, size, file_ofs);
+  inode_release_write_lock(file->inode); //Done writing
+  return bytes_written;
 }
 
 /* Prevents write operations on FILE's underlying inode
@@ -167,7 +168,26 @@ off_t
 file_length (struct file *file) 
 {
   ASSERT (file != NULL);
-  return inode_length (file->inode);
+  
+  inode_acquire_read_lock(file->inode); //----Beginning CS---
+  inode_add_reader(file->inode);
+  if(inode_reader_cnt(file->inode)==1){
+    inode_acquire_write_lock(file->inode);
+  }
+  inode_release_read_lock(file->inode); //----End CS
+  
+  off_t length = inode_length (file->inode);
+  
+  //If we are the last reader, release write_lock.
+  inode_acquire_read_lock(file->inode); //----Beginning CS---
+  inode_remove_reader(file->inode); //Added
+  if(inode_reader_cnt(file->inode)==0){
+    inode_release_write_lock(file->inode);
+  }
+  inode_release_read_lock(file->inode); //----End CS
+  
+  
+  return length;
 }
 
 /* Sets the current position in FILE to NEW_POS bytes from the
