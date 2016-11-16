@@ -62,7 +62,8 @@ byte_to_sector (const struct inode *inode, off_t pos)
 /* List of open inodes, so that opening a single inode twice
    returns the same `struct inode'. */
 static struct list open_inodes;
-static struct lock inode_list_lock;
+static struct lock inode_list_lock; //Added
+static struct lock disk_lock; //Added
 
 /* Initializes the inode module. */
 void
@@ -70,6 +71,7 @@ inode_init (void)
 {
   list_init (&open_inodes);
   lock_init(&inode_list_lock);
+  lock_init(&disk_lock);
 }
 
 /* Initializes an inode with LENGTH bytes of data and
@@ -88,28 +90,35 @@ inode_create (disk_sector_t sector, off_t length)
   /* If this assertion fails, the inode structure is not exactly
      one sector in size, and you should fix that. */
   ASSERT (sizeof *disk_inode == DISK_SECTOR_SIZE);
-
+  
+  
   disk_inode = calloc (1, sizeof *disk_inode);
   if (disk_inode != NULL)
     {
+      
       size_t sectors = bytes_to_sectors (length);
       disk_inode->length = length;
       disk_inode->magic = INODE_MAGIC;
       if (free_map_allocate (sectors, &disk_inode->start))
         {
+          lock_acquire(&disk_lock);
           disk_write (filesys_disk, sector, disk_inode);
           if (sectors > 0) 
             {
               static char zeros[DISK_SECTOR_SIZE];
               size_t i;
               
-              for (i = 0; i < sectors; i++) 
+              for (i = 0; i < sectors; i++) {
                 disk_write (filesys_disk, disk_inode->start + i, zeros); 
+              }
             }
           success = true; 
+          lock_release(&disk_lock);
         } 
       free (disk_inode);
+      
     }
+  
   return success;
 }
 
@@ -150,7 +159,9 @@ inode_open (disk_sector_t sector)
   inode->deny_write_cnt = 0;
   inode->reader_cnt = 0;
   inode->removed = false;
+  lock_acquire(&disk_lock); //Added
   disk_read (filesys_disk, inode->sector, &inode->data);
+  lock_release(&disk_lock); //Added
   lock_init(&inode->write_lock);  
   lock_init(&inode->read_lock);  
   lock_init(&inode->open_close_lock);  //Added
@@ -253,7 +264,9 @@ inode_read_at (struct inode *inode, void *buffer_, off_t size, off_t offset)
       if (sector_ofs == 0 && chunk_size == DISK_SECTOR_SIZE) 
         {
           /* Read full sector directly into caller's buffer. */
+          lock_acquire(&disk_lock); //Added
           disk_read (filesys_disk, sector_idx, buffer + bytes_read); 
+          lock_release(&disk_lock); //Added
         }
       else 
         {
@@ -265,7 +278,9 @@ inode_read_at (struct inode *inode, void *buffer_, off_t size, off_t offset)
               if (bounce == NULL)
                 break;
             }
+          lock_acquire(&disk_lock); //Added
           disk_read (filesys_disk, sector_idx, bounce);
+          lock_release(&disk_lock); //Added
           memcpy (buffer + bytes_read, bounce + sector_ofs, chunk_size);
         }
       
@@ -314,7 +329,9 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
       if (sector_ofs == 0 && chunk_size == DISK_SECTOR_SIZE) 
         {
           /* Write full sector directly to disk. */
+          lock_acquire(&disk_lock); //Added
           disk_write (filesys_disk, sector_idx, buffer + bytes_written); 
+          lock_release(&disk_lock); //Added
         }
       else 
         {
@@ -329,12 +346,18 @@ inode_write_at (struct inode *inode, const void *buffer_, off_t size,
           /* If the sector contains data before or after the chunk
              we're writing, then we need to read in the sector
              first.  Otherwise we start with a sector of all zeros. */
-          if (sector_ofs > 0 || chunk_size < sector_left) 
+          lock_acquire(&disk_lock); //Added
+          if (sector_ofs > 0 || chunk_size < sector_left)
+          {
             disk_read (filesys_disk, sector_idx, bounce);
+          }
           else
+          {
             memset (bounce, 0, DISK_SECTOR_SIZE);
+          }
           memcpy (bounce + sector_ofs, buffer + bytes_written, chunk_size);
           disk_write (filesys_disk, sector_idx, bounce); 
+          lock_release(&disk_lock); //Added
         }
 
       /* Advance. */
