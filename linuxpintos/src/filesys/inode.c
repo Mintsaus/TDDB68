@@ -42,6 +42,7 @@ struct inode
     struct lock write_lock; 
     struct lock read_lock;
     struct lock open_close_lock;
+    struct lock dir_lock;
   };
 
 /* Returns the disk sector that contains byte offset POS within
@@ -61,12 +62,14 @@ byte_to_sector (const struct inode *inode, off_t pos)
 /* List of open inodes, so that opening a single inode twice
    returns the same `struct inode'. */
 static struct list open_inodes;
+static struct lock inode_list_lock;
 
 /* Initializes the inode module. */
 void
 inode_init (void) 
 {
   list_init (&open_inodes);
+  lock_init(&inode_list_lock);
 }
 
 /* Initializes an inode with LENGTH bytes of data and
@@ -119,6 +122,7 @@ inode_open (disk_sector_t sector)
   struct list_elem *e;
   struct inode *inode;
 
+  lock_acquire(&inode_list_lock); //Added
   /* Check whether this inode is already open. */
   for (e = list_begin (&open_inodes); e != list_end (&open_inodes);
        e = list_next (e)) 
@@ -126,6 +130,7 @@ inode_open (disk_sector_t sector)
       inode = list_entry (e, struct inode, elem);
       if (inode->sector == sector) 
         {
+          lock_release(&inode_list_lock); //Added
           inode_reopen (inode);
           return inode; 
         }
@@ -133,9 +138,11 @@ inode_open (disk_sector_t sector)
 
   /* Allocate memory. */
   inode = malloc (sizeof *inode);
-  if (inode == NULL)
+  if (inode == NULL){
+    lock_release(&inode_list_lock); //Added
     return NULL;
-
+  }
+  
   /* Initialize. */
   list_push_front (&open_inodes, &inode->elem);
   inode->sector = sector;
@@ -144,9 +151,12 @@ inode_open (disk_sector_t sector)
   inode->reader_cnt = 0;
   inode->removed = false;
   disk_read (filesys_disk, inode->sector, &inode->data);
-  lock_init(&inode->write_lock);  //Added
-  lock_init(&inode->read_lock);  //Added
+  lock_init(&inode->write_lock);  
+  lock_init(&inode->read_lock);  
   lock_init(&inode->open_close_lock);  //Added
+  lock_init(&inode->dir_lock); //Added
+  
+  lock_release(&inode_list_lock); //Added
   return inode;
 }
 
@@ -156,8 +166,10 @@ inode_reopen (struct inode *inode)
 {
   if (inode != NULL) 
     {
+      lock_acquire(&inode->open_close_lock); //Added
       ASSERT(inode->open_cnt != 0);
       inode->open_cnt++;
+      lock_release(&inode->open_close_lock); //Added
     }
   return inode;
 }
@@ -180,11 +192,15 @@ inode_close (struct inode *inode)
     return;
 
   /* Release resources if this was the last opener. */
+  lock_acquire(&inode->open_close_lock);
   if (--inode->open_cnt == 0)
     {
+      lock_release(&inode->open_close_lock);
       /* Remove from inode list and release lock. */
+      lock_acquire(&inode_list_lock);
       list_remove (&inode->elem);
- 
+      lock_release(&inode_list_lock);
+      
       /* Deallocate blocks if removed. */
       if (inode->removed) 
         {
@@ -192,8 +208,10 @@ inode_close (struct inode *inode)
           free_map_release (inode->data.start,
                             bytes_to_sectors (inode->data.length)); 
         }
-
       free (inode); 
+    }else
+    {
+      lock_release(&inode->open_close_lock);
     }
 }
 
@@ -395,6 +413,20 @@ inode_release_open_close_lock(struct inode *inode)
  lock_release(&inode->open_close_lock); 
 }
 
+//----------Dir lock-----------
+void
+inode_acquire_dir_lock(struct inode *inode)
+{
+ lock_acquire(&inode->dir_lock); 
+}
+
+void
+inode_release_dir_lock(struct inode *inode)
+{
+ lock_release(&inode->dir_lock); 
+}
+
+
 int
 inode_reader_cnt(struct inode *inode)
 { 
@@ -410,7 +442,6 @@ void inode_remove_reader(struct inode *inode)
 {
   inode->reader_cnt--;
 }
-
 
 bool
 inode_is_removed(struct inode *inode)

@@ -7,6 +7,7 @@
 
 static struct file *free_map_file;   /* Free map file. */
 static struct bitmap *free_map;      /* Free map, one bit per disk sector. */
+static struct lock free_map_lock; //Added
 
 /* Initializes the free map. */
 void
@@ -15,6 +16,7 @@ free_map_init (void)
   free_map = bitmap_create (disk_size (filesys_disk));
   if (free_map == NULL)
     PANIC ("bitmap creation failed--disk is too large");
+  lock_init(&free_map_lock);
   bitmap_mark (free_map, FREE_MAP_SECTOR);
   bitmap_mark (free_map, ROOT_DIR_SECTOR);
 }

@@ -37,6 +37,7 @@ dir_open (struct inode *inode)
 {
   inode_acquire_write_lock(inode);
   struct dir *dir = calloc (1, sizeof *dir);
+  
   if (inode != NULL && dir != NULL)
     {
       dir->inode = inode;
@@ -75,6 +76,7 @@ dir_close (struct dir *dir)
 {
   if (dir != NULL)
     {
+      
       inode_close (dir->inode);
       free (dir);
     }
@@ -123,7 +125,7 @@ bool
 dir_lookup (const struct dir *dir, const char *name,
             struct inode **inode) 
 {
-  inode_acquire_open_close_lock(dir->inode);
+  inode_acquire_dir_lock(dir->inode);
   struct dir_entry e;
 
   ASSERT (dir != NULL);
@@ -133,7 +135,7 @@ dir_lookup (const struct dir *dir, const char *name,
     *inode = inode_open (e.inode_sector);
   else
     *inode = NULL;
-  inode_release_open_close_lock(dir->inode);
+  inode_release_dir_lock(dir->inode);
   return *inode != NULL;
 }
 
@@ -146,7 +148,7 @@ dir_lookup (const struct dir *dir, const char *name,
 bool
 dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector) 
 {
-  inode_acquire_write_lock(dir->inode);
+  inode_acquire_dir_lock(dir->inode);
   struct dir_entry e;
   off_t ofs;
   bool success = false;
@@ -156,7 +158,10 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector)
 
   /* Check NAME for validity. */
   if (*name == '\0' || strlen (name) > NAME_MAX)
+  {
+    inode_release_dir_lock(dir->inode);
     return false;
+  }
 
   /* Check that NAME is not in use. */
   if (lookup (dir, name, NULL, NULL))
@@ -182,7 +187,7 @@ dir_add (struct dir *dir, const char *name, disk_sector_t inode_sector)
   
   
  done:
-  inode_release_write_lock(dir->inode);
+  inode_release_dir_lock(dir->inode);
   return success;
 }
 

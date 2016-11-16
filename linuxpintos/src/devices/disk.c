@@ -60,6 +60,8 @@ struct disk
 
     long long read_cnt;         /* Number of sectors read. */
     long long write_cnt;        /* Number of sectors written. */
+    
+    struct lock disk_lock;
   };
 
 /* An ATA channel (aka controller).
