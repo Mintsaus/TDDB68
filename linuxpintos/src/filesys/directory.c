@@ -123,7 +123,7 @@ bool
 dir_lookup (const struct dir *dir, const char *name,
             struct inode **inode) 
 {
-  inode_acquire_write_lock(dir->inode);
+  inode_acquire_open_close_lock(dir->inode);
   struct dir_entry e;
 
   ASSERT (dir != NULL);
@@ -133,7 +133,7 @@ dir_lookup (const struct dir *dir, const char *name,
     *inode = inode_open (e.inode_sector);
   else
     *inode = NULL;
-  inode_release_write_lock(dir->inode);
+  inode_release_open_close_lock(dir->inode);
   return *inode != NULL;
 }
 
