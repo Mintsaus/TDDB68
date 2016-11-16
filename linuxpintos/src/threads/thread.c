@@ -175,15 +175,13 @@ thread_create (const char *name, int priority,
                thread_func *function, void *aux) 
 {
 	
-  struct child_status *cs = aux;//(struct child_status*)aux;
   struct thread *t;
   struct kernel_thread_frame *kf;
   struct switch_entry_frame *ef;
   struct switch_threads_frame *sf;
   tid_t tid;
   
-  //struct thread *curr_thread = thread_current(); //Lab3
-	//printf("Beginning of thread_create in thread: %d \n", curr_thread -> tid);
+
   ASSERT (function != NULL);
 
   /* Allocate thread. */
@@ -194,11 +192,6 @@ thread_create (const char *name, int priority,
   /* Initialize thread. */
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
-
-  /* ---------------Lab 3----------------- */
-  
-  t->cs_parent = cs; 	//Unsure if this is safe in all cases, 
-						//but couldn't access new thread from process_execute.
   
 
   /* Stack frame for kernel_thread(). */

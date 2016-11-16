@@ -17,6 +17,8 @@ void putbuf(const char *buffer, size_t n);
 void exit(int status);
 void check_valid_pointer(const void * p);
 void check_pagedir(const void * p);
+void check_buffer(char* p, size_t size);
+void check_string(char* p);
 uint8_t input_getc(void);
 int fd_ok(int fd, struct bitmap *map);
 tid_t process_execute(const char *);
@@ -64,18 +66,19 @@ syscall_handler (struct intr_frame *f UNUSED)
   check_pagedir((const void *)p);
 	switch(*p)
 	{
-		case (SYS_HALT)://Done			
+		case (SYS_HALT):		
 		power_off();
 			break;
 			
-		case (SYS_READ): //Done	
+		case (SYS_READ): 
 			fd = *(p + 1);
       check_valid_pointer((const void *) (p + 1));
 			buffer = (char *)(*(p + 2));
-      check_valid_pointer((const void *) buffer);
       check_pagedir((const void *) (p + 2));
 			size = *(p + 3);
       check_valid_pointer((const void *) (p + 3));
+      check_buffer(buffer, size);
+      
 			if(fd == 0) /* Reads from console */
 			{
 				int i;
@@ -94,14 +97,15 @@ syscall_handler (struct intr_frame *f UNUSED)
 			}
 			break;
 
-		case (SYS_WRITE)://Done
+		case (SYS_WRITE):
 			fd = *(p + 1);
       check_valid_pointer((const void *) (p + 1));
 			buffer = (char *)(*(p + 2));
-      check_valid_pointer((const void *) buffer);
       check_pagedir((const void *) buffer);
 			size = *(p + 3);
       check_valid_pointer((const void *) (p + 3));
+      check_buffer(buffer, size);
+      
 			if(fd == 1){									/* Writes to console */
 				putbuf(buffer, size);
 			}else if(fd == 0 || !fd_ok(fd, fd_map)){		/*invalid fd */
@@ -114,19 +118,19 @@ syscall_handler (struct intr_frame *f UNUSED)
 			}
 			break;
 		
-		case (SYS_CREATE)://Done
+		case (SYS_CREATE):
 			name = (char *)(*(p + 1));
-      check_valid_pointer((const void *) name);
       check_pagedir((const void *) name);
+      check_string(name);
 			size = *(p + 2);
-      check_valid_pointer((const void *) (p + 3));
+      check_valid_pointer((const void *) (p + 2));
 			f -> eax = filesys_create(name, size);
 			break;
 		
-		case (SYS_OPEN)://Done
+		case (SYS_OPEN):
 			name = (char *)(*(p + 1));								/* Get name of file */
-      check_valid_pointer((const void *) name);
       check_pagedir((const void *) name);
+      check_string(name);
 			fd = (int)bitmap_scan_and_flip(fd_map, 0, 1, 0);		/* Get next free position in bitmap (fd) */
 			
       if(fd == (int)BITMAP_ERROR || (file_handle = filesys_open(name)) == NULL){
@@ -138,7 +142,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			}
 			break;
 			
-		case (SYS_CLOSE)://Done
+		case (SYS_CLOSE):
 			fd = *(p + 1);
       check_valid_pointer((const void *) (p + 1));
 			if(!fd_ok(fd, fd_map)){ break; }
@@ -189,23 +193,21 @@ syscall_handler (struct intr_frame *f UNUSED)
       
     case (SYS_REMOVE):
       name = (char *)(*(p + 1));
-      check_valid_pointer((const void *) name);
+      check_pagedir((const void *) name);
+      check_string(name);
       ok = filesys_remove(name);
       f->eax = ok;
       break;
 		
 		case (SYS_EXEC):
 			name = (char *)(*(p + 1));
-      //~ printf("in sys_exec\n");
-      check_valid_pointer((const void *) name);
       check_pagedir((const void *) name);
+      check_string(name);
       if(name == NULL){
         f->eax = -1;
         break;
       }
-      
 			tid = process_execute(name);
-      //~ printf("sys_exec: %d\n", tid);
 			f->eax = tid;
 			break;
 			
@@ -242,9 +244,7 @@ void check_valid_pointer(const void *p){
   if(!is_user_vaddr(p) || p < (void *) 0x08048000) //nr from 3.1.4.1 in Pintos docs
   {
     exit(-1);
-  } else {
-    //printf("This is a valid pointer: %p\n", p);
-  }
+  } 
 }
 
 void check_pagedir(const void *p){
@@ -253,4 +253,25 @@ void check_pagedir(const void *p){
     exit(-1);
   }
 }
+
+void check_string(char* p){
+  
+  char *loop_ptr = p;
+  check_valid_pointer((const void *)loop_ptr);
+  for(loop_ptr = p; *loop_ptr != NULL; loop_ptr++){
+    check_valid_pointer((const void *)(loop_ptr + 1));
+    
+  }
+  
+}
+
+void check_buffer(char* p, size_t size) {
+  char *buffer_cpy = p;
+  size_t i;
+  for(i = 0; i < size; i++){
+    check_valid_pointer((const void *)buffer_cpy);
+    buffer_cpy++;
+  }
+}
+
 

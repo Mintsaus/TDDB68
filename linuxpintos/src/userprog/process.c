@@ -52,6 +52,7 @@ process_execute (const char *file_name)
   struct child_status *cs = (struct child_status *)malloc(sizeof(struct child_status));
   cs->ref_cnt = 2;
   cs->fn_copy = fn_copy;
+  cs->exit_status = -1;
 
   
   /*-------------Lab3-----------------*/
@@ -67,8 +68,7 @@ process_execute (const char *file_name)
 	sema_down(&cs->sema_exec);// Makes sure start_process is finished before proceeding
 	//Get tid from child_status, cs can change this to -1 if it fails
 	tid = cs->pid;
-	//~ printf("Process exec tid: %d\n", tid);
-	//~ printf("Process exec after sema_down, cs ref_cnt: %d\n", cs->ref_cnt);
+  
 	if(tid == TID_ERROR){		//om -1 misslyckades load, kan ta bort strukten
 		list_remove(&cs->cs_elem);
 		free(cs);
@@ -85,15 +85,14 @@ static void
 start_process (void *file_name_)
 {
 	struct thread *curr_thread = thread_current();
-  //~ printf("Beginning of start_process for thread: %d \n", curr_thread->tid);
   struct child_status *cs = (struct child_status *)file_name_;
   char *file_name;
   if(curr_thread->tid >= 2){
 		file_name = &cs->filename; //Lab3 file_name_ is our struct cs
 	}else{
-		//printf("Using old method for file_name \n");
 		file_name = (char *) file_name_;
 	}
+  curr_thread->cs_parent = cs;
   struct intr_frame if_;
   bool success;
   /* Initialize interrupt frame and load executable. */
@@ -101,20 +100,15 @@ start_process (void *file_name_)
   if_.gs = if_.fs = if_.es = if_.ds = if_.ss = SEL_UDSEG;
   if_.cs = SEL_UCSEG;
   if_.eflags = FLAG_IF | FLAG_MBS;
-  //printf(" About to load %s \n", cs->fn_copy);
-  success = load (cs->fn_copy, &if_.eip, &if_.esp); //cs->fn_copy
+  success = load (cs->fn_copy, &if_.eip, &if_.esp);
 
   /* If load failed, quit. */
- 
-  //~ palloc_free_page (cs->fn_copy); //cs->fn_copy   free:as rätt?
-  
   if (!success){ 
-		//~ printf("Not success \n");
 		cs->pid = -1;
 		sema_up(&cs->sema_exec);
 		thread_exit ();
 	}else{
-		sema_up(&cs->sema_exec); //Causes problems. Is not initialized? Try to comment out and run lab3test, interesting stuff.
+		sema_up(&cs->sema_exec);
 	}
 
   /* Start the user process by simulating a return from an
@@ -156,13 +150,8 @@ process_wait (tid_t child_tid UNUSED)
    if(cs == NULL){
     return -1; //Did not find the child, something went wrong
   }
-  // These commented-out lines should be unnecessary since all children calls sema_up when exiting if the parent is alive.
-  //lock_acquire(&cs->cs_lock);
-  //if(cs->ref_cnt == 2){
-    //lock_release(&cs->cs_lock); 
-    sema_down(&cs->sema_exec);
-  //}else{ lock_release(&cs->cs_lock); }
-        
+  
+  sema_down(&cs->sema_exec); // The actual waiting
   exit_code = cs->exit_status;
   list_remove(el);
   free(cs);
@@ -184,7 +173,6 @@ process_exit (void)
 	  cs_parent->ref_cnt--;                 
 	  
 	  if(cs_parent->ref_cnt == 0){		//Parent is dead
-      //~ printf("Parent of thread %d is dead \n", cur -> tid);
       lock_release(&cs_parent->cs_lock);
       free(cs_parent);
 	  }else {								//Parent waits or doesn't care
@@ -230,7 +218,6 @@ process_exit (void)
       free(ec);
       free(cs);		
     } 
-   //~ printf("PROC_EXIT after while\n");
    
 
 
@@ -252,7 +239,6 @@ process_exit (void)
       pagedir_activate (NULL);
       pagedir_destroy (pd);
     }
-    //printf("Last in proc_exit\n");
 }
 
 /* Sets up the CPU for running user code in the current
@@ -625,17 +611,14 @@ setup_stack (void **esp, const char **arguments)
   uint8_t *kpage;
   bool success = false;
 	
-  //printf("arguments[%d] = %s", 1, arguments[1]);
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
     {
       success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
       if (success){
-		//printf("Great success!");
         *esp = PHYS_BASE;
       }else{
         palloc_free_page (kpage);
-        //printf("Free page in setup_stack");
         return success;
 	}
     }

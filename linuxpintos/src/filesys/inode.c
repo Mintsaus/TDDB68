@@ -380,7 +380,7 @@ inode_release_write_lock(struct inode *inode)
 
 int
 inode_reader_cnt(struct inode *inode)
-{
+{ 
   return inode->reader_cnt;
 }
 
