@@ -41,6 +41,7 @@ struct inode
     int reader_cnt;
     struct lock write_lock; 
     struct lock read_lock;
+    struct lock open_close_lock;
   };
 
 /* Returns the disk sector that contains byte offset POS within
@@ -145,6 +146,7 @@ inode_open (disk_sector_t sector)
   disk_read (filesys_disk, inode->sector, &inode->data);
   lock_init(&inode->write_lock);  //Added
   lock_init(&inode->read_lock);  //Added
+  lock_init(&inode->open_close_lock);  //Added
   return inode;
 }
 
@@ -354,6 +356,7 @@ inode_length (const struct inode *inode)
   return inode->data.length;
 }
 
+//----- Read lock------------
 void
 inode_acquire_read_lock(struct inode *inode)
 {
@@ -366,6 +369,7 @@ inode_release_read_lock(struct inode *inode)
  lock_release(&inode->read_lock); 
 }
 
+//----- Write lock------------
 void
 inode_acquire_write_lock(struct inode *inode)
 {
@@ -376,6 +380,19 @@ void
 inode_release_write_lock(struct inode *inode)
 {
  lock_release(&inode->write_lock); 
+}
+
+//----- Open/Close lock------------
+void
+inode_acquire_open_close_lock(struct inode *inode)
+{
+ lock_acquire(&inode->open_close_lock); 
+}
+
+void
+inode_release_open_close_lock(struct inode *inode)
+{
+ lock_release(&inode->open_close_lock); 
 }
 
 int
@@ -393,6 +410,7 @@ void inode_remove_reader(struct inode *inode)
 {
   inode->reader_cnt--;
 }
+
 
 bool
 inode_is_removed(struct inode *inode)
